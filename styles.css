@@ -11,6 +11,20 @@
 	--clr-grid-box: #90e5ee1a;
 
 	--clr-secondary-400: 217 19% 35%;
+	/* NICE GRADIENT, OKAYYY: linear-gradient(#292540, #331daa), */
+
+}
+
+body {
+	color: var(--clr-primary);
+	font-family: Lora, Georgia, 'Times New Roman', Times, serif;
+	text-align: center;
+	background-color: #27233A;
+	background-image:
+	 /* linear-gradient(#292540, #331daa), */
+	url('/assets/image-curtain.svg'); 
+	background-repeat: repeat;
+	fill-opacity: 1;
 }
 
 /* ----- INDEX SPECIFIC COMPONENT ----- */
@@ -21,8 +35,9 @@
 
 #signature {
 	position: absolute;
-	width: 6rem;
+	width: 11rem;
 	min-height: 5rem;
+	min-width: 5rem;
 	user-select: none;
 	animation-name: stagger-signature;
 	animation-duration: 10s;
@@ -82,6 +97,7 @@
 	grid-template-columns: repeat(1, 100%); /* repeat(4, 25%) */
 	width: min(60%, 70rem);
 	margin-inline: auto;
+	min-height: 50rem;
 }
 
 .section-title {
@@ -106,20 +122,16 @@
 }
 
 .footer {
-	/* padding: -1rem; */
-	background-color: black;
-	background-position: inherit;
+	text-align: left;
+	padding-top: -5rem;
+	background-image: linear-gradient(#292540, #331daa);
+	background-position: sticky;
 
 	border-bottom: 1rem solid var(--clr-grid-box);
 	border-right: 0.5rem solid var(--clr-grid-box);
-
-	/*
-	background-image:
-	 linear-gradient(rgba(1, 0, 0, 0.0), rgba(1, 0, 0, 0.0)),
-	url('/assets/image-camberden-signature-small-favicon.ico');
-	animation: small-signature-movement 30s linear infinite; 
-	*/
+	
 }		
+
 @keyframes small-signature-movement {
 	from {background-position: 0 0;}
 	to {background-position: 100% 0;}
@@ -145,17 +157,7 @@
 
 /* ----- SITE-WIDE GENERAL STYLE COMPONENT ----- */
 
-body {
-	color: var(--clr-primary);
-	font-family: Lora, Georgia, 'Times New Roman', Times, serif;
-	text-align: center;
-	/* z-index: 1; */
-	/* background-image: url('/assets/image-curtain.svg');  */
-	/* #EEEFF0 in SVG Fill */
-	/* background-color: #292540; */
-	fill-opacity: 0.1;
-	background-color: var(--clr-quinary-body);
-}
+
 
 p {
 	color: inherit;
@@ -422,7 +424,7 @@ button {
 
 @media screen and (max-width: 500px) {
 	body {
-		background-image: none; 
+		background: #27233A;
 	}
 
 	#camberden {
