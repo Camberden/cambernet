@@ -1,0 +1,1 @@
+alert("Entering after ftp sync!");

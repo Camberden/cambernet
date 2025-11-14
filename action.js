@@ -69,7 +69,7 @@ function convertToJapaneseDate(date) {
 convertToJapaneseDate(formattedDate);
 
 const camberden = document.querySelector("#camberden");
-const monickers = ["camberden", "観葉伝", "カンバデン"];
+const monickers = ["camberden.net", "観葉伝ネット", "カンバデンネット"];
 
 function randomizeMonicker(){
 	const m = Math.random();
@@ -116,14 +116,7 @@ generateSiteInfo();
  */
 const sections = [
 	["dashboard", "Personal Dashboard",],
-	["workspace", "Coding Workspace",],
-	["blog", "Blogging Page",],
-	["language", "Language Resource",],
-	["accounting", "Accounting Resource",],
-	["travel", "Travel Page",],
-	["lifecraft", "Lifecraft Page",],
-	["musings", "Musings Page",],
-	["music", "Original Music",],
+	["novelties", "Novel Testing Space"],
 ];
 const sectionTitles = document.querySelectorAll(".section-title");
 const sectionLinks = document.querySelector("#section-links");

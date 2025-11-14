@@ -1,3 +1,5 @@
+helper.txt
+.vscode/ftp-sync.json
 /vendor/
 node_modules/
 npm-debug.log
