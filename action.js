@@ -6,7 +6,7 @@
  * - Date is changed for any first update completed on a new day.
  * @author Camberden (Chrispy | Kippi)
  */
-const latestUpdatePushed = "Friday November 14th 2025";
+const latestUpdatePushed = "Thursday November 20th 2025";
 document.querySelector("#latest-update").innerHTML = latestUpdatePushed;
 const splitDate = latestUpdatePushed.split(" ");
 /**
@@ -44,13 +44,14 @@ function convertToJapaneseDate(date) {
 	}
 
 	// ----- DAYS ----- //
-	console.log(date.getDate());
 	if (date.getDate() > 30) {
 		japaneseDate += kanjiNumbers[2] + kanjiNumbers[9] + (kanjiNumbers[(date.getDate() % 30) - 1] + "日");
 	} else if (date.getDate() == 30) {
 		japaneseDate += (kanjiNumbers[2] + kanjiNumbers[9] + "日");	
-	} else if (date.getDate() >= 20) {
+	} else if (date.getDate() > 20) {
 		japaneseDate += kanjiNumbers[1] + kanjiNumbers[9] + (kanjiNumbers[(date.getDate() % 20) - 1] + "日");
+	} else if (date.getDate() == 20) {
+	japaneseDate += (kanjiNumbers[1] + kanjiNumbers[9] + "日");	
 	} else if (date.getDate() > 10) {
 		japaneseDate += kanjiNumbers[9] + (kanjiNumbers[(date.getDate() % 10) - 1] + "日");
 	} else {
@@ -73,7 +74,7 @@ const monickers = ["camberden.net", "観葉伝ネット", "カンバデンネッ
 
 function randomizeMonicker(){
 	const m = Math.random();
-	console.log(m);
+	// console.log(m);
 	if (m <= 0.1) {
 		camberden.lang = "jp";
 		camberden.innerHTML = monickers[1];
@@ -115,7 +116,7 @@ generateSiteInfo();
  * The section name to appear on the page.
  */
 const sections = [
-	["dashboard", "Personal Dashboard",],
+	// ["dashboard", "Personal Dashboard",],
 	["novelties", "Novel Testing Space"],
 ];
 const sectionTitles = document.querySelectorAll(".section-title");

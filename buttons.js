@@ -51,7 +51,7 @@ function camberdenConfig(configured) {
 			form.addEventListener("submit", ButtonInterface.handle);
 		});
 		} else {
-			console.log("Running! (configuration disabled)");
+			console.log("Running! (configuration disabled)!");
 		}
 	
 	}
