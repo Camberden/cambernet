@@ -129,8 +129,12 @@ body {
 
 	border-bottom: 1rem solid var(--clr-grid-box);
 	border-right: 0.5rem solid var(--clr-grid-box);
-	
-}		
+}
+
+#footer-php {
+	font-family: Arial, Helvetica, sans-serif;
+	color: orangered;
+}
 
 @keyframes small-signature-movement {
 	from {background-position: 0 0;}
