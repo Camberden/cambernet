@@ -2,13 +2,13 @@
  * @description First VPS Hosted Website:
  * - November 14, 2025 to Present
  * - Testing ground for alternatively hosted website.
- * @constant latestUpdatePushed 
+ * @constant latestUpdate
  * - Date is changed for any first update completed on a new day.
  * @author Camberden (Chrispy | Kippi)
  */
-const latestUpdatePushed = "Thursday November 20th 2025";
-document.querySelector("#latest-update").innerHTML = latestUpdatePushed;
-const splitDate = latestUpdatePushed.split(" ");
+const latestUpdate = "Thursday November 20th 2025";
+document.querySelector("#latest-update").innerHTML = latestUpdate;
+const splitDate = latestUpdate.split(" ");
 /**
  * 
  * @param {string} month
@@ -118,6 +118,7 @@ generateSiteInfo();
 const sections = [
 	// ["dashboard", "Personal Dashboard",],
 	["novelties", "Novel Testing Space"],
+
 ];
 const sectionTitles = document.querySelectorAll(".section-title");
 const sectionLinks = document.querySelector("#section-links");
