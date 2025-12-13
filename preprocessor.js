@@ -5,4 +5,4 @@ function redirectPHP(){
 		document.location = "/index.php";
 	}
 }
-redirectPHP();
+// redirectPHP();

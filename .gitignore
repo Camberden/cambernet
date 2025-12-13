@@ -1,4 +1,6 @@
 helper.txt
+index.txt
+installed-certs.txt
 .vscode/ftp-sync.json
 /vendor/
 node_modules/

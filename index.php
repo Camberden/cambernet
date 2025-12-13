@@ -14,7 +14,4 @@ include base_path("views/view.index.php");
 
 include base_path("views/partials/view.footer.php");
 
-
-
-
 ?>
