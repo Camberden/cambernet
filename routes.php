@@ -1,14 +1,6 @@
 <?php
 
-function dd() {
-	$arguments = func_get_args();
-	foreach ($arguments as $argument) {
-		echo "<pre>";
-		var_dump($argument);
-		echo "</pre>";
-	}
-	exit(1);
-}
+
 
 $routes = [
 	"/" => base_path("views/view.index.php"),
@@ -16,7 +8,6 @@ $routes = [
 	// "/" => base_path("views/view.index.php"),
 ];
 
-dd($_SERVER);
 
 $uri = parse_url($_SERVER["REQUEST_URI"]);
 
