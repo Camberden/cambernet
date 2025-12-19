@@ -2,7 +2,7 @@ helper.txt
 index.txt
 installed-certs.txt
 ca.txt
-.vscode/ftp-sync.json
+.vscode/pro-deployer.json
 /vendor/
 node_modules/
 npm-debug.log
