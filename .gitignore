@@ -1,8 +1,12 @@
+#Personal
+helper
 helper.txt
-index.txt
 installed-certs.txt
-ca.txt
-.vscode/pro-deployer.json
+rsync-action.txt
+runner.sh
+testechos.sh
+
+# Vendor
 /vendor/
 node_modules/
 npm-debug.log
