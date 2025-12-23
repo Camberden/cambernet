@@ -3,8 +3,7 @@ helper
 helper.txt
 installed-certs.txt
 rsync-action.txt
-runner.sh
-testechos.sh
+*.sh
 
 # Vendor
 /vendor/
