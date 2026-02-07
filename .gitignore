@@ -1,7 +1,10 @@
-#Personal
+# Personal
 *.sh
 runner.sh
 runner.yaml
+
+# HTMX
+htmx.js
 
 # Vendor
 /vendor/
