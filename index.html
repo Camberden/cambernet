@@ -8,12 +8,13 @@
 	<style>
 		@import "styles.css" screen;
 	</style>
+	<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 	<script src="./htmx.js"></script>
 	<title>Chrispy's Corner</title>
 </head>
 
 <body>
-
+	<!-- NAV & TOP -->
 	<main class="index-grid">
 
 		<div class="signature-div">
@@ -36,15 +37,21 @@
 		</div>
 
 		<div id="info-div">
-			<div id="page-info"></div>
+			<div id="page-info">
+
+			</div>
 			<div id="info-div-frame">
 				<div id="info-div-background">
 				</div>
 			</div>
 
+		</div><!-- END NAV AND TOP -->
+
+		 <!-- HTMX -->
+		<div>
+			<h1 id="htmx-play">HTMX Play</h1>
 		</div>
-		<!-- END NAV AND TOP -->
-		<hr class="hr-cmbr-gradient hr-push-up">
+		<hr class="hr-cmbr-gradient hr-push-down">
 
 		<div class="triggers">
 			<div class="trigger-box" hx-post="/mouse_entered" hx-trigger="mouseenter">Here here, mouse!
@@ -86,10 +93,16 @@
 
 	</main>
 
+	<!-- HTMX MISC BUTTONS -->
 	<div class="index-sub-grid">
 
-		<div>
-			<h2>Greetings</h2>
+		<div style="text-align:left;">
+			<h2 class="marker">Greetings</h2>
+			<hr class="hr-custom">
+			<p>I'll ensure to add some functionality to the buttons right here, when the time is right.
+				At this time, I surely need to get on with importing myself some UI components to put
+				an end to this styles.css hell. Haha.
+			</p>
 		</div>
 		<div>
 			<button>Pending 123</button>
@@ -100,7 +113,78 @@
 		</div>
 	</div>
 
+
+	<!-- ALPINE.JS -->
 	<div class="index-grid">
+		<hr class="hr-cmbr-gradient hr-push-up">
+		<div>
+			<h1 id="alpinejs-play">AlpineJS Play</h1>
+		</div>
+		<hr class="hr-cmbr-gradient hr-push-down">
+
+		<div class="triggers">
+			<div class="trigger-box">
+
+				<div x-data="{ open: false }">
+    				...
+				</div>
+				<hr class="hr-trans">
+			</div>
+		</div>
+
+
+		<div class="triggers">
+			<div class="trigger-box">
+				<div x-data="{ open: false }">
+					<div x-data="{ label: 'Content:' }">
+						<span x-text="label"></span>
+						<span x-show="open"></span>
+					</div>
+				</div>
+				<hr class="hr-trans">
+			</div>
+		</div>
+
+
+		<div class="triggers">
+			<div class="trigger-box">
+
+				<div x-data="{ label: 'Click Here, now.' }" x-text="label">
+					...
+				</div>
+				<hr class="hr-trans">
+			</div>
+		</div>
+		<hr class="hr-push-down">
+	</div>
+
+	<!-- ALPINE.JS MISC BUTTONS -->
+	<div class="index-sub-grid">
+
+		<div style="text-align:left;">
+			<h2 class="marker">Hello Alpine</h2>
+			<hr class="hr-cmbr-dark-gradient">
+			<p>Importing the Alpine framework was easy. Next I'm off to grab some components.
+			</p>
+		</div>
+
+		<div x-data="{ count: 0 }">
+			<span x-text="count"></span>
+			<hr class="hr-groove-bottom">
+			<hr class="hr-groove-top">
+			<button @click="count++">Increment!</button>
+			<!-- <button x-on:click="count++">Increment</button> -->
+		</div>
+
+		<div>
+			<code>You will often see @ instead of x-on:. This is a shorter, friendlier syntax that many prefer. From now on, this documentation will likely use @ instead of x-on:.</code>
+		</div>
+
+	</div>
+
+
+	<!-- FOOTER -->
+ 	<div class="index-grid">
 		<hr class="hr-push-up hr-cmbr-gradient hr-push-down">
 
 		<footer class="index-footer">

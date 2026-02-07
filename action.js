@@ -11,9 +11,10 @@ const latestUpdate = "Saturday, February 7th, 2026";
 document.querySelector("#latest-update").innerHTML = latestUpdate;
 const camberden = document.querySelector("#camberden");
 const monickers = ["camberden", "観葉伝", "カンバデン"];
-const pageInfo = (
+let pageInfo = (
 	`API Console Log Appears here.`
 );
+
 
 /**
  * 
@@ -152,6 +153,41 @@ const yetAnotherResult = invoke({
 const outbound = yetAnotherResult.textContent;
 sout(outbound);
 }
+const buttonMapper = () => {
+
+	document.querySelectorAll("button").forEach(button => {
+			button.onmouseenter = function() {
+				CMBRutil.buttonOnMouseEnter(button);
+			}
+			button.onmouseleave = function() {
+				CMBRutil.buttonOnMouseLeave(button);
+			}
+			button.onclick = function() {
+				CMBRutil.buttonOnClick(button);
+			}
+		});
+}
+/**
+ * 
+ * @param {HTMLCollection} classNames 
+ */
+const classMapper = (classNames) => {
+	document.querySelectorAll("." + classNames).forEach(className => {
+		className.onclick = function() {
+			document.location = className.value;
+		}
+	})
+}
+
+const initAlpine = () => { 
+	Alpine.data('dropdown', () => ({
+    open: false,
+ 
+    toggle() {
+        this.open = ! this.open
+    }
+}))
+}
 
 /** @local @function Main */
 (async (/*===*| RUN |===*/) => {
@@ -160,18 +196,8 @@ sout(outbound);
 	CMBRutil.displayPageInfo(pageInfo);
 	randomizeMonicker();
 	convertToJapaneseDate(formatter(latestUpdate));
-	document.querySelectorAll("button").forEach(button => {
-		button.onmouseenter = function() {
-			CMBRutil.buttonOnMouseEnter(button);
-		}
-		button.onmouseleave = function() {
-			CMBRutil.buttonOnMouseLeave(button);
-		}
-		button.onclick = function() {
-			CMBRutil.buttonOnClick(button);
-			document.location = button.value;
-			pageInfo.textContent = button.value;
-		}
-	});
+	buttonMapper();
+	classMapper("linkage-box");
+
 	
 })(/*===*===*===| END |===*===*===*/);

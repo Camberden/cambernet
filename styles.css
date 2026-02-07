@@ -303,14 +303,15 @@ nav {
 	height: 0.5rem;
 }
 .hr-groove-top {
-	border-top: 0.5rem groove black;
+	background-color: black;
+	border-top: 0.1rem solid cadetblue;
 	width: 100%;
 	box-shadow:  1rem 1rem 2rem rgb(25, 23, 144), 0rem 0rem 2rem rgb(221, 122, 94);
 	margin-bottom: 3rem;
 }
 .hr-groove-bottom {
 	background-color: black;
-	border-bottom: 0.5rem groove black;
+	border-bottom: 0.1rem solid cadetblue;
 	width: 100%;
 	box-shadow:  1rem 1rem 2rem rgb(25, 23, 144), 0rem 0rem 2rem rgb(221, 122, 94);
 	margin-top: 3rem;
@@ -525,6 +526,43 @@ button {
 		background-size: 100% 100%;
 		background-position: 100% 100%;
 	}
+}
+
+#htmx-play {
+	font-family: "PermanentMarker", sans-serif;
+	font-size: 3rem;
+	background: var(--cmbr-legacy-gradient);
+	border-bottom: 0.3rem solid var(--clr-grid-box);
+	border-left: 0.1rem solid var(--clr-grid-box);
+
+	background-clip: border-box;
+	-webkit-background-clip: text;
+	background-repeat: no-repeat;
+	color: transparent;
+	user-select: none;
+	/* animation-name: cmbr-sectionsizer;
+  	animation-duration: 4s;
+	animation-timing-function: ease-out;
+	animation-direction: alternate;
+  	animation-iteration-count: infinite; */
+}
+#alpinejs-play {
+	font-family: "PermanentMarker", sans-serif;
+	font-size: 3rem;
+	background: var(--cmbr-gradient);
+	border-bottom: 0.3rem solid var(--clr-grid-box);
+	border-left: 0.1rem solid var(--clr-grid-box);
+
+	background-clip: border-box;
+	-webkit-background-clip: text;
+	background-repeat: no-repeat;
+	color: transparent;
+	user-select: none;
+	/* animation-name: cmbr-sectionsizer;
+  	animation-duration: 4s;
+	animation-timing-function: ease-out;
+	animation-direction: alternate;
+  	animation-iteration-count: infinite; */
 }
 
 #info-div {
