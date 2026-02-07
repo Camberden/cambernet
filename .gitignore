@@ -1,9 +1,7 @@
 #Personal
-helper
-helper.txt
-installed-certs.txt
-rsync-action.txt
 *.sh
+runner.sh
+runner.yaml
 
 # Vendor
 /vendor/

@@ -3,38 +3,118 @@
 <!-- Hi there! :V -->
 
 <head>
-	<meta charset="UTF-8">
-	<link rel="shortcut icon" href="assets/image-crystal-chrispy-favicon.png">
-	<link rel="stylesheet" type="text/css" href="styles.css" media="screen">
-	<link href="https://fonts.googleapis.com/css?family=Lora:400italic" rel="stylesheet" type="text/css">
-	<link href="https://fonts.googleapis.com/css?family=Permanent+Marker:400" rel="stylesheet" type="text/css">
-	<script src="action.js" defer></script>
-	<title>Chrispy's VPS Instance</title>
+	<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="images/cmbr-sig.svg">
+	<style>
+		@import "styles.css" screen;
+	</style>
+	<script src="./htmx.js"></script>
+	<title>Chrispy's Corner</title>
 </head>
 
 <body>
-	
+
 	<main class="index-grid">
 
 		<div class="signature-div">
-			<img id="signature" src="assets/image-camberden-signature-6.svg" alt="emblem">
+			<img id="signature" src="images/cmbr-sig.svg" alt="emblem">
 		</div>
 
-		<h1 id="camberden" lang="en-US">camberden.net</h1>
+		<div class="nav-row-grid">
+			<div id="sections-dropdown" style="display:none;">
+				<div id="sections-access">Navigation</div>
+			</div>
 
-		<div id="site-info" class="index-item"></div>
-		<p><code>Presently at /index.html</code></p>
-		<p><a href="/banana.html">Access Banana</a></p>
+			<div id="title-container">
+				<h1 id="camberden" lang="en-US">camberden</h1>
+			</div>
 
-		<div id="section-links"></div>
-
-		<div class="index-item footer">
-			<p class="marker" id="footer-text">Made with ♡ by Chrispy<br>Last updated on <span id="latest-update"></span><br>
-			<span id="japanese-date"></span>
-			</p>
+			<div id="bookmarks-dropdown" style="display: none;">
+				<div id="bookmarks-access">Bookmarks</div>
+				<div id="bookmarks-links"></div>
+			</div>
 		</div>
+
+		<div id="info-div">
+			<div id="page-info"></div>
+			<div id="info-div-frame">
+				<div id="info-div-background">
+				</div>
+			</div>
+
+		</div>
+		<!-- END NAV AND TOP -->
+		<hr class="hr-cmbr-gradient hr-push-up">
+
+		<div class="triggers">
+			<div class="trigger-box" hx-post="/mouse_entered" hx-trigger="mouseenter">Here here, mouse!
+				<hr class="hr-trans">
+			</div>
+		</div>
+		<div class="triggers" hx-get="/clicked/1" hx-swap="outerHTML">
+			<div class="trigger-box">Click This
+				<hr class="hr-trans">
+			</div>
+		</div>
+		<div class="triggers" hx-get="/clicked/2" hx-trigger="click[shiftKey]" hx-swap="outerHTML">
+			<div class="trigger-box">Shift Click This
+				<hr class="hr-trans">
+			</div>
+		</div>
+
+		<hr class="hr-cmbr-gradient hr-push-down">
+
+		<div><button class="linkage-box" value="http://localhost:8765" target="_blank" rel="noreferrer">Localhost:8765
+				=> For AnkiConnect Access!</button>
+			<hr class="hr-cmbr-dark-gradient">
+		</div>
+		<div><button class="linkage-box" value="http://localhost:5500" target="_blank" rel="noreferrer">Localhost:5500
+				[for FiveServer]</button>
+			<hr class="hr-cmbr-dark-gradient">
+		</div>
+		<div><button class="linkage-box" value="http://localhost:4240" target="_blank" rel="noreferrer">Localhost:4240
+				[for ExpressServer]</button>
+			<hr class="hr-cmbr-dark-gradient">
+		</div>
+		<div><button class="linkage-box" value="http://localhost:8080" target="_blank" rel="noreferrer">Localhost:8080
+				[for ArtisanServer]</button>
+			<hr class="hr-cmbr-dark-gradient">
+		</div>
+
+		<hr class="hr-cmbr-gradient hr-push-up">
+		<hr class="hr-push-down">
 
 	</main>
 
+	<div class="index-sub-grid">
+
+		<div>
+			<h2>Greetings</h2>
+		</div>
+		<div>
+			<button>Pending 123</button>
+		</div>
+
+		<div>
+			<button>Pending 456</button>
+		</div>
+	</div>
+
+	<div class="index-grid">
+		<hr class="hr-push-up hr-cmbr-gradient hr-push-down">
+
+		<footer class="index-footer">
+			<p id="footer-text">Made with ♡ by Chrispy</p>
+			<p>Last updated on <span id="latest-update"></span></p>
+			<p><span id="japanese-date"></span></p>
+		</footer>
+	</div>
+
+
+
+	<script src="cmbr.js"></script>
+	<script src="action.js"></script>
+
 </body>
 
+</html>
