@@ -44,13 +44,11 @@ const basePort = document.location.port.length ? document.location.port : "";
 
 /** @global @readonly @description Site-specific Links Configuration */
 const baseHyperlinks = [
-	"https://camberden.com/",
-	"https://camberden.github.io/",
+	"https://camberden.net/",
 	"http://127.0.0.1:" + basePort,
 	"http://localhost:" + basePort,
 	"http://localhost:" + basePort + "/index.html",
 ];
-var CMBRdata = "banana";
 /**
  * @global @public @interface
  * @description - Camberden Personal Utilities:
@@ -62,11 +60,11 @@ const CMBRutil = {
 	buttonOnMouseEnter: function (button) {
 		if (!button.classList.contains("button-toggled")) {
 			button.classList.add("button-highlight");
-		} 
-	},
+			} 
+		},
 	buttonOnMouseLeave: function (button) {
 		button.classList.remove("button-highlight");
-	},
+		},
 	buttonOnClick: function (button) {
 		if (button.classList.contains("toggleable")){
 
