@@ -1,0 +1,11 @@
+apps:
+- name: camberden.net
+  log_date_format: 'YYYY-MM-DD HH:mm:ss Z'
+  cwd: /home/camberde/public_html/camberden.net/
+  script: "npm"
+  args: "run start"
+  interpreter: "/usr/bin/node"
+  env:
+   NODE_ENV: "production"
+   NODE_PORT: 3092
+
