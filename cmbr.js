@@ -3,6 +3,7 @@
  * @interface CMBRutil
  * @author Camberden (Chrispy | Kippi)  
  */ 
+// htmx.config.selfRequestsOnly = false;
 
 /** 
  * @description Site Map Links
@@ -14,21 +15,8 @@
  */
 const sections = [
 	["homepage", "Homepage ↺"],
-	["dashboard", "Personal Dashboard"],
-	["workspace", "Coding Workspace"],
-	["anki", "Anki & Notes Depository"],
-	["blog", "Blogging Page"],
-	["language", "Language Resource"],
-	["accounting", "Accounting Resource"],
-	["travel", "Travel Page"],
-	["lifecraft", "Lifecraft Page"],
-	["musings", "Musings Page"],
-	["fantasy", "Fantasyland"],
-	["segregation", "Segregation"],
-	["mainframe", "Mainframe"],
-	["music", "Original Music"],
+	["workspace", "Alternative Workspace"],
 ];
-
 /** 
  * @description Links to Frequented External Sites
  * @readonly
@@ -48,6 +36,7 @@ const bookmarks = [
 	["https://wd108.myworkday.com/wday/authgwy/nc/login.html", "Internal Jobs"],
 	["https://int.dac.nc.gov", "Intranet"],
 	["https://portal.osc.nc.gov/app", "Fiori"],
+	["https://alpinejs.dev/components", "Alpine Components"],
 ];
 
 /** @global @readonly @description Determines the Site's Port Number */
@@ -55,13 +44,13 @@ const basePort = document.location.port.length ? document.location.port : "";
 
 /** @global @readonly @description Site-specific Links Configuration */
 const baseHyperlinks = [
-	"https://camberden.net/",
-	"https://camberden.net/index.html",
+	"https://camberden.com/",
+	"https://camberden.github.io/",
 	"http://127.0.0.1:" + basePort,
 	"http://localhost:" + basePort,
 	"http://localhost:" + basePort + "/index.html",
 ];
-
+var CMBRdata = "banana";
 /**
  * @global @public @interface
  * @description - Camberden Personal Utilities:
@@ -70,22 +59,30 @@ const baseHyperlinks = [
  */
 const CMBRutil = {
 
-	/** @CSS .button-highlight .button-depressed */
 	buttonOnMouseEnter: function (button) {
-		button.classList.add("button-highlight");
+		if (!button.classList.contains("button-toggled")) {
+			button.classList.add("button-highlight");
+		} 
 	},
 	buttonOnMouseLeave: function (button) {
 		button.classList.remove("button-highlight");
-		if (button.classList.contains("button-depressed")) {
-			button.classList.remove("button-depressed");
-		}
 	},
 	buttonOnClick: function (button) {
-		button.classList.add("button-highlight");
+		if (button.classList.contains("toggleable")){
+
+			 if (button.classList.contains("button-toggled")) {
+				button.classList.remove("button-toggled");
+			} else {
+				button.classList.add("button-toggled");
+			}
+
+		} else {
 		button.classList.add("button-depressed");
+
 		setTimeout(() => {
 			button.classList.remove("button-depressed");
-		}, 100);
+		}, 200);
+		}
 	},
 	/**
 	 * @description Handles all page forms, preventing reload upon form submission
@@ -107,35 +104,121 @@ const CMBRutil = {
 			}
 		}
 	},
+
+	dataTheme: function () {
+		document.querySelectorAll(".data-theme-button").forEach(button => {
+			button.onclick = function () {
+				switch (button.id) {
+					case "dark":
+						document.querySelector("body").setAttribute("data-theme", "dark");
+						button.style.color = "initial";
+						document.getElementById("light").style.color = "transparent";				
+						document.getElementById("legacy").style.color = "transparent";
+						// document.getElementById("paperesque").style.color = "transparent";
+
+					break;
+					case "light":
+						document.querySelector("body").setAttribute("data-theme", "light");
+						button.style.color = "initial";
+						document.getElementById("dark").style.color = "transparent";				
+						document.getElementById("legacy").style.color = "transparent";
+						// document.getElementById("paperesque").style.color = "transparent";
+
+					break;
+					case "legacy":
+						document.querySelector("body").setAttribute("data-theme", "legacy");
+						button.style.color = "initial";
+						document.getElementById("dark").style.color = "transparent";				
+						document.getElementById("light").style.color = "transparent";
+						// document.getElementById("paperesque").style.color = "transparent";
+
+					break;
+					case "paperesque":
+						document.querySelector("body").setAttribute("data-theme", "paperesque");
+						button.style.color = "initial";
+						document.getElementById("dark").style.color = "transparent";				
+						document.getElementById("light").style.color = "transparent";
+						// document.getElementById("legacy").style.color = "transparent";
+
+					break;
+					default:
+						console.log("Light, Dark, and Lavendarium.");
+					break;
+				}
+			}
+		});
+		document.getElementById(document.querySelector("body").getAttribute("data-theme")).style.color = "initial";
+	},
+
+	/**
+	 * 
+	 * @implements
+	 * @function
+	 * @emits dataTheme();
+	 * @description 2026 Page-Agnostic NavBar Generator
+	 */
+	navigationCharter: function () {
+		const siteMap = document.getElementById("chart-links");
+		const mergeReference = sections.length;
+		bookmarks.forEach(bookmark => { sections.push(bookmark); })
+
+		for (let i = 0; i < sections.length - 1; i++) {
+			const a = document.createElement("a");
+			if (i >= mergeReference) {
+				a.setAttribute("href", `${sections[i][0]}`);
+			} else if (sections[i][0] !== "homepage") {
+				a.setAttribute("href", `../${sections[i][0]}/${sections[i][0]}.html`);
+				a.setAttribute("data-route", `/${sections[i][0]}`);
+
+			} else {
+				a.setAttribute("href", `../index.html`);
+				a.setAttribute("data-route", `/`);
+			}
+			a.appendChild(document.createTextNode(sections[i][1]));
+			const div = document.createElement("div"); div.setAttribute("class", "section-title");
+			div.appendChild(a);
+			div.onmouseenter = function () {
+				if (div.classList.contains("section-highlight")) {
+					div.classList.add("section-highlight");
+				} else {
+					div.classList.remove("section-lose-highlight"); div.classList.add("section-highlight");
+				}
+			}
+			div.onmouseleave = function () {
+				if (div.classList.contains("section-highlight")) {
+					div.classList.replace("section-highlight", "section-lose-highlight");
+					}
+				}
+			siteMap.appendChild(div);
+		}
+		this.dataTheme();
+	},
+
 	/**
 	 * 
 	 * @param {HTMLElement} target
-	 * @param {String[][]} linkArray 
+	 * @param {String[][]} linkArray sections
 	 */
 	initSections: function (target, linkArray) {
-
 		target = document.querySelector("." + target);
 		linkArray.forEach(section => {
-			const tag = this.atSiteIndex() ? document.createElement("h3") : document.createElement("span");
+			const tag = document.createElement("a");
+			if (section[0] !== "homepage") {
+				tag.setAttribute("href", `/${section[0]}/${section[0]}.html`);
+				tag.setAttribute("data-route", `/${section[0]}`);
+			} else {
+				tag.setAttribute("href", `/index.html`);
+				tag.setAttribute("data-route", `/`);
+			}
 			tag.setAttribute("id", section[0]);
 			const text = document.createTextNode(section[1]);
 			tag.appendChild(text);
 
 			const sectionDiv = document.createElement("div");
+			sectionDiv.setAttribute("id", section[0]);
 			sectionDiv.setAttribute("class", `${Object.keys({section}).toString()}-title`);
-			sectionDiv.onclick = function () {
-				// FOR INDEX =====>
-				if (document.location.href.includes("index.html") || window.location.pathname === "/") {
-					window.location = section[0] + "/" + section[0] + ".html";
+			
 
-				
-				// FOR DROPDOWN =====>
-				} else if (section[0] === linkArray[0][0]) {
-					window.location = "../" + "index.html";
-				} else {
-					window.location = "../" + section[0] + "/" + section[0] + ".html";
-				}
-			};
 			sectionDiv.onmouseenter = function () {
 				sectionDiv.classList.contains("section-highlight") ?
 				sectionDiv.classList.add("section-highlight") :
@@ -193,7 +276,7 @@ const CMBRutil = {
 			case "sections" :
 				if (this.atSiteIndex()) {
 					sections.splice(0, 1);
-					basePort === "4240" ? (()=>{sections.push(["administration", "Administration"]); sout("Express Development Server @ " + document.location.host); setTimeout(()=>{ document.getElementById("administration").setAttribute("style", "display:block;")}, 2000 )})() : console.clear();
+					basePort === "4240" ? (()=>{sections.push(["administration", "Administration"]); sout("Express Development Server @ " + document.location.host); setTimeout(()=>{ x = document.getElementById("administration"); x.style.display = "block"; x.setAttribute("class", "section-title")}, 2000 )})() : console.log("|===>");
 					CMBRutil.initSections(`sections-links`, sections);
 					break;
 				} 
@@ -239,7 +322,12 @@ const CMBRutil = {
 			return true;
 		}
 	},
-	/** @global @readonly @returns {Boolean} boolean @description Reads site index URL and provides gateway for development servers and all configured domains */
+	/** 
+	 * @global 
+	 * @readonly 
+	 * @returns {Boolean} boolean 
+	 * @description Reads site index URL and provides gateway for development servers and all configured domains
+	 *  */
 	atSiteIndex: function () {
 	if (this.acceptableProtocol() && document.location.href.endsWith("index.html")) {
 		return true;
@@ -255,18 +343,30 @@ const CMBRutil = {
 		return false;
 	}
 	},
-	/** @param {String} info */
-	displayPageInfo: function (info) {
-		const data = (Array.from(info.split("."))).map(str => str.trim()); 
-		data.pop();
-		data.forEach(s => {
-			const p = document.createElement("h2");
-			const text = document.createTextNode(s + ".");
-			p.appendChild(text);
-			p.appendChild(document.createElement("br"));
-			document.getElementById(`page-info`).appendChild(p);
+	// Function to update URL parameters
+	updateURLParameter: function(key, value) {
+		urlParams.set(key, value); // Set or update the parameter
+		history.replaceState(null, '', '?' + urlParams.toString()); // Update the URL
+	},
+
+	openEndPoint: function() {
+		let endpoint = new URL("/api/data", document.location.origin);
+		console.log(endpoint.toString()); // Outputs: https://example.com/api/data
+		// Get the current URL parameters
+		const urlParams = new URLSearchParams(window.location.search);
+
+		const endpointSearchInput = document.createElement("input");
+		endpointSearchInput.setAttribute("id","endpoint-search-input");
+		endpointSearchInput.setAttribute("style", "display: fixed; bottom:0; width:100%; height:25%;");
+		
+		document.appendChild(endpointSearchInput);
+
+		// Add event listener to an input field
+		document.getElementById("endpoint-search-input").addEventListener("input", function() {
+			updateURLParameter("search", this.value); // Update 'search' parameter
 		});
 	},
+
 	/**
 	 * 
 	 * @param {HTMLElement[]} buttons 
@@ -282,8 +382,10 @@ const CMBRutil = {
 			}
 			button.onclick = () => {
 				this.buttonOnClick(button);
-				sout(button.id);
-				if (button.id = "sparkle") {
+				sout("Button ID => " + button.id);
+				sout("Button Value => " + button.id);
+
+				if (button.id === "sparkle") {
 					button.textContent = "✨sparkle✨"
 					setTimeout(() => {
 						button.textContent = "sparkle";
@@ -291,48 +393,70 @@ const CMBRutil = {
 				}
 			};
 		});
-	}
+	},
+
+	/** 
+	 * @description Reads cmbr.json
+	 * @borrows cmbr.json
+	 * @param {Array} query
+	 * @implements {Promise<Object>} 
+	 * 
+	 */
+	connectCMBRjson: async function(query) {
+		return fetch(`${document.location.origin}/cmbr.json`)
+		.then(data => data.json())
+		.then(data => {
+			// console.log(data);
+			console.log("QUERY BEFORE RESOLUTION: " + query[0]);
+			return data;
+		})
+		.then((data) => {
+			query[0] == "travel-photos" ? console.log("QUERY 0 SAME: " + query[0]) : console.log("QUERY 0 NOT SAME: " + query[0]);
+			query[1] == 1 ? console.log("QUERY 1 SAME: " + query[1]) : console.log("QUERY 1 NOT SAME: " + query[1]);
+			console.log("QUERY LENGTH: " + query.length);
+			switch(query[0]) {
+				case "travel-photos":
+					if (query.length == 1) {
+						// console.log(data[query[0]].items);
+						return (data[query[0]].items);
+						break;
+					}
+					// console.log(data[query[0]].items[query[1]]);
+					return (data[query[0]].items[query[1]]);
+					break;
+				break;
+				case "sections":
+					// console.log("sections");
+					return data["sections"];
+				break;
+				case "blog":
+					if (query.length == 1) {
+						// console.log(data[query[0]]);
+						return (data[query[0]]);
+						break;
+					}
+					let post = ("post-" + query[1]);
+					sout("blog as post = " + post);
+					// console.log(data[query[0]][post]);
+					return (data[query[0]][post]);
+					break;
+				break;
+			
+				default:
+					sout("Bad Query at connectCMBRjson.");
+					return data;
+			}
+		});
+	},
+
 }
 
 // ----- GLOBAL FUNCTION EXPRESSION INVOKATIONS ----- //
 const recognizeFileProtocol = (x) => { y = document.getElementById(x); CMBRutil.acceptableProtocol() ? y.innerHTML += " &check;" : y.innerHTML += `<span style="font-size: 0.8rem; color: red; position: absolute;">[lesser functionality in file protocol]</span>`; }
-const initNav = () => { CMBRutil.actionsProvided("sections"); CMBRutil.actionsProvided("bookmarks"); }
+//todo Delete initNav();
+const initNav = () => { CMBRutil.actionsProvided("sections"); CMBRutil.actionsProvided("bookmarks"); CMBRutil.dataTheme(); }
 const displaySite = () => { document.getElementById("current-site").innerHTML = document.location.host };
 const displaySection = () => { document.getElementById("current-section").innerHTML = (window.location.pathname).slice(window.location.pathname.lastIndexOf("/") + 1, -5).toLowerCase(); };
 const sout = (x) => { console.log("<‰=== " + (x ?? "No Output") + " ===‰>"); } //x += ("|=====* ");
 const braft = (l) => document.querySelector(`${l}`).appendChild(document.createElement("br"));
-let CMBRdata = "<‰=== Empty Data ===‰>";
-
-
-/** @description Reads .json File as text 
- * @param {String} txt Name of .json File 
- * @implements {Promise<Object>} 
- * 
- */
-function connectCMBRjson(name) {
-
-	fetch(`${document.location.origin}/${name}.json`).then(response => {
-    	return response.text();
-	}).then(stuff => {
-		const loaded = JSON.parse(stuff);
-		console.log(typeof(loaded["urls"]));
-		CMBRdata = (Object.keys(loaded.sections).length);
-	}).catch(error => {
-		console.error('Failed to fetch page: ', error)
-	});
-}
-
-function routeNew(txt) {
-
-	fetch(`${document.location.origin}/anki/${txt}.txt`).then(response => {
-    	return response.text();
-	}).then(html => {
-		const parser = new DOMParser();
-		const doc = parser.parseFromString(html, "text/html");
-
-	
-(html => console.log("Rejected Txt File Read in Promise: " + html[0]));
-	}).catch(error => {
-		console.error('Failed to fetch page: ', error)
-	});
-}
+const indexSectionFilter = () => { if ( CMBRutil.atSiteIndex() ) { document.getElementById("homepage").style.display = "none"; }}

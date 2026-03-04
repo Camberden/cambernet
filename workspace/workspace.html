@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+	<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="../images/cmbr-sig.svg">
+	<link rel="stylesheet" type="text/css" href="../styles.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="./workspace.css" media="screen" />
+	<script defer src="https://cdn.jsdelivr.net/npm/@imacrayon/alpine-ajax@0.12.6/dist/cdn.min.js"></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+	<script src="../cmbr.js"></script>
+	<title>Chrispy's Workspace</title>
+</head>
+
+<body data-theme="dark">
+
+	<nav>
+		<div class="nav-sail">
+
+			<!-----| NAV 1 |----->
+			<div id="nav-1" x-data="{ active: 0 }">
+				
+				<div x-data="{
+					id: 1,
+					get expanded() {
+						return this.active === this.id
+					},
+					set expanded(value) {
+						this.active = value ? this.id : null
+					},
+					}" role="region" class="">
+						<button
+							type="button"
+							x-on:click="expanded = !expanded"
+							:aria-expanded="expanded"
+							id="chart-access">
+							<div class="trigger-dropdown">
+								<span x-show="expanded" x-cloak>&UpArrow;</span>
+								<span x-show="!expanded" x-cloak>&DownArrow;</span>
+								<span>Options</span>
+								<span x-show="expanded">&UpArrow;</span>
+								<span x-show="!expanded">&DownArrow;</span>
+							</div>
+						</button>
+					<div id="chart-dropdown" x-show="expanded" x-collapse>
+						<div id="chart-links">
+						</div>
+					</div>
+				</div>
+				<span id="nav-sig"></span>
+
+			</div>
+
+			<!-----| NAV 2 |----->
+			<div id="nav-2">
+				<h1 class="h1-lamp">
+					<!-- ♪ -->
+				</h1>
+			</div>
+
+			<!-----| NAV 3 |----->
+			<div id="nav-3">
+				<h1 class="h1-lamp">Workspace</h1>
+			</div>
+
+			<!-----| NAV 4 |----->
+			<div id="nav-4">
+				<h1 class="h1-lamp">
+					<!-- ♫ -->
+				</h1>
+			</div>
+
+			<!-----| NAV 5 |----->
+			<div id="nav-5">
+				<span class="data-theme-button" id="dark">🌙</span>
+				<span class="data-theme-button" id="light">☀️</span>
+				<span class="data-theme-button" id="legacy">🪻</span>
+			</div>
+
+		</div>
+
+		<div class="nav-hoist">
+			<hr class="hr-nav-pad">
+			<hr class="hr-blass">
+			<hr class="hr-cmbr-gradient">
+			<hr id="nav-anchor" class="hr-groove-top">
+		</div>
+
+	</nav>
+
+	<!-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --  -->
+
+	</div>
+	<div class="iframe-perimeter">
+		<hr class="hr-push-up">
+		
+		<button id="panel">Web Panel Test</button>
+
+	</div>
+
+	<div>
+		<div class="triggers">
+			<div class="trigger-box" hx-get="../depository/obsidian/Purple Foray.md" hx-trigger="click">
+				<h2>foray</h2>
+				<hr class="hr-trans">
+			</div>
+		</div>
+
+		<p style="text-align: left;">
+	September 1st, 2024…<br>
+	Chapel Hill, NC<br>
+	1555HRS<br>
+	&emsp; <br>
+	Almost finished with another eighty-hour work-week. I'm grateful to have been enjoying work very much.
+	Even so, I maintain managed enthusiasm for my intended career change, and am learning to better interweave that
+	enthusiasm in my current position through stressing oft-overlooked procedures and offering solutions to streamline
+	operations across shifts and teams. I anticipate my learning journey with coding to manifest my idea for a simple
+	pay and pension prediction utility once I gain enough confidence in Laravel and attain the ability to deploy on an
+	internet-accessible server, cloud or not.
+	<br>&emsp;
+	I wouldn't say I have too many interests or anything, but the amount of creative things I want to do can seem like much 
+	though not to an overwhelming degree that would cause me to freeze up like I have prior to my brain's software update, 
+	so to speak. I would like to gain a modest competence in creating digital assets, in producing music again, in font design,
+	in simple game design (likely educational), in video creation, among others that may arise as this worldly self further 
+	develops. 
+	<br>&emsp;
+	I've learned through writing the pension calculator about document.getElementById("").children.item(#) which will be 
+	able to target and access the nth index tag within the gotten element's child. Cool! I can't wait to see how these all
+	work with database connectivity through Laravel. Well, I actually can wait, and will. 
+	<br>&emsp;
+	I am secure; I am safe; I am content. 
+	Missu.</p>
+
+	</div>
+
+	</body>
+
+	</div>
+
+	<footer id="workspace-footer">
+		<hr class="hr-groove-top">
+		<p class="eremoran-kiptascript">dir nao sudoz kaldoz ne</p>
+	</footer>
+
+<script src="workspace.js"></script>
+
+</body>
+
+</html>

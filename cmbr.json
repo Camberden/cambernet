@@ -1,0 +1,38 @@
+{
+  "urls": {
+    "prodUrlPrimary": "https://camberden.com/",
+    "prodUrlSecondary": "https://camberden.github.io/",
+    "devUrlPrimary": "file:///Users/chrispy/Documents/cambergithub/camberden.github.io/index.html",
+    "devUrlSecondary": "http://localhost:4240/",
+    "devUrlTertiary": "http://localhost:5500/"
+  },
+  "sections": {
+    "homepage": "Homepage ↺",
+    "workspace": "Alternative Workspace"
+  },
+  "bookmarks": {
+    "Checkpoint": "https://www.youtube.com/watch?v=XgqTrvcAySA",
+    "Clozemaster": "https://www.clozemaster.com",
+    "Jisho": "https://jisho.org",
+    "NHK Yasashii": "https://www3.nhk.or.jp/news/easy/",
+    "Coursework": "https://www.mheducation.com",
+    "Maps": "https://maps.google.com",
+    "Internal Jobs": "https://wd108.myworkday.com/wday/authgwy/nc/login.html",
+    "Intranet": "https://int.dac.nc.gov",
+    "Fiori": "https://portal.osc.nc.gov/app"
+  },
+  "travel-photos": {
+    "path": "assets/travel-photos/",
+    "count": 7,
+    "items": [
+      "assets/travel-photos/photo-tokyo-jp-1.jpeg",
+      "assets/travel-photos/photo-tokyo-jp-2.jpeg",
+      "assets/travel-photos/photo-tokyo-jp-3.jpeg",
+      "assets/travel-photos/photo-tokyo-jp-4.jpeg",
+      "assets/travel-photos/photo-tokyo-jp-5.jpeg",
+      "assets/travel-photos/photo-tokyo-jp-6.jpeg",
+      "assets/travel-photos/photo-tokyo-jp-7.jpeg"
+    ]
+  }
+}
+ 

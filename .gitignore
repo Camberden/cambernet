@@ -1,8 +1,9 @@
-# Personal
+# |=====| CMBR.net Specific Ignores |===============|=====>
 *.sh
 runner.sh
 runner.yaml
 
+# |=====| Default Ignores |===============|=====>
 # Vendor
 /vendor/
 node_modules/

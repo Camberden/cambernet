@@ -1,20 +1,16 @@
-/** ===> Camberden.net UI & API Project UPDATE ===>
- * @description Rebooting the camberden.net hosted site.
- * - Migrating from a Laravel template with problematic htaccess.
- * - Will demonstrate API access and dataparsing through:
- * - Anki, Obsidian, Minecraft, FileSystem, Cloud 
+// import { CMBRdb } from "./cmbr-db.js";
+/** ===> CAMBERDEN.NET UPDATE ===>
+ * @description Alternatively Hosted Server-side Website:
+ * - From December 2025 to Present
+ * - Secondary Workspace
  * @constant latestUpdate
  * - Date is changed for any first update completed on a new day.
  * @author Camberden (Chrispy | Kippi)
  */
-const latestUpdate = "Wednesday, February 11th, 2026";
+const latestUpdate = "Tuesday, March 3rd, 2026";
 document.querySelector("#latest-update").innerHTML = latestUpdate;
 const camberden = document.querySelector("#camberden");
-const monickers = ["camberden", "観葉伝", "カンバデン"];
-let pageInfo = (
-	`API Console Log Appears here.`
-);
-
+const monickers = ["camberden.net", "観葉伝ネット", "カンバデンネット", "}*'<'('H'[';<\\<;["];
 /**
  * 
  * @param {string} month
@@ -35,7 +31,7 @@ const convertDate = (month, calendarDay, year) => {
  * @param {String} update 
  * @returns {Date} Formatted Date
  */
-const formatter = (update) => { x = update.split(" "); return convertDate(x[1], x[2], x[3]); }
+const formatter = (update) => { const x = update.split(" "); return convertDate(x[1], x[2], x[3]); }
 /**
  * @param {Date} date
  * @description Converts date object to a Japanese date.
@@ -93,109 +89,76 @@ const randomizeMonicker = () => {
 		camberden.innerHTML = monickers[0].replace("c", "k");
 		camberden.classList.add("eremoran-kiptascript");
 		camberden.setAttribute("style", "font-family: eremoran-kiptascript;");
+	} else if (m <= 0.8) {
+		camberden.innerHTML = monickers[3];
 	} else {
 		camberden.innerHTML = monickers[0];
+		
 	}
+	camberden.style.opacity = "100%";
 }
-const randomizePhotos = () => {
+
+/**
+ * @param {Object} album
+ */
+const randomizePhotos = (album) => {
+
 	const infoDivBackground = document.getElementById("info-div-background");
 	infoDivBackground.style.animationPlayState = "paused";
+	infoDivBackground. parentElement.style.animationPlayState = "paused";
 	const m = Math.random();
 	infoDivBackground.style.animationPlayState = "running";
-	let photoIndex = Math.round(m.toFixed(1) * 10);
-	photoIndex < 1 ? randomizePhotos : infoDivBackground.style.backgroundImage = `url(assets/travel-photos/photo-nc-us-${photoIndex}.jpeg)`;
-}
-const jsonInvokation = async() => {
+	infoDivBackground.parentElement.style.animationPlayState = "running";
 
-	function invoke(action, version, params={}) {
-    return new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.addEventListener('error', () => reject('failed to issue request'));
-        xhr.addEventListener('load', () => {
-            try {
-                const response = JSON.parse(xhr.responseText);
-                if (Object.getOwnPropertyNames(response).length != 2) {
-                    throw 'response has an unexpected number of fields';
-                }
-                if (!response.hasOwnProperty('error')) {
-                    throw 'response is missing required error field';
-                }
-                if (!response.hasOwnProperty('result')) {
-                    throw 'response is missing required result field';
-                }
-                if (response.error) {
-                    throw response.error;
-                }
-                resolve(response.result);
-            } catch (e) {
-                reject(e);
-            }
-        });
-
-        xhr.open('POST', 'http://127.0.0.1:8765');
-        xhr.send(JSON.stringify({action, version, params}));
-    });
-}
-
-await invoke('createDeck', 6, {deck: 'another'});
-const anotherResult = await invoke('deckNames', 6);
-console.log(`got list of decks: ${anotherResult}`);
-information.textContent = anotherResult;
-
-invoke('findNotes', 6, {params: {notes: [0]}});
-const yetAnotherResult = invoke({
-    action: "findNotes",
-    version: 6,
-	query: "deck:current"
-});
-
-const outbound = yetAnotherResult.textContent;
-sout(outbound);
-}
-const buttonMapper = () => {
-
-	document.querySelectorAll("button").forEach(button => {
-			button.onmouseenter = function() {
-				CMBRutil.buttonOnMouseEnter(button);
-			}
-			button.onmouseleave = function() {
-				CMBRutil.buttonOnMouseLeave(button);
-			}
-			button.onclick = function() {
-				CMBRutil.buttonOnClick(button);
-			}
-		});
-}
-/**
- * 
- * @param {HTMLCollection} classNames 
- */
-const classMapper = (classNames) => {
-	document.querySelectorAll("." + classNames).forEach(className => {
-		className.onclick = function() {
-			document.location = className.value;
-		}
-	})
-}
-const initAlpine = () => { 
-	Alpine.data('dropdown', () => ({
-    open: false,
- 
-    toggle() {
-        this.open = ! this.open
-    }
-}))
-}
-
-/** @local @function Main */
-(async (/*===*| RUN |===*/) => {
-
-	// CMBRutil.actionsProvided("sections");
-	CMBRutil.displayPageInfo(pageInfo);
-	randomizeMonicker();
-	convertToJapaneseDate(formatter(latestUpdate));
-	buttonMapper();
-	classMapper("linkage-box");
-
+	let photoIndex = Math.round(m.toFixed(2) * album.length);
+	console.log("Photo Index: " + photoIndex);
+	if (photoIndex < 1) {
+		++photoIndex;
+	}
+	infoDivBackground.style.backgroundImage = `url("${album[photoIndex]}")`;
+	infoDivBackground.parentElement.style.borderRight = `var(--cmbr-grid-box)`;
 	
-})(/*===*===*===| END |===*===*===*/);
+}
+const jsonAndDatabaseDemo = async () => {
+	CMBRutil.connectCMBRjson("cmbr");
+	// const q = await CMBRdb.querySelect();
+	// console.log(q[0].title);
+}
+const queryButtonDemonstrator = async () => {
+
+	const identity = await CMBRdb.identify();
+	console.log(identity);
+	// const auth = await CMBRdb.verify();
+	// console.log(auth);
+	const button1 = document.createElement("button");
+	button1.setAttribute("id", "query-select-all");
+	button1.appendChild(document.createTextNode("Query Select All"));
+	const button2 = document.createElement("button");
+	button2.setAttribute("id", "query-insert");
+	button2.appendChild(document.createTextNode("Query Insert"));
+	
+	document.getElementById("page-info").appendChild(button1);
+	document.getElementById("page-info").appendChild(button2);
+
+	document.getElementById("query-select-all").onclick = async function() {
+		const sel = await CMBRdb.querySelect();
+		document.getElementById("page-info").appendChild(document.createTextNode(sel[0].location));
+	}
+	document.getElementById("query-insert").onclick = async function() {
+		const sel = await CMBRdb.queryInsertPost();
+		console.log(sel);
+	}
+}
+
+(async (/*=====*| RUN |*=====*/) => {
+
+	const photos = await CMBRutil.connectCMBRjson(["travel-photos"]);
+	
+	convertToJapaneseDate(formatter(latestUpdate));
+	randomizePhotos(photos);
+	randomizeMonicker();
+	const slideshow = setInterval(()=> {
+		randomizePhotos(photos);
+	}, 10000);
+
+})(/*=====*| END |*=====*/);
