@@ -1,0 +1,78 @@
+<div x-data="{ 
+    atHome: CMBRutil.atSiteIndex(),
+    atLegacyHome: CMBRutil.atLegacyIndex(),
+    basePath: document.location.origin + '/',
+    homePage:  'Homepage ↺',
+    sitemap: {
+        links: {
+                internal: [
+                    ['workspace', 'Workspace Dashboard'],
+                    ['worksite', 'Worksite'],
+                    ['cloudspace', 'Cloudspace'],
+                    ['blog', 'Blogging Page'],
+                    ['test-blog', 'Test Blog'],
+                    ['music', 'Original Music'],
+                ],
+                external: [
+                    ['Checkpoint', 'https://www.youtube.com/watch?v=XgqTrvcAySA',],
+                    ['Anki Web', 'https://ankiweb.net/'],
+                    ['Clozemaster', 'https://www.clozemaster.com'],
+                    ['Jisho', 'https://jisho.org'],
+                    ['NHK Yasashii', 'https://www3.nhk.or.jp/news/easy/',],
+                    ['Course Schedule', '/assets/reference-docs/refdoc-acc149-syllabus.pdf'],
+                    ['Coursework', 'https://account.cengage.com/login?',],
+                    ['Maps', 'https://maps.google.com',],
+                    ['Internal Jobs', 'https://wd108.myworkday.com/wday/authgwy/nc/login.html',],
+                    ['Intranet', 'https://int.dac.nc.gov',],
+                    ['Fiori', 'https://portal.osc.nc.gov/app',],
+                    ['Alpine Components', 'https://alpinejs.dev/components'],
+                    ['Alpine Toolbox', 'https://www.alpinetoolbox.com/dist/tools/'],
+                    ['Alpine Ajax', 'https://alpine-ajax.js.org'],
+                ]
+            },
+        },
+    }">
+
+    <template x-if="atHome">
+        <div>
+            <template x-for="link in sitemap.links.internal" , :key="index">
+                <div :class="'section-title'">
+                    <a x-text="link[1]" :href="basePath + link[0] + '/' + link[0] + '.html'"
+                        :data-route="'/' + link[0] + '/'">
+                    </a>
+                </div>
+            </template>
+        </div>
+    </template>
+
+    <template x-if="!atHome">
+        <div :class="'section-title'">
+            <a x-text="homePage" :href="basePath + 'index.html'" :data-route="'/'">
+            </a>
+        </div>
+    </template>
+
+    <template x-if="!atHome">
+        <div x-effect=" displaySection() ">
+            <template x-for=" link in sitemap.links.internal" , :key="index">
+                <div :class="'section-title'" :style="'padding:0.1rem'">
+                    <a x-text="link[1]" :href="basePath + link[0] + '/' + link[0] + '.html'"
+                        :data-route="'/' + link[0] + '/'">
+                    </a>
+                </div>
+            </template>
+        </div>
+    </template>
+
+    <template x-if="!atHome">
+        <div>
+            <template x-for="link in sitemap.links.external">
+                <div :class="'section-title'" :style="'padding:0.1rem'">
+                    <a x-text="link[0]" :href="link[1]">
+                    </a>
+                </div>
+            </template>
+        </div>
+    </template>
+
+</div>

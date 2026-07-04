@@ -1,0 +1,127 @@
+<div id="nav-handle" x-data="{ 
+    atIndex: CMBRutil.atSiteIndex(),
+    sectionsHandle: CMBRutil.staticLinkTransform('sections.html'),
+    }" x-bg>
+
+    <template x-if=" !atIndex" x-show="$store.navStore.on">
+        <div class="nav-sail">
+            <!-----| NAV 1 |----->
+            <div id="nav-1" x-data="{ active: 0 }">
+
+                <div x-data="{
+                            id: 1,
+                            get expanded() {
+                                return this.active === this.id
+                            },
+                            set expanded(value) {
+                                this.active = value ? this.id : null
+                            },
+                            }" role="region">
+                    <button id="chart-access" type="button" @click="expanded = !expanded" x-bind:hx-get="sectionsHandle"
+                        hx-target="#chart-links" hx-trigger="load" hx-swap="innerHTML">
+                        <div class="trigger-dropdown">
+                            <span x-show="expanded" x-cloak>&UpArrow;</span>
+                            <span x-show="!expanded" x-cloak>&DownArrow;</span>
+                            <span class="vt323">Options</span>
+                            <span x-show="expanded" x-cloak>&UpArrow;</span>
+                            <span x-show="!expanded" x-cloak>&DownArrow;</span>
+                        </div>
+                    </button>
+                    <div id="chart-dropdown" x-show="expanded" x-collapse>
+                        <div id="chart-links">
+                            <template x-show="expanded">
+
+                            </template>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-----| NAV 2 |----->
+            <div id="nav-2" x-data="{
+                navLoaded: false,
+                getNavLoaded: function() {
+                    const navver = document.getElementById('nav-auth-status'); 
+                    console.table({
+                        'This navLoaded': this.navLoaded, 
+                        'Store before': Alpine.store('nauth').valid,
+                        'Length trigger': navver.innerText.length,
+                    });
+                    const lenval = navver.innerText.length;
+                    this.navLoaded = (lenval > 0 ? true : false);
+                    console.table({'This navLoaded after': this.navLoaded});
+                    if (this.navLoaded && !Alpine.store('nauth').valid) { 
+                        Alpine.store('nauth').toggle();
+                    }
+                    if (!this.navLoaded && Alpine.store('nauth').valid) { 
+                        Alpine.store('nauth').toggle();
+                        }
+                        console.table({'Store after': Alpine.store('nauth').valid});
+                        } 
+                        }" x-transition
+                :style="Alpine.store('nauth').valid ? 'background: rgba(0, 0, 255, 10%)' : 'background: transparent;'">
+                <s id="reactivate" class="h1-lamp" hx-get='/api/auth/reactivate' hx-trigger="load delay:1s"
+                    hx-target="#nav-auth-status" hx-swap="textContent">
+                </s>
+                <ins id="nav-auth-status" :class="'vt323 nusr'"
+                    :style="'align-content: center; justify-self: center; color:green'" x-effect="setTimeout(() => {
+                    getNavLoaded();
+                }, 1100); " x-show="navLoaded" x-transition.delay.500ms x-transition.duration.500ms></ins>
+                <!-- ♪ -->
+            </div>
+
+            <!-----| NAV 3 |----->
+            <div id="nav-3">
+                <h1 class="h1-lamp">
+                    <span id="current-section"></span>
+                </h1>
+
+            </div>
+
+            <!-----| NAV 4 |----->
+            <div id="nav-4">
+                <s class="h1-lamp">
+                    <!-- ♫ -->
+                </s>
+                <div class="modal" style="display:none;" x-data>
+                    <div class="modal-field">
+                        <span class="modal-close">&times;</span><br>
+                        <div id="modal-text"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-----| NAV 5 |----->
+            <div id="nav-5" x-data="{
+                setting: 'dark',
+                getSetting: function(value) {
+                    return this.setting === value;
+                },
+                toggleMode: function (value){
+                    this.setting = value;
+                    Alpine.store('thematic').setMode(value);
+                    document.body.dataset.theme = this.setting;
+                },
+                }" x-init="$watch('setting', value => console.info(setting + ' mode active.'))">
+                <span id="dark" class="data-theme-button"
+                    :style="getSetting($el.id) ? 'color:initial' : 'color:transparent'"
+                    @click="toggleMode($el.id)">🌙</span>
+                <span id="light" class="data-theme-button"
+                    :style="getSetting($el.id) ? 'color:initial' : 'color:transparent'"
+                    @click="toggleMode($el.id)">☀️</span>
+                <span id="legacy" class="data-theme-button"
+                    :style="getSetting($el.id) ? 'color:initial' : 'color:transparent'"
+                    @click="toggleMode($el.id)">🪻</span>
+            </div>
+
+        </div>
+
+        <div class="nav-hoist">
+            <hr class="hr-nav-pad">
+            <hr class="hr-blass">
+            <hr class="hr-cmbr-gradient">
+            <hr id="nav-anchor" class="hr-groove-top">
+        </div>
+    </template>
+</div>

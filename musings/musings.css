@@ -1,0 +1,280 @@
+/* ----- PAGETITLE ----- */
+
+#sutra-panel {
+	font-style: normal;
+	text-align: center;
+	color:#8fd488;
+	user-select: none;
+	padding: 0%;
+}
+
+.open {
+	color: #f1cf63;
+	font-family: Open Sans Condensed, sans-serif;
+	text-align: center;
+	background-size: cover;
+	line-height: 3em;
+}
+  
+.opentitle {
+	font-family: Permanent Marker, sans-serif;
+	font-size: 5em;
+	font-weight: 700;
+	line-height: 1.1em;
+	text-transform: uppercase;
+}
+
+.center {
+	margin: 0;
+	position: relative;
+	top: 3%;
+	left: 50%;
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+  }
+
+.highlight {
+	color:rgb(123, 153, 184);
+  }
+
+/* ----- POEMCONTAINER ----- */
+
+.poem {
+	background-color: var(--clr-quinary-body);
+	min-width: 5rem;
+	padding: 2rem;
+	max-height: 40vh;
+	overflow-y: visible;
+}
+
+.sutra-container {
+	background-color: #f6f3ed;
+	min-width: 300px;
+}
+
+/* ----- POEM WRITING ----- */
+  
+.writing {
+	user-select: none;
+	color: var(--clr-secondary);
+	text-align: left;
+	font-family: Lora, sans-serif;
+	font-style: italic;
+	font-size: 1.5em;
+
+	/* max-width: 570px; */
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 2em;
+	line-height: 1.9em;
+	min-width: 1em;
+}
+  
+.writinginitial {
+	font-size: 7em;
+	float: left;
+	line-height: 0.8em;
+	margin-top: -0.29em;
+	margin-right: -0.05em;
+	text-shadow: -5px -2px 0px rgb(133, 132, 132);
+}
+
+/* ----- INPUT FIELD ----- */
+
+form {
+	padding-bottom: 15px;
+	position: relative;
+}
+
+input[type=text] {
+	background-color: #a1dbf8;
+	color: #f59b60;
+	font-family: Permanent Marker, serif;
+	font-size: 24px;
+	background-repeat: no-repeat;
+	padding-left: 3%;
+	padding-right: 3%;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+input[type=text]:focus {
+	border: 10px solid #bda5d4;
+}
+
+/* ----- BOTTOMSIGNATURE ----- */
+
+.marker-for-menu {
+	color: #db8044;
+	text-align: right;
+	font-size: 1em;
+	font-family: Permanent Marker, serif;
+}
+
+#return:hover {
+	color: red;
+}
+  
+.markersmall {
+	margin-top: -1em;
+	font-size: 50px;
+}
+
+.marker-violet {
+	font-family: Permanent Marker, serif;
+	color: rgb(19, 94, 199);
+}
+
+/* ----- MENUMODAL ----- */
+
+#menulabel {
+	color: #db8044;
+	text-align: right;
+	font-size: 1em;
+	font-family: Permanent Marker, serif;
+}
+
+#menulabel:hover {
+	color: #a1dbf8;
+	font-size: 1.1em;
+	position: inherit;
+	text-shadow: -2.5px -1px 0px #ff00ff;
+}
+
+.modal {
+	display: none; /* To hide by default */
+	position: fixed; /* to stay in place */
+	z-index: 1; /* To stay on top */
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%; 
+	overflow: auto; 
+	background-color: rgb(0,0,0); 
+	background-color: rgba(0,0,0,0.4); 
+  }
+  
+.menudialog {
+	background-color: rgb(233, 233, 233);
+	margin: 15% auto; /* 15% from the top and centered */
+	padding: 20px;
+	border: 1px solid #888;
+	width: 80%; /* Could be more or less, depending on screen size */
+	background-image: url(../assets/artifacts/chrispy-collage.jpeg);
+	background-size: 200px;
+	background-repeat: no-repeat;
+	background-position-x: 100%;
+}
+
+.dialogtext {
+	color: #db8044;
+	font-size: 1em;
+	margin-left: 30%;
+	font-family: Permanent Marker, serif;
+}
+
+.closemenu {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.closemenu:hover,
+.closemenu:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+/* ----- WORKSPACE IMPORT ----- */
+
+.page-item {
+	flex: 2;
+	padding: 2rem;
+	box-shadow: 2.5rem 3.75rem 3rem -3rem hsl(var(--cmbr-curtain-plum) / 0.25);
+	border-width: 0.3rem;
+	border-style: double;
+	border-color: grey;
+	background: rgba(144, 229, 238, 0.1);
+}
+
+/* ----- LIST TRAVERSAL AND ITEM SELECTION ----- */
+
+.highlight {
+	color: red;
+	letter-spacing: .1em;
+	transition: 0.1s ease-out;
+	background-color: transparent;
+}
+
+#item-list > li {
+	text-align: left;
+	margin-left: 33%;
+	list-style-type: none;
+}
+
+#item-list > li:hover {
+	/* background: var(--clr-quaternary); */
+	background: #9A031E;
+	/* background: #797a9e; */
+}
+
+.sutra-line-highlight {
+	/* THESE CSS PROPERTIES ARE SET AND THEN MANIPULATED IN JS */
+	background-image: linear-gradient(120deg, rgb(245, 155, 96) 0%, rgb(161, 219, 248) 100%); 
+	background-repeat: no-repeat;
+	background-size: 0% 0.1rem;
+	background-position: 0 88%;
+	transition: background-size 0.1s ease-in;
+	width: 100%;
+}
+
+#kanji-field {
+	font-size: 2rem;
+}
+
+#musings-input {
+	column-span: all;
+	box-shadow: 2.5rem 3.75rem 3rem -3rem hsl(var(--cmbr-curtain-plum) / 0.25);
+	/* border-width: 0.3rem; */
+	border-style: double;
+	border-color: grey;
+	background: rgba(144, 229, 238, 0.1);
+}
+
+.rolyan-field {
+	flex: 1;
+}
+
+.rolyan-writing {
+	font-family: "Permanent Marker";
+	font-style: normal;
+	font-weight: 100;
+	font-size: 100%;
+	color: cadetblue;
+	text-align: left;
+	writing-mode: vertical-lr;
+	line-height: 200%;
+}
+
+
+@keyframes text-fade {
+	0% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+.interval-fade {
+	color: var(--clr-tertiary);
+	user-select: none;
+	animation-name: text-fade;
+	/* animation-duration: 3s; */
+	animation-iteration-count: infinite;
+}
+

@@ -1,0 +1,41 @@
+<div id="folders-handle" x-data="{ 
+	folderData: {},
+		imageRequest: {
+		uploads: '/images/uploads/',
+		travel: '/assets/travel-photos/',
+		artifacts: '/assets/artifacts/',
+		officers: '/assets/segregation-officers/',
+		residents: '/assets/segregation-residents/'
+		}
+	 }">
+
+	<!-- <select>
+		<template x-for="(selection, index) in imageRequest" :key="index">
+			<option x-text="selection[index]">wrwererw</option>
+		</template>
+	</select> -->
+	<button class="trigger-box" x-target="workspace-console" @click="folderData = await $get('/api/media/uploads')">
+		Show Uploads
+	</button>
+
+
+	<div class="cmbr-pen flex-grid-cmbr flex-table-r" hx-get="/api/media/uploads" hx-target="#workspace-console"
+		hx-trigger="load" hx-swap="innerHTML" x-effect="JSON.stringify(folderData, null, 2)">
+		<template x-for="(item, index) in folderData" :key="index">
+			<div>
+				<figure>
+					<img :src="'/images/uploads/' + item" width="200" height="200"
+						@mouseover="$tooltip(item); $el.style='outline: 0.1rem solid magenta; cursor: pointer;'"
+						@mouseout="$el.style='outline:none;'" />
+					<figcaption>
+						<a :href="'/images/uploads/' + item" x-text="'/images/uploads/' + item"></a>
+					</figcaption>
+				</figure>
+			</div>
+		</template>
+	</div>
+
+
+
+
+</div>

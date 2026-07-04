@@ -1,0 +1,160 @@
+.animated-gradient {
+	background: url("../images/cmbr-curtain.svg"), linear-gradient(45deg, #EE7722, rgb(122, 114, 234), #73bcde, #62dd87);
+	background-size: 10%, 400%;
+	opacity: 1;
+	position: relative;
+	animation: spectrum 15s ease-in-out infinite, fade-in .25s ease-in;
+}
+
+#music-title {
+	font-size: 2rem;
+}
+
+/* ---------- MODAL SETTINGS ---------- */
+
+#info-modal {
+	color: antiquewhite;
+	display: none;
+	/* To hide by default */
+	position: fixed;
+	/* to stay in place */
+	z-index: 1;
+	/* To stay on top */
+	text-align: center;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+#close-modal {
+	text-align: center;
+	font-size: 100px;
+}
+
+#close-modal:hover {
+	color: red;
+}
+
+
+/* ---------- GRID CONTENT ---------- */
+
+.music-grid-old {
+	display: grid;
+	gap: 1rem;
+	/* for vertical and horizontal spacing */
+	grid-template-columns: repeat(3, 33%);
+	/* repeat(4, 25%) */
+
+	padding-block: 2rem;
+	width: min(95%, 70rem);
+	margin-inline: auto;
+}
+
+.music-grid {
+	padding: 2rem;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	grid-template-columns: repeat(4, 25%);
+	border-radius: 1rem;
+	gap: 1rem;
+}
+
+.music-item {
+	flex: 1;
+	padding: 1rem;
+	box-shadow: 2.5rem 3.75rem 3rem -3rem hsl(var(--cmbr-curtain-plum) / 0.25);
+	border-width: 0.3rem;
+	border-style: double;
+	border-color: grey;
+	background: rgba(144, 229, 238, 0.1);
+}
+
+.music-item-main {
+	flex: 2;
+	padding: 1rem;
+	box-shadow: 2.5rem 3.75rem 3rem -3rem hsl(var(--cmbr-curtain-plum) / 0.25);
+	border-width: 0.3rem;
+	border-style: double;
+	border-color: grey;
+	background: rgba(144, 229, 238, 0.1);
+}
+
+.sub-music-grid {
+	display: grid;
+	place-self: center;
+	gap: 0.5rem;
+	grid-template-columns: repeat(3, 33%);
+	width: min(95%, 70rem);
+}
+
+.sub-music-item {
+	place-self: center;
+	display: contents;
+	border-width: 0.3rem;
+	border-style: double;
+	border-color: grey;
+}
+
+.grid-col-span-2 {
+	grid-column: 2;
+}
+
+#photo-box>img {
+	max-width: 10rem;
+}
+
+.now-playing-highlight {
+	background-image: linear-gradient(120deg, #f59b60 0%, #a1dbf8 100%);
+	background-size: 100% 0.1em;
+	background-repeat: no-repeat;
+	background-position: 0 88%;
+}
+
+#track-list {
+	list-style-type: none;
+}
+
+#track-list>li:hover {
+	background: var(--clr-quinary-body);
+}
+
+.track-list-selected-highlight {
+	background-color: var(--clr-quaternary);
+}
+
+
+/* CURRENTLY PLAYING SETTINGS */
+
+
+.currently-playing-design {
+	background-color: black;
+	background-image:
+		linear-gradient(rgba(105, 89, 89, 0), rgba(1, 0, 0, 0.0)),
+		url('../images/cmbr-sig-sm.ico');
+	animation: iconmove 25s linear infinite;
+}
+
+#soundcloud-link {
+	font-family: 'Courier New', Courier, monospace;
+	color: purple;
+	background-color: transparent;
+	opacity: 0.6;
+	position: relative;
+}
+
+#backdrop-low {
+	padding: 10rem;
+}
+
+/* |=====| CUES |=====| */
+/* |=====| vtt Files |=====| */
+
+audio::cue {
+	font-size: 1.5rem;
+	background-image: linear-gradient(to bottom, yellow, lightyellow);
+	color: red;
+}

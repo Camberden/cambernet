@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+	<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="referrer" content="no-referrer" />
+	<link rel="shortcut icon" href="..images/cmbr-sig.svg">
+	<link rel="stylesheet" type="text/css" href="../styles.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="blog.css" media="screen" />
+	<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+		integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+	<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+		integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+	<script async src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/@imacrayon/alpine-ajax@0.12.6/dist/cdn.min.js"></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+	<script src="/htmx.js"></script>
+	<script src="/cmbr.js"></script>
+
+	<title>Chrispy's Blog</title>
+</head>
+
+<body data-theme="dark">
+
+	<nav id="nav" hx-get="/nav.html" hx-target="#nav" hx-trigger="load" hx-swap="innerHTML" x-bg></nav>
+
+	<main id="blog-main" class="flex-grid-cmbr grid-col-1-3-1" x-data="{
+			modifyingBp: false,
+			toggleModifyingBp() { 
+				this.modifyingBp = !this.modifyingBp;
+			}
+		}">
+
+		<!-- % LEFT -->
+		<div class="blog-item" id="blog-post-listings">
+
+			<select id="blog-post-year-select">
+				<option value="all-years">All Years</option>
+			</select>
+			<br>
+			<hr class="hr-cmbr-dark-gradient">
+			<hr class="hr-groove-top">
+
+			<ul id="blog-post-list">
+
+			</ul>
+
+			<hr class="hr-groove-bottom">
+			<hr class="hr-cmbr-dark-gradient">
+
+		</div>
+		<!-- % CENTER -->
+		<article id="blog-post-articles" class="blogging-font">
+			<div class="blog-post-header">
+				<!-- <template> -->
+				<!-- <button x-show="!modifyingBp" id="new-bp" hx-get="new-post.html" hx-trigger="click"
+					hx-target="#modify-bp" hx-swap="innerHTML" @click="toggleModifyingBp()">New</button>
+				<button x-show="!modifyingBp" id="update-bp" hx-get="update-post.html" hx-trigger="click"
+					hx-target="modify-bp" hx-swap="innerHTML" @click="toggleModifyingBp()">Update</button> -->
+				<!-- </template> -->
+				<button id="previous-bp" class="blog-button" x-show="!modifyingBp">Previous</button>
+				<button id="next-bp" class="blog-button" x-show="!modifyingBp">Next</button>
+			</div>
+			<div x-show="!modifyingBp">
+				<div>
+					<p id="blog-post-date">August 11th, 2024</p>
+					<p id="blog-post-location">Chapel Hill Suite</p>
+					<p id="blog-post-time">2200HRS</p>
+				</div>
+				<div>
+					<p id="blog-post-body"></p>
+				</div>
+			</div>
+			<div id="modify-bp" x-show="modifyingBp"></div>
+
+
+		</article>
+
+		<!-- % RIGHT -->
+		<div class="blog-item" id="blog-post-media">
+			<!-- <span class="vt323" id="auth-status"></span> -->
+			<h3>Post <span id="displayed-post"></span></h3>
+			<h4><span id="blog-post-title"></span></h4>
+
+			<hr class="hr-cmbr-dark-gradient">
+			<hr class="hr-groove-top">
+
+			<div id="blog-tags">
+				<div id="blog-post-tags"></div>
+			</div>
+
+			<div id="blog-map"></div>
+
+			<div id="blog-photos">
+			</div>
+
+			<div id="blog-music">
+				<div id="player"></div>
+			</div>
+
+			<hr class="hr-groove-bottom">
+			<hr class="hr-cmbr-dark-gradient">
+		</div>
+
+	</main>
+
+	<script src="blog-data.js"></script>
+	<script src="blog.js"></script>
+
+</body>
+
+</html>

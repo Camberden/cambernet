@@ -1,0 +1,36 @@
+<!-- ^ Alpine Modal for Generated Menus follwing inputs. ^ -->
+<div id="exmodal-handle" x-data="{ openModal: false,
+ }">
+	<!-- Trigger -->
+	<span x-on:click="openModal = true">
+		<button type="button" class="trigger-box" x-text="Alpine.store('nauth').valid ? 'Logout' : 'Login'">
+		</button>
+	</span>
+
+	<!-- Modal -->
+	<div x-show="openModal" style="display: none" x-on:keydown.escape.prevent.stop="openModal = false" role="dialog"
+		aria-modal="true" x-id="['modal-title']" :aria-labelledby="$id('modal-title')" class="modal">
+		<!-- Overlay -->
+		<div x-show="openModal" x-transition.opacity
+			style="position:fixed; inset: 0; background-color: rgba(0, 0, 0, 0.4);">
+		</div>
+
+		<!-- Panel -->
+		<div x-show="openModal" x-transition x-on:click="openModal = false">
+			<div x-on:click.stop x-trap.noscroll.inert="openModal"
+				style="position: relative; min-height: auto; max-width: auto; padding:4rem;">
+				<div class="modal-field">
+					<template x-if="Alpine.store('nauth').valid === true">
+						<div hx-get="../template/logout.html" hx-target="this" hx-trigger="load" hx-swap="outerHTML"
+							x-text="'Logout'" @load="console.log(Alpine.store('nauth').valid)">
+						</div>
+					</template>
+					<template x-if="Alpine.store('nauth').valid === false" x-show="Alpine.store('nauth').valid">
+						<div hx-get="../template/login.html" hx-target="this" hx-trigger="load" hx-swap="outerHTML"
+							x-text="'Login'" @load="console.log(Alpine.store('nauth').valid)">
+						</div>
+					</template>
+				</div>
+			</div>
+		</div>
+	</div>

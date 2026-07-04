@@ -1,0 +1,37 @@
+<div id="folders-handle" x-data="{
+	modalVar: 'photos',
+	folderData: {},
+	imageRequest: {
+		uploads: '/images/uploads/',
+		travel: '/assets/travel-photos/',
+		artifacts: '/assets/artifacts/',
+		officers: '/assets/segregation-officers/',
+		residents: '/assets/segregation-residents/'
+	}
+	 }">
+
+	<button class="trigger-box" @click="folderData = await $get('/api/media/travel-photos')">
+		Show Travel Photos
+	</button>
+
+	<div class="cmbr-pen flex-grid-cmbr flex-table-r" hx-get="/api/media/travel-photos" hx-target="#workspace-console"
+		hx-trigger="load" hx-swap="innerHTML" x-effect="JSON.stringify(folderData, null, 2)" x-data>
+		<template x-for="(item, index) in folderData" :key="index">
+			<div>
+				<figure>
+					<img :src="'/assets/travel-photos/' + item" width="300" height="200"
+						@mouseover="$tooltip(item); $el.style='outline: 0.1rem solid magenta; cursor: pointer;'"
+						@mouseout="$el.style='outline:none;'" />
+					<figcaption>
+						<a :href="'/assets/travel-photos/' + item"></a>
+					</figcaption>
+				</figure>
+			</div>
+		</template>
+	</div>
+
+
+
+
+
+</div>
