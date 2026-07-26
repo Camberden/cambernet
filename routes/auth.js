@@ -139,7 +139,7 @@ router.get('/reactivate', async (req, res, next) => {
 			res.send(noIden);
 		}
 	} catch (err) {
-		console.lot("No token or token invalid: " + err.message);
+		console.log("No token or token invalid: " + err.message);
 		next();
 	};
 });

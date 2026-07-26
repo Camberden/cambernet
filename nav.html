@@ -62,7 +62,7 @@
                         }" x-transition
                 :style="Alpine.store('nauth').valid ? 'background: rgba(0, 0, 255, 10%)' : 'background: transparent;'">
                 <s id="reactivate" class="h1-lamp" hx-get='/api/auth/reactivate' hx-trigger="load delay:1s"
-                    hx-target="#nav-auth-status" hx-swap="textContent">
+                    hx-target="#nav-auth-status" hx-swap="innerHTML">
                 </s>
                 <ins id="nav-auth-status" :class="'vt323 nusr'"
                     :style="'align-content: center; justify-self: center; color:green'" x-effect="setTimeout(() => {
