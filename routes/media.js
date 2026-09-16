@@ -41,27 +41,6 @@ router.post('/upload', upload.single('heic-photo'), function (req, res) {
 	res.redirect('/');
 });
 
-
-router.get('/reactivate', async (req, res, next) => {
-	try {
-		if (req.cookies.jwt_token) {
-			const cook = cookieParser.signedCookie(req.cookies.jwt_token);
-			const user = verifyToken(cook);
-			const iden = user.payload.username;
-			res.send("Welcome back, " + iden + "!");
-		} else {
-			console.log("No token found in cookies.");
-		}
-	} catch (err) {
-		console.lot("No token or token invalid: " + err.message);
-		next();
-	};
-});
-
-router.get('/done', async (req, res) => {
-	console.log("Done.");
-});
-
 router.get('/uploads', async (req, res, next) => {
 	console.log("HELLOOOOO FOLDERS?>?>?")
 	try {

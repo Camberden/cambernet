@@ -3,13 +3,46 @@ const pool = require('../config/database');
 const { cookieJwtAuth } = require('../middleware/auth');
 
 const router = express.Router();
+router.post('/', cookieJwtAuth, async (req, res) => {
+	try {
+
+		const { newTdInfo } = req.body;
+		const user_id = req.user.payload.id;
+		console.log(user_id);
+
+		if (!req.user) {
+			return res.status(400).json({ error: 'Info required.' });
+		}
+
+		await pool.getConnection();
+
+		const [result] = await pool.query(
+			'INSERT INTO todos (user_id, info) VALUES (?, ?)',
+			[user_id, newTdInfo]
+		);
+
+		pool.releaseConnection();
+
+		res.send({
+			message: '(1) Todo post created successfully!',
+			postId: result.insertId,
+			user: req.user,
+		});
+	} catch (error) {
+		console.error('Todo creation error:', error);
+		res.status(500).json({ error: 'Failed to create todopost' });
+	} finally {
+		pool.releaseConnection();
+	}
+});
 
 router.get('/', async (req, res) => {
 	console.log('Todos API: router.get(`/`) [const parsedTodos = todoposts.map(todopost => ({...todopost, }));]');
+	pool.releaseConnection();
+	if (!req.user) {
+		console.log("No user.");
+	};
 
-	if (req.message) {
-		console.log(message);
-	}
 	try {
 		await pool.getConnection();
 
@@ -26,56 +59,17 @@ router.get('/', async (req, res) => {
 		// tags: post.tags ? JSON.parse(post.tags) : []
 
 		res.json(parsedTodoposts);
+
 	} catch (error) {
 		console.error('Todo fetch error:', error);
 		res.status(500).json({ error: 'Failed to fetch todos' });
+	} finally {
+		pool.releaseConnection();
 	}
 });
 
-router.post('/', cookieJwtAuth, async (req, res, next) => {
-
-	try {
-
-		if (!req.user) {
-			res.sendStatus(404);
-			return;
-		}
-
-		const { newTdInfo } = req.body;
-		const user_id = req.user.payload.id;
-		console.log(user_id);
-
-		if (!newTdInfo) {
-			return res.status(400).json({ error: 'Info required.' });
-		}
-
-		await pool.getConnection();
-
-		const [result] = await pool.query(
-			'INSERT INTO todos (user_id, info) VALUES (?, ?)',
-			[user_id, newTdInfo]
-		);
-
-		await pool.releaseConnection();
-
-		// res.redirect('../blog/blog.html');
-		res.redirect('../../worksite/worksite.html');
-
-		// res.send({
-		//   message: '(1) Blog post created successfully!',
-		//   postId: result.insertId,
-		//   location: '/blog/blog.html',
-		//   redirectUrl: 'blog/blog.html'
-		// });
-	} catch (error) {
-		console.error('Blog todo creation error:', error);
-		res.status(500).json({ error: 'Failed to create todopost' });
-	}
-
-	next();
-});
-
-router.put('/:id', cookieJwtAuth, async (req, res, next) => {
+router.put('/:id', cookieJwtAuth, async (req, res) => {
+	pool.releaseConnection();
 	try {
 		const updateTdId = parseInt(req.params.id).toFixed(0);
 		const { updateTdInfo } = req.body;
@@ -101,21 +95,28 @@ router.put('/:id', cookieJwtAuth, async (req, res, next) => {
 
 		await pool.execute(
 			'UPDATE todos SET info = ? WHERE id = ?',
-
 			[updateTdInfo, updateTdId]
 		);
 
 		pool.releaseConnection();
 
-		res.json({ message: 'todopost updated successfully' });
+		res.send({
+			message: '(1) Todo updated successfully!',
+			postId: result.insertId,
+			user: req.user,
+		});
 	} catch (error) {
 		console.error('todopost update error:', error);
+		pool.releaseConnection();
 		res.status(500).json({ error: 'Failed to update todopost' });
+	} finally {
+		pool.releaseConnection();
 	}
 });
 
 router.delete('/:id', cookieJwtAuth, async (req, res) => {
 	console.log("Todos API: router.delete(`/:id`) [const { deleteTdId } = req.params;]");
+	pool.releaseConnection();
 	try {
 
 		const deleteTdId = parseInt(req.params.id).toFixed(0);
@@ -145,12 +146,16 @@ router.delete('/:id', cookieJwtAuth, async (req, res) => {
 
 		pool.releaseConnection();
 
-		res.json({ message: 'Todopost deleted successfully' });
+		res.send({
+			message: '(1) Todo deleted successfully!',
+			user: req.user,
+		});
 	} catch (error) {
 		console.error('Todopost delete error:', error);
 		res.status(500).json({ error: 'Failed to delete todopost' });
+	} finally {
+		pool.releaseConnection();
 	}
 });
-
 
 module.exports = router;

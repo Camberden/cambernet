@@ -3,7 +3,6 @@ const { hashPassword, comparePassword } = require("../services/hashingService");
 const { generateToken, verifyToken } = require("../services/tokenService");
 const pool = require('../config/database');
 const { cookieJwtAuth } = require('../middleware/auth.js');
-const cookieParser = require("cookie-parser");
 
 const router = express.Router();
 
@@ -126,22 +125,23 @@ router.post('/version', async (req, res) => {
 	res.end();
 
 });
-router.get('/reactivate', async (req, res, next) => {
+router.get('/reactivate', cookieJwtAuth, async (req, res) => {
+	pool.releaseConnection();
 	try {
-		if (req.cookies.jwt_token) {
-			const cook = cookieParser.signedCookie(req.cookies.jwt_token);
-			const user = verifyToken(cook);
-			const iden = user.payload.username;
-			res.send(iden);
+		if (req.user) {
+			res.send(req.user.payload.username);
+			pool.releaseConnection();
 		} else {
 			console.log("No token found in cookies.");
 			const noIden = '';
+			pool.releaseConnection();
 			res.send(noIden);
 		}
 	} catch (err) {
 		console.log("No token or token invalid: " + err.message);
-		next();
+		pool.releaseConnection();
 	};
+	pool.releaseConnection();
 });
 router.post('/logout', async (req, res) => {
 	res.get('jwt_token');
@@ -149,5 +149,4 @@ router.post('/logout', async (req, res) => {
 	res.redirect('/');
 });
 
-// module.exports = router;
 module.exports = router;

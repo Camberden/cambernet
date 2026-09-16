@@ -17,7 +17,6 @@ exports.charterDir = async (folder) => {
 			console.log(file);
 		});
 	});
-
 }
 
 // res.download('/report-12345.pdf');

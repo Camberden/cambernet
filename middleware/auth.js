@@ -7,16 +7,17 @@ exports.cookieJwtAuth = (req, res, next) => {
 			const cook = cookieParser.signedCookie(req.cookies.jwt_token);
 			const user = verifyToken(cook);
 			if (user) {
-				console.log("Accessed.");
+				console.log("Accessed @ cookieJwtAuth!");
 				req.user = user;
-				console.log(user.payload);
+				console.log("User ID: " + user.payload.id);
 			}
 		} else {
 			console.log("Not Accessed.");
 			console.log("No token found in cookies.");
+			res.sendStatus(401).json({ error: 'Unauthorized: No token provided' });
 		}
 	} catch (err) {
-		console.lot("No token or token invalid: " + err.message);
+		console.log("No token or token invalid: " + err.message);
 		next();
 	};
 	next();

@@ -14,7 +14,7 @@
 	<hr class="hr-cmbr-dark-gradient">
 	<div class="grid-col-1-3-1">
 		<wbr>
-		<button type="submit" x-text="'Create Td'" cmbr-i></button>
+		<button type="submit" x-text="'Create Td'" @click="htmx.process($el); $store.site.reroute();" cmbr-i></button>
 		<wbr>
 	</div>
 </form>

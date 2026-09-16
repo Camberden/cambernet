@@ -39,10 +39,6 @@ const nonStaticDev = "http://localhost:3020";
  * @description Intializes ALPine DAta, MAgics, DIrectives, and STores
  */
 document.addEventListener("alpine:init", () => {
-	// !==========| Alpine Data |==========!
-	Alpine.data('camberden', () => ({
-		site: document.location.origin,
-	})); // *=> end of Alpine Data
 	// !==========| Alpine Magics |==========!
 	Alpine.magic('tooltip', el => message => {
 		let instance = tippy(el, { content: message, trigger: 'manual' });
@@ -86,8 +82,22 @@ document.addEventListener("alpine:init", () => {
 	});
 
 	// *=> end of Alpine Directives
+
 	// !==========| Alpine Store |==========!
 	// TODO Get the Persist Plugin //
+	Alpine.store('site', {
+		origin: document.location.origin,
+		page: document.location.href,
+		reroute: function () {
+			setInterval(() => { document.location = this.page }, 1000);
+		}
+	});
+	Alpine.store('modal', {
+		active: false,
+		toggle() {
+			this.active = !this.active;
+		}
+	});
 	Alpine.store('thematic', {
 		mode: null,
 		getMode() {
@@ -102,7 +112,7 @@ document.addEventListener("alpine:init", () => {
 			this.mode = val;
 			this.setMode(val);
 		}
-	})
+	});
 	Alpine.store('nauth', {
 		valid: false,
 		toggle() {
@@ -583,6 +593,4 @@ const braft = (l) => document.querySelector(`${l}`).appendChild(document.createE
 
 (async () => {
 	CMBRutil.handleFormDefault(true);
-
-
 });
