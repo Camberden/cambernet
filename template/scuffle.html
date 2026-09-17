@@ -1,8 +1,39 @@
-<div x-data="{ 
+<div x-data="{
+
+            generateNames() {
+                let firstName = '';
+                let lastName = '';
+                let fullName = '';
+                const syllables = [
+                    'ka', 'ki', 'ku', 'ke', 'ko', 'keu',
+                    'ra', 'ri', 'ru', 're', 'ro', 'reu',
+                    'ta', 'ti', 'tu', 'te', 'to', 'teu',
+                    'sa', 'si', 'su', 'se', 'so', 'seu',
+                    'ma', 'mi', 'mu', 'me', 'mo', 'meu'
+                ];
+                const vowels = ['a', 'i', 'u', 'e', 'o', 'eu'];
+                const clusters = ['sh', 'zm', 'sr', 's', 'j', 'kr', 'ks', 'ksh'];
+                
+                for(let i = 0; i < 2; i++) {
+                    let ran1 = ((syllables.length - 1) * Math.random()).toFixed(0);
+                    let ran2 = ((vowels.length - 1) * Math.random()).toFixed(0);
+                    let ran3 = ((clusters.length - 1) * Math.random()).toFixed(0);
+                    // console.log(ran1);
+                    // console.log(syllables[ran1]);
+                    if (i === 0) {
+                        firstName += syllables[ran1] + clusters[ran3];
+                    }
+                    if (i === 1) {
+                        lastName += (vowels[ran2] + clusters[ran3] + syllables[ran1] + syllables[ran1]);
+                    }
+                }
+                    fullName = firstName + ' ' + lastName;
+                    return fullName;
+                },
 				undergoing: false,
 				attackPhase: false,
-				sel1: 0, // Firstwolf, Attack 3, Vitality 18
-				sel2: 2, // Secondfox, Attack 1, Vitality 12
+				sel1: 1, // Firstwolf, Attack 3, Vitality 18
+				sel2: 4, // Secondfox, Attack 1, Vitality 12
 				damageDealt: 0,
 				damageReceived: 0,
 				vitalities: [],
@@ -11,21 +42,98 @@
 				fighters: 
                 [
 					{
+						id: 0, name: 'Select Fighter', rank: 'Administration',
+						photo: 'images/cmbr-sig-sm.ico', attack: 0, defense: 0, dexterity: 0, vitality: 0, experience: 0,
+					},
+					{
 						id: 1, name: 'Firstwolf', rank: 'CO',
-						photo: '/assets/segregation-officers/staff-3.jpg', attack: 3, defense: 3, dexterity: 3, vitality: 18, experience:
-							0,
-					}, {
+						photo: '/assets/segregation-officers/staff-3.jpg', attack: 3, defense: 3, dexterity: 3, vitality: 18, experience: 0,
+					},
+                    {
 						id: 2, name: 'Secondwolf', rank: 'CO', photo: '/assets/segregation-officers/staff-0.jpg', attack: 4,
 						defense: 2, dexterity: 2, vitality: 22, experience: 0,
-					}, {
+					},
+                    {
 						id: 3, name: 'Firstfox', rank: 'CO',
 						photo: '/assets/segregation-officers/staff-14.jpg', attack: 2, defense: 3, dexterity: 4, vitality: 15, experience:
 							0,
-					}, {
+					},
+                    {
 						id: 4, name: 'Secondfox', rank: 'CO', photo: '/assets/segregation-officers/staff-10.jpg', attack: 1,
 						defense: 3, dexterity: 6, vitality: 12, experience: 0,
-					}
+					},
 				],
+
+                findRank() {
+                    let attack = (Math.random() * 10).toFixed(0);
+                    let defense = (Math.random() * 10).toFixed(0);
+                    let dexterity = (Math.random() * 10).toFixed(0);
+                    let vitality = (Math.random() * 10).toFixed(0);
+                    let assignment = '3';
+                    let highest = 0;
+                    let lowest = 0;
+                    const profile = [attack, defense, dexterity, vitality];
+                    profile.forEach(stat => {
+                        console.log('stat: ' + stat);
+                        stat > highest ? highest = stat : highest = highest;
+                        stat < highest && stat > lowest ? lowest = stat : lowest = lowest;
+                    });
+                    if (highest >=5 && lowest >= highest - 4) {
+                        assignment = '3';
+                    }
+                    if (highest >=6 && lowest > highest - 3) {
+                        assignment = '2';
+                    }
+                    if (highest >=7 && lowest > highest - 5) {
+                        assignment = '2';
+                    }
+                    if (highest >= 10 && lowest > highest - 3) {
+                        assignment = '1';
+                    } 
+                    console.log(highest);
+                    switch (highest) {
+                        case attack:
+                        assignment = 'A' + assignment;
+                        break;
+                        case  defense:
+                        assignment = 'D' + assignment;
+                        break;
+                        case dexterity:
+                        assignment = 'X' + assignment;
+                        break;
+                        case vitality:
+                        assignment = 'V' + assignment;
+                        break;
+                        default:
+                        assignment = '?' + assignment;
+                        break;
+                    }
+                    profile.push(assignment);
+                    console.log(assignment);
+                    return profile;
+                },
+
+                addFighter: function () {
+                    const stats = this.findRank();
+                    let character = {
+                        id: this.fighters.length,
+                        name: this.generateNames(),
+                        rank: stats[4],
+                        photo: '/assets/segregation-residents/resident-' + (Math.random() * 10).toFixed(0) + '.jpg',
+                        attack: stats[0],
+                        defense: stats[1],
+                        dexterity: stats[2],
+                        vitality: stats[3],
+                        experience: (Math.random() * 10).toFixed(0),
+                    };
+                    this.fighters.push(character);
+                },
+
+                generateFighters(num) {
+                    for (let i = 0; i < num; i++) {
+                        this.addFighter();
+                    }
+                },
 
 				setFighterPhoto(selection) {
 					return this.fighters[selection].photo;
@@ -42,7 +150,7 @@
 					}
 					console.info('p1: ' + this.playerOneHealth + ' p2: ' + this.playerTwoHealth);
 				}
-        }">
+        }" x-effect="generateFighters(10)">
 
     <div :class="'flex-grid-cmbr'">
 
@@ -61,20 +169,22 @@
                 <h4 class="marker">Choose Player 2</h4>
                 <div x-text=" fighters[sel1].name " x-show=" undergoing "></div>
                 <select x-model="sel1" x-show=" ! undergoing ">
-                    <option :value="-1" disabled>Character 1</option>
-                    <option :value="0" selected>Wolf 1</option>
-                    <option :value="1">Wolf 2</option>
-                    <option :value="2">Fox 1</option>
-                    <option :value="3">Fox 2</option>
+                    <template x-for="fighter in fighters">
+                        <option :value="fighter.id" x-text="fighter.name" :disabled="fighter.id <= 0 ? true : false;">
+                        </option>
+                    </template>
                 </select>
                 <hr class="glass-pane">
                 <div x-text=" fighters[sel2].name " x-show=" undergoing "></div>
                 <select name="playerTwoSelect" x-model="sel2" x-show=" ! undergoing ">
-                    <option :value="-1" disabled>Character 2</option>
-                    <option :value="2" selected>Fox 1</option>
+                    <template x-for="fighter in fighters">
+                        <option :value="fighter.id" x-text="fighter.name" :disabled="fighter.id <= 0 ? true : false;">
+                        </option>
+                    </template>
+                    <!-- <option :value="2" selected>Fox 1</option>
                     <option :value="3">Fox 2</option>
                     <option :value="0">Wolf 1</option>
-                    <option :value="1">Wolf 2</option>
+                    <option :value="1">Wolf 2</option> -->
                 </select>
             </div>
             <hr :class="'hr-cmbr-dark-gradient'">
@@ -93,7 +203,7 @@
                                         x-text=" playerOneHealth " x-show=" undergoing "></span></span></span>
                         </div>
                     </div>
-                    <h4>Character #<span x-text=" (parseInt(sel1) + 1) "></span></h4>
+                    <h4>Character #<span x-text=" (parseInt(sel1)) "></span></h4>
                     <h4><i x-text=" fighters[sel1].name "></i></h4>
                     <h4>Rank: <span x-text=" fighters[sel1].rank "></span></h4>
                     <img x-ref="playerOneHeadshot" :class="'scuffler-headshot'" :src=" setFighterPhoto(sel1) "></img>
@@ -145,7 +255,7 @@
                                         x-text=" playerTwoHealth " x-show=" undergoing "></span></span></span>
                         </div>
                     </div>
-                    <h4>Character #<span x-text=" (parseInt(sel2) + 1) "></span></h4>
+                    <h4>Character #<span x-text=" (parseInt(sel2)) "></span></h4>
                     <h4><i x-text=" fighters[sel2].name "></i></h4>
                     <h4>Rank: <span x-text=" fighters[sel2].rank "></span></h4>
                     <img x-ref="playerTwoHeadshot" :class="'scuffler-headshot'" :src=" setFighterPhoto(sel2) "></img>
@@ -160,6 +270,7 @@
                 <hr :class="'hr-groove-bottom'">
                 <h5></h5>
                 <input type="text" placeholder="gamenotes" x-model="gamenotes" />
+                <button class="trigger-box" @click="addFighter();" x-text="'Add Fighter :o !'"></button>
             </div>
         </div>
 

@@ -111,7 +111,6 @@ router.post('/login', async (req, res, next) => {
 	}
 });
 router.post('/version', async (req, res) => {
-	const { mysqlVcheck } = req.body;
 	await pool.getConnection();
 	const [rows] = await pool.query('SELECT VERSION() AS version');
 	console.log('MySQL version:', rows[0].version);
@@ -119,12 +118,25 @@ router.post('/version', async (req, res) => {
 	console.log('Result: ' + result);
 	resultRows = rows[0];
 
-	await pool.releaseConnection();
+	pool.releaseConnection();
 	// res.sendFile("/workspace/workspace.html");
 	res.write("MySqlVersion: " + result);
 	res.end();
-
 });
+
+router.post('/threads', async (req, res) => {
+	await pool.getConnection();
+	const [rows] = await pool.query("SHOW status WHERE `Variable_name` = 'Threads_connected';");
+	console.log('MySQL Threads_connected:', rows[0].Value);
+	result = (rows[0].Value).toString();
+	console.log('Result: ' + result);
+	resultRows = rows[0];
+
+	pool.releaseConnection();
+	res.write("Threads active: " + result + " / 100, technically...");
+	res.end();
+});
+
 router.get('/reactivate', cookieJwtAuth, async (req, res) => {
 	pool.releaseConnection();
 	try {

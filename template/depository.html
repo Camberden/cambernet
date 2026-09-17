@@ -1,17 +1,13 @@
 <div id="depository-handle" x-data="{
-		activeModal: false,
-		toggleModal() {
-			this.activeModal = !this.activeModal;
-		};
 }">
 	<div>
 		<h2 :id="$id('modal-title')" class="marker-green">New Note</h2>
-		<div id="modal-splash" x-show="activeModal">baba
+		<div id="modal-splash">
 		</div>
 	</div>
 	<div>
-		<form id="notes-form" class="grid-col-7x-1" hx-post='/api/notes/' hx-target="#all-notes-display"
-			hx-swap="innerHTML">
+		<form id="notes-form" class="grid-col-7x-1" :hx-post="'/api/notes/'" hx-target="#modal-splash"
+			hx-trigger="submit" hx-swap="innerHTML" x-effect="htmx.process($el);">
 
 			<div class="grid-row-1-1">
 				<label for="newNoteTitle" x-text="'Title'"></label>
@@ -45,8 +41,8 @@
 			</div>
 			<div class="grid-row-1-1">
 				<strong x-text="'Submit'"></strong>
-				<button type="submit" x-text="'Create Note'" @click="htmx.process($el);
-						$store.site.reroute(); alert(document.getElementById('all-notes-display').children[0].innerHTML);"
+				<button type="submit" x-text="'Create Note'"
+					@click="$store.site.reroute(); alert(document.getElementById('modal-splash').innerHTML);"
 					cmbr-i></button>
 			</div>
 		</form>
