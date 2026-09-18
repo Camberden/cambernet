@@ -1,116 +1,193 @@
 <div id="step-pay-plan-handle">
 	<style>
-		.usd::before {
+		[camberact]>dd {
+			animation: 0.5s ease-in-out text-fade;
+		}
+
+		dt {
+			text-align: right;
+		}
+
+		dd {
+			cursor: pointer;
+			text-align: center;
+		}
+
+		dl>dd:nth-of-type(odd):hover {
+			background-color: #9390ee1a;
+		}
+
+		dl>dd:nth-of-type(even):hover {
+			background-color: #eeae901a;
+		}
+
+		[cash]::before {
 			content: attr(item) "$ ";
+		}
+
+		[salary]:hover {
+			cursor: pointer;
+			color: burlywood;
+		}
+
+		[salary]:active {
+			color: sienna;
+		}
+
+		[co]::before {
+			content: attr(item) "CO ";
+		}
+
+		[yrs]::before {
+			content: attr(item) "@ ";
+		}
+
+		[yrs]::after {
+			content: attr(item) " yrs";
 		}
 	</style>
 	<div x-data="{
-
-				salarySchedules: {
-					salarySchedule2020: [
-						['33130', '33130', '33130', '33130', '33130', '33130', '33130'],
-						['34220', '34220', '34220', '34220', '34220', '34220', '34220'],
-						['36598', '36598', '36598', '36598', '36598', '36598', '36598'],
-					],
-					salarySchedule2021: [
-						['33130', '35449', '37576', '39455', '41033', '42264', '43109'],
-						['34220', '36615', '38812', '40753', '42383', '43654', '44527'],
-						['36598', '39160', '41510', '43586', '45329', '46689', '47623'],
-					],
-					salarySchedule2022: [
-						['33958', '36335', '38515', '40441', '42059', '43321', '44187'],
-						['35076', '37530', '39782', '41772', '43443', '44745', '45640'],
-						['37513', '40139', '42548', '44676', '46462', '47856', '48814'],
-					],
-					salarySchedule2023: [
-						['36525', '39801', '41427', '43498', '45237', '46595', '47527'],
-						['37727', '40367', '42790', '44929', '46726', '48127', '49090'],
-						['40348', '43173', '45764', '48052', '49974', '51473', '52503'],
-					],
-					salarySchedule2024: [
-						['37621', '40253', '42670', '44803', '46594', '47993', '48953'],
-						['38859', '41578', '44074', '46277', '48128', '49571', '50563'],
-						['41558', '44468', '47137', '49494', '51473', '53017', '54078'],
-					], 
-					salarySchedule2025: [
-						['37621', '40253', '42670', '44803', '46594', '47993', '48953'],
-						['38859', '41578', '44074', '46277', '48128', '49571', '50563'],
-						['41558', '44468', '47137', '49494', '51473', '53017', '54078'],
-					],  
-					// Budget Stalled - No Update - No Backpay
-					salarySchedule2026: [
-						['42512', '45486', '48217', '50627', '52651', '54232', '55317'], // C/OI
-						['43911', '46983', '49852', '52293', '54385', '56015', '57136'], // C/OII
-						['46961', '50249', '53265', '55928', '58164', '59909', '61108'], // C/OIII
-					],
-					salarySchedule2027: [
-						['42512', '45486', '48217', '50627', '52651', '54232', '55317'], // C/OI
-						['43911', '46983', '49852', '52293', '54385', '56015', '57136'], // C/OII
-						['46961', '50249', '53265', '55928', '58164', '59909', '61108'], // C/OIII
-					],
+				stepIds: {
+					co1: ['co1-0', 'co1-1', 'co1-2', 'co1-3', 'co1-4', 'co1-5', 'co1-6'],
+					co2: ['co2-0', 'co2-1', 'co2-2', 'co2-3', 'co2-4', 'co2-5', 'co2-6'],
+					co3: ['co3-0', 'co3-1', 'co3-2', 'co3-3', 'co3-4', 'co3-5', 'co3-6'],
 				},
-
+				routeStepIds(num) {
+					switch (num) {
+						case 1: return this.stepIds.co1; break; case 2: return this.stepIds.co2; break; case 3: return this.stepIds.co3; break; 
+						default: return; break;
+					}
+				},
+				currentSchedule: {
+					year: 2027,
+					co1: ['42512', '45486', '48217', '50627', '52651', '54232', '55317'], // C/OI
+					co2: ['43911', '46983', '49852', '52293', '54385', '56015', '57136'], // C/OII
+					co3: ['46961', '50249', '53265', '55928', '58164', '59909', '61108'], // C/OIII
+				},
+				routeCurrentSchedule(num) {
+					switch (num) {
+						case 1: return this.currentSchedule.co1; break; case 2: return this.currentSchedule.co2; break; case 3: return this.currentSchedule.co3; break; 
+						default: return; break;
+					}
+				},
+				salarySchedules: [
+					{
+						year: 2020,
+						co1: ['33130', '33130', '33130', '33130', '33130', '33130', '33130'],
+						co2: ['34220', '34220', '34220', '34220', '34220', '34220', '34220'],
+						co3: ['36598', '36598', '36598', '36598', '36598', '36598', '36598'],
+					},
+					{
+						year: 2021,
+						co1: ['33130', '35449', '37576', '39455', '41033', '42264', '43109'],
+						co2: ['34220', '36615', '38812', '40753', '42383', '43654', '44527'],
+						co3: ['36598', '39160', '41510', '43586', '45329', '46689', '47623'],
+					},
+					{
+						year: 2022,
+						co1: ['33958', '36335', '38515', '40441', '42059', '43321', '44187'],
+						co2: ['35076', '37530', '39782', '41772', '43443', '44745', '45640'],
+						co3: ['37513', '40139', '42548', '44676', '46462', '47856', '48814'],
+					},
+					{
+						year: 2023,
+						co1: ['36525', '39801', '41427', '43498', '45237', '46595', '47527'],
+						co2: ['37727', '40367', '42790', '44929', '46726', '48127', '49090'],
+						co3: ['40348', '43173', '45764', '48052', '49974', '51473', '52503'],
+					},
+					{
+						year: 2024,
+						co1: ['37621', '40253', '42670', '44803', '46594', '47993', '48953'],
+						co2: ['38859', '41578', '44074', '46277', '48128', '49571', '50563'],
+						co3: ['41558', '44468', '47137', '49494', '51473', '53017', '54078'],
+					},
+					{
+						year: 2025,
+						co1: ['37621', '40253', '42670', '44803', '46594', '47993', '48953'],
+						co2: ['38859', '41578', '44074', '46277', '48128', '49571', '50563'],
+						co3: ['41558', '44468', '47137', '49494', '51473', '53017', '54078'],
+					} ,
+					{
+						// Budget Stalled - No Update - No Backpay
+						year: 2026,
+						co1: ['42512', '45486', '48217', '50627', '52651', '54232', '55317'], // C/OI
+						co2: ['43911', '46983', '49852', '52293', '54385', '56015', '57136'], // C/OII
+						co3: ['46961', '50249', '53265', '55928', '58164', '59909', '61108'], // C/OIII
+					},
+					{
+						year: 2027,
+						co1: ['42512', '45486', '48217', '50627', '52651', '54232', '55317'], // C/OI
+						co2: ['43911', '46983', '49852', '52293', '54385', '56015', '57136'], // C/OII
+						co3: ['46961', '50249', '53265', '55928', '58164', '59909', '61108'], // C/OIII
+					},
+				],
 				fiscalYear: 2027,
-				currentSchedule: this.salarySchedules.entries.keys(0),
 				currentSalary: 54232,
-				currentHourlyRate: (this.currentSalary / 52 / 40).toFixed(2),
+				currentHourlyRate: this.currentSalary / 52 / 40,
 				custodyLevel: 1,
 				yearsExperience: 5,
-				currentSelection: 'co1-5',
-				currentHover: 'co-1-0', 
-				viewStep: function() {
-					const stepIds = [
-						'co1-0', 'co1-1', 'co1-2', 'co1-3', 'co1-4', 'co1-5', 'co1-6',
-						'co2-0', 'co2-1', 'co2-2', 'co2-3', 'co2-4', 'co2-5', 'co2-6',
-						'co3-0', 'co3-1', 'co3-2', 'co3-3', 'co3-4', 'co3-5', 'co3-6',
-					];
-					stepIds.forEach(stepId => {
-						let stepEl = document.getElementById(stepId);
-						stepEl.onclick = function () {
-							this.custodyLevel = stepId[2];
-							this.yearsExperience = stepId[4];
+				selectedSalaryId: `co${this.custodyLevel}-${this.yearsExperience}`,
+				selectionLoaded: false,
+				selectionLoad() {
+					this.selectionLoaded = ! this.selectionLoaded;
+					setTimeout(() => {
+						this.selectionLoaded = ! this.selectionLoaded;
+					}, 1000);
+				},
+				currentSelection(el){
+					this.custodyLevel = parseInt(el.id[2]);
+					this.yearsExperience = parseInt(el.id[4]);
+					this.selectedSalaryId = el.id;
+				},
+				selectionAdjust() {
+					switch(this.custodyLevel) {
+						case 1:
+							this.currentSalary = this.currentSchedule.co1[this.yearsExperience];
+						break;
+						case 2:
+							this.currentSalary = this.currentSchedule.co2[this.yearsExperience];
+						break;
+						case 3:
+							this.currentSalary = this.currentSchedule.co3[this.yearsExperience];
+						break;
+						default:
+							this.currentSalary = this.currentSalary;
+						break;
+					}
+					return this.currentSalary;
+				},
+				getSchedule(yr) {
+					if (yr - 2020 >= this.salarySchedules.length) {
+						this.fiscalYear--;
+						return this.currentSchedule;
+					} 
+					if (yr - 2020 < 0) {
+						this.fiscalYear++;
+						return this.currentSchedule;
+					}
+					this.salarySchedules.forEach(s => {
+						if (s.year === yr) {
+							this.currentSchedule = s;
+							this.selectionAdjust();
 						};
 					});
 				},
-				populateSalaryTable: function(schedule) {
-					for (let i = 0; i < 8; i++) {
-						for (let j = 0; j < schedule[i].length; j++) {
-							document.getElementById(`co${i + 1}-${j}`).innerHTML = schedule[i][j];
-						}
-					}
-				},
-				nextFiscalYear: function() {
-					if ((this.fiscalYear - 2020) < this.salarySchedules.length) {
-						this.fiscalYear++;
-						this.currentSchedule = this.salarySchedules[this.fiscalYear - 2020];
-						populateSalaryTable(this.currentSchedule);
-						viewStep();
-					};
-				},
-				previousFiscalYear: function() {
-					if (!this.fiscalYear - 2020 <= 0) {
-						this.fiscalYear--;
-						this.currentSchedule = this.salarySchedules[this.fiscalYear - 2020];
-						populateSalaryTable(this.currentSchedule);
-						viewStep();
-					};
-				},
-			}" x-init="viewStep(); populateSalaryTable(currentSchedule);">
+			}">
 
 		<div class="tool-header">
-			<h2 class="tool-title">Step Pay Plan</h2>
+			<h2 x-ref="'spp'" class="tool-title">Step Pay Plan</h2>
 			<hr class="hr-cmbr-dark-gradient">
 		</div>
 		<div class="flex-table">
 			<div class="grid-col-3-1-1">
 				<div class="grid-col-1-1">
-					<strong id="custody-level" x-html=" 'I'.repeat(custodyLevel);">_</strong>
-					<strong id="years-experience" x-html="yearsExperience">_</strong>
-					<p>Fiscal Year:</p>
-					<i id="fiscal-year" x-html="fiscalYear - (fiscalYear + 1);">_</i>
+					<strong x-html="'I'.repeat(custodyLevel);" co>_</strong>
+					<strong x-html="yearsExperience" yrs>_</strong>
+					<i>Fiscal Year:</i>
+					<i x-text="fiscalYear"></i>
 				</div>
-				<button class="step-pay-plan-button" @click="previousFiscalYear();">Previous</button>
-				<button class="step-pay-plan-button" @click="nextFiscalYear();">Next</button>
+				<button @click="fiscalYear--; getSchedule(fiscalYear); selectionLoad();" cmbr-btn>Previous</button>
+				<button @click="fiscalYear++; getSchedule(fiscalYear); selectionLoad();" cmbr-btn>Next</button>
 			</div>
 		</div>
 		<div>
@@ -119,72 +196,52 @@
 				<div id="salary-table" class="flex-table">
 					<div class="grid-col-8x-1">
 						<div id="salary-table-corner" class="flex-table-side-header salary-highlight"></div>
-						<div class="flex-table-header">Step 0</div>
-						<div class="flex-table-header">Step 1</div>
-						<div class="flex-table-header">Step 2</div>
-						<div class="flex-table-header">Step 3</div>
-						<div class="flex-table-header">Step 4</div>
-						<div class="flex-table-header">Step 5</div>
-						<div class="flex-table-header">Step 6</div>
+						<template x-for="i in 7">
+							<div class="flex-table-header" x-text="'Step ' + (i - 1)"></div>
+						</template>
 					</div>
 					<div class="flex-table-body">
-						<div class="flex-table-row grid-col-8x-1 co-row">
-							<div class="flex-table-side-header">COI</div>
-							<div id="co1-0"></div>
-							<div id="co1-1"></div>
-							<div id="co1-2"></div>
-							<div id="co1-3"></div>
-							<div id="co1-4"></div>
-							<div id="co1-5"></div>
-							<div id="co1-6"></div>
-						</div>
-						<div class="flex-table-row grid-col-8x-1 co-row">
-							<div class="flex-table-side-header">COII</div>
-							<div id="co2-0"></div>
-							<div id="co2-1"></div>
-							<div id="co2-2"></div>
-							<div id="co2-3"></div>
-							<div id="co2-4"></div>
-							<div id="co2-5"></div>
-							<div id="co2-6"></div>
-						</div>
-						<div class="flex-table-row grid-col-8x-1 co-row">
-							<div class="flex-table-side-header">COIII</div>
-							<div id="co3-0"></div>
-							<div id="co3-1"></div>
-							<div id="co3-2"></div>
-							<div id="co3-3"></div>
-							<div id="co3-4"></div>
-							<div id="co3-5"></div>
-							<div id="co3-6"></div>
-						</div>
+						<template x-for="level in 3">
+							<div class="flex-table-row grid-col-8x-1">
+								<div class="flex-table-side-header" x-text="'I'.repeat(level);" co></div>
+								<template x-for="(step, index) in routeStepIds(level)" , :key="index">
+									<div :id="step" x-html="routeCurrentSchedule(level)[index]"
+										@click="currentSelection($el) ; selectionAdjust(); selectionLoad();"
+										:class="$el.id === selectedSalaryId ? 'thicken' : '';" cash salary>
+									</div>
+								</template>
+							</div>
+						</template>
 					</div>
 				</div>
 				<hr class="hr-dark"><br>
+				<dl class="grid-col-1-1" :camberact="selectionLoaded">
+					<dt>Base-Rate Salary:</dt>
+					<dd x-html="parseInt(currentSalary).toFixed(2);"
+						style="background-color:#00205B; color:#ffca00; font-weight: 500;">
+					</dd>
+					<dt>Base-Rate Monthly:</dt>
+					<dd x-html="(currentSalary / 12).toFixed(2);" cash></dd>
+					<dt>Base-Rate Hourly:</dt>
+					<dd x-html="(currentSalary / 52 / 40).toFixed(2);" cash></dd>
+					<dt>Base-Rate 11HR Gap Total:</dt>
+					<dd x-html="((currentSalary / 52 / 40) * 11).toFixed(2);" cash></dd>
+					<dt>Base 12.25HR Shift Value: </dt>
+					<dd x-html="((currentSalary / 52 / 40) * 12.25).toFixed(2);" cash></dd>
+					<dt>Differential Overtime:</dt>
+					<dd x-html="(((currentSalary / 52 / 40) * 1.5) - (currentSalary / 52 / 40)).toFixed(2);" cash>
+					</dd>
+					<dt>OT 12.25HR Shift Value: </dt>
+					<dd x-html="(12.25 * ((currentSalary / 52 / 40) * 1.5)).toFixed(2);" cash>
+					</dd>
+					<dt>Differential Nightly:</dt>
+					<dd x-html="((currentSalary / 52 / 40) / 10).toFixed(2);" cash></dd>
+					<dt>Differential Weekend:</dt>
+					<dd x-html="((currentSalary / 52 / 40) / 10).toFixed(2);" cash></dd>
+					<dt>Differential Holiday:</dt>
+					<dd x-html="(((currentSalary / 52 / 40) * 1.75) - (currentSalary / 52 / 40)).toFixed(2);" cash></dd>
+				</dl>
 			</div>
-			<ul id="salary-values" class="grid-col-1-1" style="list-style-type: none;">
-				<li>Base-Rate Salary:</li> <span id="current-salary" class="usd" x-html="currentSalary"
-					style="background-color:#00205B; color:#ffca00; font-weight: 500;"></span>
-				<li>Base-Rate Monthly:</li> <span id="monthly-salary" class="usd"
-					x-html="(currentSalary / 12).toFixed(2);"></span>
-				<li>Base-Rate Hourly:</li> <span id="hourly-salary" class="usd" x-html="currentHourlyRate"></span>
-				<li>Base-Rate 11HR Gap Total:</li> <span id="gap-pay" class="usd"
-					x-html="(currentHourlyRate * 11).toFixed(2);"></span>
-				<li>Base 12.25HR Shift Value: </li><span id="base-shift-pay" class="usd"
-					x-html="(currentHourlyRate * 12.25).toFixed(2);"></span>
-				<li>Differential Overtime:</li> <span id="overtime-diff" class="usd"
-					x-html="((currentHourlyRate * 1.5) - currentHourlyRate).toFixed(2);"
-					style="background-color:rgb(from var(--doi-black) r g b / 50%); color:#bf0a30;"></span>
-				<li>OT 12.25HR Shift Value: </li><span id="ot-shift-diff" class="usd"
-					x-html="(12.25 * (currentHourlyRate * 1.5)).toFixed(2);"
-					style="background-color:rgb(from var(--doi-black) r g b / 50%); color:#bf0a30;"></span>
-				<li>Differential Nightly:</li><span id="night-diff" class="usd"
-					x-html="(currentHourlyRate / 10).toFixed(2);"></span>
-				<li>Differential Weekend:</li><span id="weekend-diff" class="usd"
-					x-html="(currentHourlyRate / 10).toFixed(2);"></span>
-				<li>Differential Holiday:</li><span id="holiday-diff" class="usd"
-					x-html="((currentHourlyRate * 1.75) - currentHourlyRate).toFixed(2);"></span>
-			</ul>
 			<hr class="hr-groove-bottom">
 			<hr class="hr-cmbr-dark-gradient">
 		</div>

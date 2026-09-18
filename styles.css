@@ -585,7 +585,7 @@ nav {
 .h1-lamp:active {
 	cursor: grabbing;
 	text-shadow: #ffcc00 2rem 1rem 5rem;
-	animation: 5s linear shadow-fade infinite;
+	animation: 5s ease-in-out shadow-fade infinite;
 }
 
 
@@ -917,6 +917,12 @@ mark {
 	background: var(--cmbr-legacy-gradient);
 }
 
+.thicken {
+	font-weight: bolder;
+	background-color: black;
+	color: blanchedalmond;
+}
+
 .chrispy {
 	font-family: "PermanentMarker", sans-serif;
 	box-sizing: border-box;
@@ -950,6 +956,31 @@ mark {
 	cursor: pointer;
 	color: var(--cmbr-btn-c-h);
 	border-color: var(--cmbr-green);
+}
+
+[cmbr-btn] {
+	cursor: pointer;
+	user-select: none;
+	font-weight: 900;
+	color: burlywood;
+	padding: 0.2rem;
+	border: 0.2rem solid cornflowerblue;
+	box-sizing: border-box;
+	transition: color 0.2s ease-in;
+}
+
+[cmbr-btn]:hover {
+	border-color: sienna;
+	color: indianred;
+}
+
+[cmbr-btn]:active {
+	border-color: burlywood;
+	color: cadetblue;
+}
+
+[cmbr-btn]:disabled {
+	cursor: not-allowed;
 }
 
 /* |==========| §BUTTONS, TRIGGERS, AND THEIR AFFIXATION <button> |====================> */
@@ -2445,6 +2476,20 @@ form>label {
 	}
 }
 
+@keyframes text-fade {
+	0% {
+		opacity: 1;
+	}
+
+	50% {
+		opacity: 0.8;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
 /* |==========| KEYFRAME ANIMATIONS @keyframes |====================> */
 /* |==========| ALL SITE ANIMATIONS AND TRANSITION RUNNERS |====================> */
 @keyframes stagger-signature {
@@ -2621,6 +2666,24 @@ form>label {
 		background-position: 100% 0;
 	}
 }
+
+@keyframes saunter {
+	from {
+		text-shadow: #a8561b 2rem -2rem -2rem;
+		background: linear-gradient(120deg, #f59c60f1 0%, #a1dbf8d8 100%);
+		background-clip: border-box;
+		-webkit-background-clip: text;
+	}
+
+	to {
+		text-shadow: #ffcc00 2rem 0rem 0rem;
+		background: linear-gradient(120deg, #f59b60 0%, #a1dbf8e5 100%);
+		background-clip: border-box;
+		-webkit-background-clip: text;
+	}
+}
+
+
 
 @keyframes shadow-fade {
 	0% {

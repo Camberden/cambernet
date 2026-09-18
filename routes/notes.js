@@ -4,41 +4,6 @@ const { cookieJwtAuth } = require('../middleware/auth');
 
 const router = express.Router();
 
-// Create a new note
-router.post('/', cookieJwtAuth, async (req, res) => {
-  console.log('Notes API: router.post(`/`)');
-  pool.releaseConnection();
-  try {
-    const { newNoteTitle, newNoteLocation, newNoteAudio, newNotePhotos, newNoteTags, newNoteContent } = req.body;
-    const user_id = req.user.payload.id;
-
-    if (!newNoteTitle || !newNoteContent) {
-      return res.status(400).json({ error: 'Title and content are required' });
-    }
-
-    await pool.getConnection();
-    console.log("Pool gets first notes connection");
-    const [result] = await pool.execute(
-      'INSERT INTO notes (user_id, title, location, audio, photos, tags, content) VALUES (?, ?, ?, ?, ?, ?, ?)',
-      [user_id, newNoteTitle, newNoteLocation, newNoteAudio, newNotePhotos, newNoteTags, newNoteContent]
-    );
-
-    pool.releaseConnection();
-
-    res.send({
-      message: '(1) Note created successfully!',
-      postId: result.insertId,
-      user: req.user,
-    });
-
-  } catch (error) {
-    console.error('Note creation error:', error);
-    res.status(500).json({ error: 'Failed to create note' });
-  } finally {
-    pool.releaseConnection();
-  }
-});
-
 // Get all notes (public)
 router.get('/', async (req, res) => {
   console.log('Notes API: router.get(`/`)');
@@ -98,6 +63,40 @@ router.get('/:id', async (req, res) => {
   } catch (error) {
     console.error('Note fetch error:', error);
     res.status(500).json({ error: 'Failed to fetch note' });
+  }
+});
+// Create a new note
+router.post('/', cookieJwtAuth, async (req, res) => {
+  console.log('Notes API: router.post(`/`)');
+  pool.releaseConnection();
+  try {
+    const { newNoteTitle, newNoteLocation, newNoteAudio, newNotePhotos, newNoteTags, newNoteContent } = req.body;
+    const user_id = req.user.payload.id;
+
+    if (!newNoteTitle || !newNoteContent) {
+      return res.status(400).json({ error: 'Title and content are required' });
+    }
+
+    await pool.getConnection();
+    console.log("Pool gets first notes connection");
+    const [result] = await pool.execute(
+      'INSERT INTO notes (user_id, title, location, audio, photos, tags, content) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [user_id, newNoteTitle, newNoteLocation, newNoteAudio, newNotePhotos, newNoteTags, newNoteContent]
+    );
+
+    pool.releaseConnection();
+
+    res.send({
+      message: '(1) Note created successfully!',
+      postId: result.insertId,
+      user: req.user,
+    });
+
+  } catch (error) {
+    console.error('Note creation error:', error);
+    res.status(500).json({ error: 'Failed to create note' });
+  } finally {
+    pool.releaseConnection();
   }
 });
 

@@ -89,6 +89,7 @@ document.addEventListener("alpine:init", () => {
 		origin: document.location.origin,
 		page: document.location.href,
 		reroute: function () {
+			console.table({ 'Going to Page: ': this.page });
 			setInterval(() => { document.location = this.page }, 1000);
 		}
 	});
@@ -128,6 +129,25 @@ document.addEventListener("alpine:init", () => {
 			this.on = !this.on;
 		},
 	});
+	Alpine.store('vivacious', {
+		/**
+		 * 
+		 * @param {HTMLElement} el 
+		 * @param {String} act 
+		 * @yields {CSSAnimation} CSS Animation
+		 * @description Applies a CSS Animation to an element
+		 * @example <div x-data x-vivacious:action="fade-in"></div>
+		 */
+		action: (el) => {
+			el.setAttribute(act, '');
+			const doAct = setInterval(() => { el.removeAttribute(act); }, 1000);
+			clearInterval(doAct);
+		},
+		active: false,
+		toggle() {
+			this.active = !this.active;
+		},
+	})
 	// *=> end of Alpine Store
 });
 

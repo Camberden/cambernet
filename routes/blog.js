@@ -5,47 +5,6 @@ const { memStorage } = require("../middleware/media");
 
 const router = express.Router();
 
-/* 1	id	int	NULL	NULL	NO	NULL	auto_increment		
-2	user_id	int	NULL	NULL	NO	NULL		users(id)	
-3	title	varchar(255)	utf8mb4	utf8mb4_0900_ai_ci	NO	NULL			
-4	location	varchar(255)	utf8mb4	utf8mb4_0900_ai_ci	YES	NULL			
-5	audio	varchar(255)	utf8mb4	utf8mb4_0900_ai_ci	YES	NULL			
-6	photos	varchar(255)	utf8mb4	utf8mb4_0900_ai_ci	YES	NULL			
-7	tags	varchar(255)	utf8mb4	utf8mb4_0900_ai_ci	YES	NULL			
-8	content	mediumtext	utf8mb4	utf8mb4_0900_ai_ci	NO	NULL			16,777,215 for medium text
-9	created_at	timestamp	NULL	NULL	YES	CURRENT_TIMESTAMP	DEFAULT_GENERATED		
-10	updated_at	timestamp	NULL	NULL	YES	CURRENT_TIMESTAMP	on update CURRENT_TIMESTAMP		 
-  */
-
-// router.post('/upload', memStorage.single('heicBP'), function (req, res, next) {
-//   if (!req.file) {
-//     return res.status(400).send('No file uploaded');
-//   }
-//   console.log("blog photo uploading...");
-//   (async () => {
-//     const inputBuffer = await promisify(fs.readFile)(req.file.path);
-//     const outputBuffer = await convert({
-//       buffer: inputBuffer,
-//       format: 'JPEG',
-//       quality: 0.5,
-//       name: 'temp-photo',
-//       // % Possibly add 'name' here?
-//     });
-
-//     await promisify(fs.writeFile)(`assets/blog-photos/bp-photo-${Date.now()}.jpeg`, outputBuffer);
-
-//   })();
-//   fs.unlink(req.file.path, (err) => {
-//     if (err) {
-//       console.error('File cleanup failed:', err);
-//     } else {
-//       console.log('Uploaded file cleaned up successfully');
-//     }
-//   });
-//   // res.redirect('/');
-//   next();
-// });
-
 // Create a new blog post
 router.post('/', cookieJwtAuth, async (req, res, next) => {
 
@@ -94,6 +53,7 @@ router.get('/', async (req, res) => {
   console.log("hi")
   res.send(closeout);
 });
+
 // Get all blog posts (public)
 router.get('/all', async (req, res) => {
   console.log('Blog API: router.get(`/all`) [const parsedPosts = posts.map(post => ({...post, }));]');

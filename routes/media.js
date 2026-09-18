@@ -78,7 +78,6 @@ router.get('/travel-photos', async (req, res, next) => {
 router.get('/clouds', async (req, res) => {
 	if (req.message) {
 		console.log(message);
-
 	}
 	try {
 		const connection = await pool.getConnection();
@@ -100,7 +99,7 @@ router.get('/clouds', async (req, res) => {
 
 		res.json(parsedClouds);
 	} catch (error) {
-		console.error('Blog fetch error:', error);
+		console.error('fetch error:', error);
 		res.status(500).json({ error: 'Failed to fetch clouds' });
 	}
 });
@@ -122,14 +121,14 @@ router.post('/clouds', cookieJwtAuth, async (req, res) => {
 			[user_id, title, thought, weight]
 		);
 
-		await pool.releaseConnection();
+		pool.releaseConnection();
 
 
-		// res.status(201).json({
-		// 	message: 'Cloud created successfully',
-		// 	cloudId: result.insertId
-		// });
-		res.redirect('/cloudspace/cloudspace.html');
+		res.send({
+			message: 'Cloud created successfully',
+			cloudId: result.insertId
+		});
+		// res.redirect('/cloudspace/cloudspace.html');
 	} catch (error) {
 		console.error('Cloud creation error:', error);
 		res.status(500).json({ error: 'Failed to create cloud' });

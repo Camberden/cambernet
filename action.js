@@ -8,7 +8,7 @@
  * - øH/«![/H)'/]^)H'¬L/¬]'/H[*'v'{';{[\\
  * @author Camberden (Chrispy | Kippi)
  */
-const latestUpdate = "Thursday, September 17th, 2026";
+const latestUpdate = "Friday, September 18th, 2026";
 document.querySelector("#latest-update").innerText = latestUpdate;
 const camberden = document.querySelector("#camberden");
 const monickers = ["camberden", "観葉伝", "カンバデン", "}*'<'('H'[';<"];
@@ -94,7 +94,6 @@ const randomizeMonicker = () => {
 		camberden.innerHTML = monickers[3];
 	} else {
 		camberden.innerHTML = monickers[0];
-
 	}
 	camberden.style.opacity = "100%";
 }
@@ -102,7 +101,6 @@ const randomizeMonicker = () => {
  * @param {Object} album
  */
 const randomizePhotos = (album) => {
-
 	const infoDivBackground = document.getElementById("info-div-background");
 	infoDivBackground.style.animationPlayState = "paused";
 	infoDivBackground.parentElement.style.animationPlayState = "paused";
