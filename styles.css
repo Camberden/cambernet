@@ -1817,10 +1817,10 @@ select:hover {
 .modal-close {
 	border-top: none;
 	border-bottom: 1px solid #888;
-	border-left: none;
-	border-right: 1px solid #888;
+	border-left: 1px solid #888;
+	border-right: none;
 	color: #888;
-	float: inline-start;
+	float: inline-end;
 	font-size: 2rem;
 	font-weight: bold;
 }
@@ -2064,7 +2064,7 @@ input {
 	font-family: monospace, serif;
 	font-size: 1.5rem;
 	border: 0.3rem ridge cornflowerblue;
-	width: 100%;
+	width: 90%;
 }
 
 input:focus {

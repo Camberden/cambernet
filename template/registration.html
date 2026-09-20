@@ -1,7 +1,8 @@
 <div id="registration-handler" x-data>
 	<!-- % regregreg -->
 
-	<form id="register-form" action='/api/auth/register' method='POST'>
+	<form id="register-form" hx-post='/api/auth/register' hx-trigger="submit" hx-target="#wksp-console"
+		hx-swap="beforeend settle:1s" @submit="openModal = false">
 		<h2 :id="$id('modal-title')" class="marker-green">Register</h2>
 		<hr class=" hr-cmbr-dark-gradient">
 		<hr class="hr-groove-top">
@@ -37,7 +38,7 @@
 			<button type="button" x-on:click="openModal = false" cmbr-i>
 				Cancel
 			</button>
-			<button x-on:submit="openModal = false" type="submit" cmbr-i>Register</button>
+			<button type="submit" cmbr-i>Register</button>
 		</div>
 		<div class="grid-col-1">
 			<i hx-get="../template/login.html" hx-target="#registration-handler" hx-trigger="click" hx-swap="outerHTML"

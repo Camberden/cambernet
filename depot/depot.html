@@ -25,37 +25,71 @@
 
 	<nav id="nav" hx-get="/nav.html" hx-target="#nav" hx-trigger="load" hx-swap="innerHTML" x-bg></nav>
 
-	<main class="index-grid" style="align-items: center; justify-items: center;" x-data>
+	<main class="index-grid" style="align-items: center; justify-items: center;" x-data="{
+		notice: {},
+		parseNotice: function() {
+			return JSON.parse(this.notice);
+		}
+		}">
+
 		<hr class="hr-push-down">
 
 		<div class="glass-pane glass-pane-backing" style="width:30rem; height: 10rem;">
-			<span id="alter"></span>
 		</div>
-
-		<div id="all-clouds-display">
-			<dl class="grid-col-1-1">
-				<template x-for="cloud in await $get('/api/media/clouds')">
-					<dt x-html="cloud.title"></dt>
-					<dd x-html="cloud.thought"></dd>
-				</template>
-			</dl>
-			<form id="new-cloud-form" hx-post='/api/media/clouds' hx-trigger="submit" hx-target="#alter"
-				hx-swap="outerHTML">
-				<label for="title" x-text="'Cloud Title'"></label>
-				<input type="text" name="title" :id=$id('title') required>
-
-				<label for="thought" x-text="'Cloud Thought'"></label>
-				<input type="text" name="thought" :id=$id('thought') required>
-
-				<label for="weight" x-text="'Cloud Weight'"></label>
-				<input type="number" name="weight" :id=$id('weight')>
-				<button type="submit" x-text="'Make Cloud'" @click="htmx.process($el); $store.site.reroute();" cmbr-i>
-				</button>
-			</form>
+		<div id="alter" @htmx:before-swap="notice = event.detail.serverResponse;"
+			@htmx:after-swap="$store.notifier.trigger()"
+			style="width:30rem; height:3rem; border: 0.3rem solid transparent;" hx-get="notice.html"
+			hx-target="#notifier" hx-trigger="htmx:after-settle" hx-swap="innerHTML"
+			x-show="$store.notifier.open === false">
+		</div>
+		<div id="notifier" style="width:30rem; height:3rem; border: 0.3rem solid transparent;"
+			x-show="$store.notifier.open === true" x-transition>
+			<img width="100%" height="100%" src="../images/squares-fade.svg" alt="loading..." cmbr-loading />
 
 		</div>
 
+		<div id="all-clouds-display" class="grid-col-1-1">
+			<div>
+				<form id="new-cloud-form" hx-post='/api/media/clouds' hx-trigger="submit" hx-target="#alter"
+					hx-swap="none settle:1s">
+					<label for="title" x-text="'Cloud Title'"></label>
+					<input type="text" name="title" :id=$id('title') required>
 
+					<label for="thought" x-text="'Cloud Thought'"></label>
+					<input type="text" name="thought" :id=$id('thought') required>
+
+					<label for="weight" x-text="'Cloud Weight'"></label>
+					<input type="number" name="weight" :id=$id('weight')>
+					<button type="submit" x-text="'Make Cloud'" @click="htmx.process($el);" cmbr-i>
+					</button>
+				</form>
+			</div>
+			<div hx-get="newercloud.html" hx-trigger="submit" hx-target="this" hx-swap="outerHTML">
+				<dl>
+					<template x-for="cloud in await $get('/api/media/clouds')">
+						<div class="grid-col-1-1-1-1"
+							style="width:30rem; height:fit-content; border: 0.1rem solid cornflowerblue;">
+							<div>
+								<b x-html="cloud.id"></b>
+							</div>
+							<div>
+								<dt x-html="'Cloud Title: ' + cloud.title"></dt>
+							</div>
+							<div>
+								<dd x-html="'Cloud Thought: ' + cloud.thought"></dd>
+							</div>
+							<div>
+								<button style="border-color:darkred;" :hx-delete="'/api/media/clouds/' + cloud.id"
+									hx-trigger="click" hx-target="#alter" hx-swap="innerHTML"
+									hx-confirm="'Are you sure you want to delete this cloud?'"
+									x-effect="htmx.process($el)" x-text="'Delete'"
+									@click="$store.site.reroute();"></button>
+							</div>
+						</div>
+					</template>
+				</dl>
+			</div>
+		</div>
 
 	</main>
 </body>

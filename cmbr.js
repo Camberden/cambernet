@@ -81,6 +81,21 @@ document.addEventListener("alpine:init", () => {
 		}, 1000);
 	});
 
+	Alpine.directive('retrieval', function (el, { expression }) {
+		console.log(expression);
+		const ex = JSON.parse(expression);
+		const t = document.createElement('ul');
+		console.log(ex);
+		for (item in ex.entries()) {
+			const d = document.createElement('li');
+			const text = document.createTextNode(item);
+			console.log(text);
+			d.appendChild(text);
+			t.appendChild(d);
+		};
+		el.appendChild(t);
+	});
+
 	// *=> end of Alpine Directives
 
 	// !==========| Alpine Store |==========!
@@ -94,9 +109,23 @@ document.addEventListener("alpine:init", () => {
 		}
 	});
 	Alpine.store('modal', {
-		active: false,
+		open: false,
 		toggle() {
-			this.active = !this.active;
+			this.open = !this.open;
+		}
+	});
+	Alpine.store('notifier', {
+		open: false,
+		toggle() {
+			this.open = !this.open;
+		},
+		trigger() {
+			if (this.open = true) {
+				setTimeout(function () {
+					this.open = false;
+					console.log('what' + this.open);
+				}, 2000);
+			}
 		}
 	});
 	Alpine.store('thematic', {
@@ -229,7 +258,6 @@ const cmbrMdConfig = {
 		"underscoresBreakWords": true
 	}
 }
-
 /**
  * @global @public @interface
  * @description - Camberden Personal Utilities:

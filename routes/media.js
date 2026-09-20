@@ -11,6 +11,7 @@ const { charterDir } = require('../services/charterService');
 const { heiconversion } = require('../services/imageService');
 
 const { cookieJwtAuth } = require('../middleware/auth.js');
+const { notifyUser } = require('../middleware/notify.js');
 const { upload, uploadMiddleware } = require('../middleware/media');
 
 
@@ -76,8 +77,8 @@ router.get('/travel-photos', async (req, res, next) => {
 });
 
 router.get('/clouds', async (req, res) => {
-	if (req.message) {
-		console.log(message);
+	if (!req.message) {
+		console.log('No message... yet!');
 	}
 	try {
 		const connection = await pool.getConnection();
@@ -91,6 +92,7 @@ router.get('/clouds', async (req, res) => {
 
 		// Parse JSON fields
 		const parsedClouds = clouds.map(cloud => ({
+			id: cloud.id,
 			title: cloud.title,
 			thought: cloud.thought,
 			weight: cloud.weight,
@@ -123,26 +125,58 @@ router.post('/clouds', cookieJwtAuth, async (req, res) => {
 
 		pool.releaseConnection();
 
-
-		res.send({
+		res.json({
 			message: 'Cloud created successfully',
 			cloudId: result.insertId
 		});
-		// res.redirect('/cloudspace/cloudspace.html');
 	} catch (error) {
 		console.error('Cloud creation error:', error);
 		res.status(500).json({ error: 'Failed to create cloud' });
 	}
 });
 
-// router.get('/', (req, res) => {
+router.delete('/clouds/:id', cookieJwtAuth, async (req, res) => {
+	console.log("Todos API: router.delete(`/:id`) [const { deleteCloudId } = req.params;]");
+	pool.releaseConnection();
+	try {
 
-// 	req.body = charterDir('images/tmp/');
+		const deleteCloudId = parseInt(req.params.id).toFixed(0);
+		const user_id = req.user.payload.id;
+		console.log("Fetching delete param:", deleteCloudId);
+		console.log("Id type:", typeof deleteCloudId);
 
-// 	console.log(res.body);
-// 	res.json("Files: " + res.body);
-// 	res.end();
-// });
+		await pool.getConnection();
 
+		// Check ownership
+		const [cloudposts] = await pool.execute(
+			'SELECT user_id FROM clouds WHERE id = ?',
+			[deleteCloudId]
+		);
+
+		if (cloudposts.length === 0) {
+			pool.releaseConnection();
+			return res.status(404).json({ error: 'cloudposts not found' });
+		}
+
+		if (cloudposts[0].user_id !== user_id) {
+			pool.releaseConnection();
+			return res.status(403).json({ error: 'Unauthorized' });
+		}
+
+		await pool.execute('DELETE FROM clouds WHERE id = ?', [deleteCloudId]);
+
+		pool.releaseConnection();
+
+		res.send({
+			message: '(1) Cloud deleted successfully!',
+			user: req.user.payload.username,
+		});
+	} catch (error) {
+		console.error('CloudId delete error:', error);
+		res.status(500).json({ error: 'Failed to delete cloudposts' });
+	} finally {
+		pool.releaseConnection();
+	}
+});
 
 module.exports = router;

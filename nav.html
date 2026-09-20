@@ -80,13 +80,15 @@
             </div>
 
             <!-----| NAV 4 |----->
-            <div id="nav-4">
+            <div id="nav-4" x-data="{
+
+            }">
                 <s class="h1-lamp">
                     <!-- ♫ -->
                 </s>
-                <div class="modal" style="display:none;" x-data>
+                <div class="modal" x-show="$store.modal.open" @click.away="$store.modal.toggle()">
+                    <span class="modal-close" x-html="'&times;'" @click="$store.modal.toggle()"></span>
                     <div class="modal-field">
-                        <span class="modal-close" x-html="'&times;'"></span><br>
                         <div id="modal-text"></div>
                     </div>
                 </div>

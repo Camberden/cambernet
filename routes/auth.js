@@ -2,6 +2,7 @@ const express = require('express');
 const { hashPassword, comparePassword } = require("../services/hashingService");
 const { generateToken, verifyToken } = require("../services/tokenService");
 const pool = require('../config/database');
+const { notifyUser } = require('../middleware/notify.js');
 const { cookieJwtAuth } = require('../middleware/auth.js');
 
 const router = express.Router();
@@ -23,6 +24,7 @@ router.post('/register', async (req, res, next) => {
 			await pool.releaseConnection();
 			return res.status(409).json({ error: 'Username already exists' });
 		}
+		const newUser = (usernameRegister[0]).toString();
 		console.log("Query completed. Hashing password...");
 		const passwordString = passwordRegister.toString();
 		const passwordHash = await hashPassword(passwordString);
@@ -33,7 +35,8 @@ router.post('/register', async (req, res, next) => {
 		);
 		await pool.releaseConnection();
 		console.log("User registered successfully");
-		res.status(201).json({ message: 'User registered successfully' });
+		// res.status(201).json({ message: 'User registered successfully' });
+		res.send("User Registered Successfully. Welcome, " + newUser + "!");
 		next();
 	} catch (err) {
 		console.error('Registration error:', err);
@@ -123,7 +126,6 @@ router.post('/version', async (req, res) => {
 	res.write("MySqlVersion: " + result);
 	res.end();
 });
-
 router.post('/threads', async (req, res) => {
 	await pool.getConnection();
 	const [rows] = await pool.query("SHOW status WHERE `Variable_name` = 'Threads_connected';");
@@ -134,6 +136,20 @@ router.post('/threads', async (req, res) => {
 
 	pool.releaseConnection();
 	res.write("Threads active: " + result + " / 100, technically...");
+	res.end();
+});
+
+router.post('/processes', notifyUser, async (req, res) => {
+	await pool.getConnection();
+	const [rows] = await pool.query("SHOW processlist;");
+	// const resultRows = (rows[0]).toString();
+	// resultRows = rows[0];
+	const resultRows = rows.map(row => ({
+		...row,
+	}));
+
+	res.send(resultRows);
+	pool.releaseConnection();
 	res.end();
 });
 
