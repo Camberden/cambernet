@@ -120,11 +120,11 @@ document.addEventListener("alpine:init", () => {
 			this.open = !this.open;
 		},
 		trigger() {
-			if (this.open = true) {
+			if (this.open === true) {
 				setTimeout(function () {
-					this.open = false;
+					this.open === false;
 					console.log('what' + this.open);
-				}, 2000);
+				}, 1000);
 			}
 		}
 	});

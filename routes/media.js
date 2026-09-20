@@ -168,8 +168,8 @@ router.delete('/clouds/:id', cookieJwtAuth, async (req, res) => {
 		pool.releaseConnection();
 
 		res.send({
-			message: '(1) Cloud deleted successfully!',
-			user: req.user.payload.username,
+			message: 'Cloud deleted successfully!',
+			deleted: 'Deleted Cloud: ' + deleteCloudId
 		});
 	} catch (error) {
 		console.error('CloudId delete error:', error);

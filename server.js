@@ -8,6 +8,7 @@ app.use(express.json());
 const cookieParser = require('cookie-parser');
 app.use(cookieParser(process.env.JWT_SECRET));
 app.get('/', (req, res, next) => {
+	console.trace("|=====| RELOADED |=====|");
 	next();
 });
 
