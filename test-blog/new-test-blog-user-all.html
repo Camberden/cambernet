@@ -1,11 +1,40 @@
-<div id="all-notes-display">
-	<div class="flex-table">
-		<template x-for="(blogpost, index) in $get('/api/blog/all/:username')" :key="index">
-			<div :class="'flex-table-row grid-col-1-1-1'">
-				<span x-html="blogpost.id"></span>
-				<span x-html="blogpost.title"></span>
-				<span x-html="blogpost.location"></span>
-			</div>
-		</template>
+<div id="all-user-blog-data" x-data="{
+	blogAllUsernameParcel: {},
+	blogAllUsernameCount: 0,
+	blogYears: [2023, 2024, 2025, 2026,],
+	blogItem: {},
+	returnOnePost: function () {
+		return this.blogAllUsernameParcel;
+	},
+}">
+
+	<div class="grid-col-1-3-1">
+		<span class="segsquare"></span>
+		<select id="blog-post-year-select"
+			x-effect="blogAllUsernameParcel = await $get('/api/blog/all/' + CMBRutil.iden)">
+			<option value="all-years" x-text="'All Years'"></option>
+			<template x-for="blogyear in blogYears">
+				<option x-text="blogyear">
+				</option>
+			</template>
+		</select>
+		<span class="segsquare"></span>
 	</div>
+	<br>
+	<hr class="hr-cmbr-dark-gradient">
+	<hr class="hr-groove-top">
+
+	<div style="width:10rem; height: 10rem; border: 0.3rem solid fuchsia;"></div>
+
+
+	<ul id=" blog-post-list" x-effect="CMBRutil.blogToggle(blogAllUsernameParcel.length)">
+		<template x-for="(blogpost, index) in blogAllUsernameParcel" :key="index">
+			<li :class="'flex-table-row grid-col-1-2'" x-on:click="CMBRutil.blogSelection = blogpost.id">
+				<b x-html="blogpost.id"></b>
+				<i x-html="blogpost.title"></i>
+			</li>
+	</ul>
+
+	<hr class="hr-groove-bottom">
+	<hr class="hr-cmbr-dark-gradient">
 </div>

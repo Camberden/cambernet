@@ -29,6 +29,25 @@
 	<main class="index-grid" style="align-items: center; justify-items: center;">
 		<hr class="hr-push-down">
 
+		<div id="mdeditor-handle" class="dashboard-item" style="text-align: left;" x-data="{
+			value: '# Markdown Testing 1 \n Quibusdam velit sequi sint aliquid atque. Non voluptate recusandae perferendis. Dolor maxime vero autem quam esse sunt rerum. Perferendis corporis veniam praesentium ab sit ipsam harum culpa. Voluptatem aspernatur officiis sapiente.',
+			init() {
+				let editor = CMBRutil.md();
+				editor.value(this.value);
+				editor.isSideBySideActive() ? console.log() : $store.navStore.toggle();
+				editor.codemirror.on('change', ()=> {
+					this.value = editor.value();
+				});
+			},
+		}">
+
+			<input x-ref="mdinput" type='hidden' name='mdinput' :value="value" />
+			<textarea x-ref="editor"></textarea>
+		</div>
+		<hr class="hr-push-down">
+
+
+
 		<div>
 			<div id="new-todopost-handle" class="cmbr-pen" x-data="{
 				selectedTodoId: null,
@@ -39,9 +58,7 @@
 						console.log( 'this.selectedTodoId:'  + this.selectedTodoId);
 						console.log( 'this.selectedTodoInfo:'  + this.selectedTodoInfo);
 					},
-
 				}">
-
 				<div>
 					<div id="all-todos-display">
 						<h2 class="marker-green">Todoposts | Selected: <span x-text="selectedTodoId"></span></h2>

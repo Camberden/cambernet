@@ -2,6 +2,7 @@ const express = require('express');
 const pool = require('../config/database');
 const { cookieJwtAuth } = require('../middleware/auth');
 const { memStorage } = require("../middleware/media");
+const { markdownMarkup } = require("../services/markdownService");
 
 const router = express.Router();
 
@@ -55,33 +56,7 @@ router.get('/', async (req, res) => {
 });
 
 // Get all blog posts (public)
-router.get('/all', async (req, res) => {
-  console.log('Blog API: router.get(`/all`) [const parsedPosts = posts.map(post => ({...post, }));]');
 
-  if (req.message) {
-    console.log(message);
-  }
-  try {
-    await pool.getConnection();
-
-    const [posts] = await pool.execute(
-      'SELECT bp.id, bp.title, bp.location, bp.audio, bp.created_at, u.username FROM blog_posts bp JOIN users u ON bp.user_id = u.id ORDER BY bp.created_at DESC'
-    );
-
-    pool.releaseConnection();
-
-    // ! Parse JSON fields
-    const parsedPosts = posts.map(post => ({
-      ...post,
-    }));
-    // tags: post.tags ? JSON.parse(post.tags) : []
-
-    res.json(parsedPosts);
-  } catch (error) {
-    console.error('Blog fetch error:', error);
-    res.status(500).json({ error: 'Failed to fetch blog posts' });
-  }
-});
 // Get a single blog post
 router.get('/read/:id', async (req, res, next) => {
   console.log('Blog API: router.get(`/read/:id`) [res.send(req.params)]');
@@ -94,7 +69,7 @@ router.get('/read/:id', async (req, res, next) => {
 // ^ const id = parseInt(req.params.id).toFixed(0);
 
 router.get('/all/:username', cookieJwtAuth, async (req, res) => {
-  console.log('Blog API: router.get(`/all`) [const parsedPosts = posts.map(post => ({...post, }));]');
+  console.log('Blog API: router.get(`/all/:username`) [const parsedPosts = posts.map(post => ({...post, }));]');
 
   try {
     if (!req.user.payload.username) {
@@ -107,10 +82,53 @@ router.get('/all/:username', cookieJwtAuth, async (req, res) => {
     await pool.getConnection();
 
     const [posts] = await pool.execute(
-      'SELECT bp.id, bp.title, bp.location, bp.audio, bp.created_at, u.username FROM blog_posts bp JOIN users u ON bp.user_id = u.id ORDER BY bp.created_at DESC'
+      'SELECT bp.id, bp.title, bp.location, bp.tags, bp.photos, bp.audio, bp.content, bp.created_at, u.username FROM blog_posts bp JOIN users u ON bp.user_id = u.id ORDER BY bp.created_at DESC'
+    );
+
+    const [postLengths] = await pool.execute(
+      'SELECT COUNT(*) AS postCount FROM blog_posts bp JOIN users u ON bp.user_id = u.id WHERE u.username = ?',
+      [currentUser]
+    );
+
+    console.log("Post lengths: " + postLengths[0].postCount);
+
+    // ! Store the post count in req.blog for later use
+    req.blog = {
+      posts: posts,
+      postCount: postLengths[0].postCount
+    };
+
+    // ! Parse JSON fields
+    const parsedPosts = posts.map(post => ({
+      ...post,
+    }));
+    // tags: post.tags ? JSON.parse(post.tags) : [];
+    content: post.content ? markdownMarkup(content) : '';
+
+    console.log(content + 'This is content, ' + typeof content + 'This is content type, ' + typeof post.content + 'This is post.content type');
+    pool.releaseConnection();
+    res.json(parsedPosts);
+  } catch (error) {
+    console.error('Blog fetch error:', error);
+    res.status(500).json({ error: 'Failed to fetch blog posts' });
+  }
+});
+
+router.get('/all', async (req, res) => {
+  console.log('Blog API: router.get(`/all`) [const parsedPosts = posts.map(post => ({...post, }));]');
+
+  if (req.message) {
+    console.log(message);
+  }
+  try {
+    await pool.getConnection();
+
+    const [posts] = await pool.execute(
+      'SELECT bp.id, bp.title, bp.location, bp.audio, bp.photos, bp.tags, bp.content, bp.created_at, u.username FROM blog_posts bp JOIN users u ON bp.user_id = u.id ORDER BY bp.created_at DESC'
     );
 
     pool.releaseConnection();
+    console.log("Connection released; checking posts length:", posts.length);
 
     // ! Parse JSON fields
     const parsedPosts = posts.map(post => ({

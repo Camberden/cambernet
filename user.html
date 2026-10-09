@@ -1,0 +1,7 @@
+<div hx-get="/api/auth/reactivate" hx-trigger="intersect" hx-target="find [cmbr-user]" hx-swap='textContent'>
+	<u cmbr-user x-effect="CMBRutil.iden = $el.textContent"></u>
+</div>
+
+<!-- % Iterations % -->
+<!--<button hx-get="/user.html" hx-trigger="click" hx-target="this" hx-swap='innerHTML'></button>-->
+<!--<div hx-get="/user.html" hx-trigger="load x-transition" hx-target="this" hx-swap='innerHTML'></div>-->

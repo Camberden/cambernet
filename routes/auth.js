@@ -138,7 +138,6 @@ router.post('/threads', async (req, res) => {
 	res.write("Threads active: " + result + " / 100, technically...");
 	res.end();
 });
-
 router.post('/processes', notifyUser, async (req, res) => {
 	await pool.getConnection();
 	const [rows] = await pool.query("SHOW processlist;");
@@ -152,7 +151,6 @@ router.post('/processes', notifyUser, async (req, res) => {
 	pool.releaseConnection();
 	res.end();
 });
-
 router.get('/reactivate', cookieJwtAuth, async (req, res) => {
 	pool.releaseConnection();
 	try {

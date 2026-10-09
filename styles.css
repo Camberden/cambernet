@@ -2367,6 +2367,7 @@ form>label {
 	animation: rotate calc(var(--loading-duration)) linear infinite;
 }
 
+#vid-paused,
 [vid-paused] {
 	--loading-size: 48px;
 	--loading-stroke: 6px;
@@ -2376,6 +2377,7 @@ form>label {
 	opacity: .75;
 }
 
+#vid-paused,
 [vid-paused]::before {
 	z-index: 10;
 	content: '⏸';

@@ -20,11 +20,13 @@
 			<div x-on:click.stop x-trap.noscroll.inert="openModal"
 				style="position: relative; min-height: auto; max-width: auto; padding:4rem;">
 				<div class="modal-field">
+					<!-- ! Auth True ! -->
 					<template x-if="Alpine.store('nauth').valid === true">
 						<div hx-get="../template/logout.html" hx-target="this" hx-trigger="load" hx-swap="outerHTML"
 							x-text="'Logout'" @load="console.log(Alpine.store('nauth').valid)">
 						</div>
 					</template>
+					<!-- ! Auth False ! -->
 					<template x-if="Alpine.store('nauth').valid === false" x-show="Alpine.store('nauth').valid">
 						<div hx-get="../template/login.html" hx-target="this" hx-trigger="load" hx-swap="outerHTML"
 							x-text="'Login'" @load="console.log(Alpine.store('nauth').valid)">

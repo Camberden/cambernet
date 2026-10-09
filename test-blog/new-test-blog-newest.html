@@ -1,0 +1,25 @@
+<div id="newest-blog-post-display" x-data="{
+		chosen: CMBRutil.iden,
+		recordCount: {},
+		}">
+	<div class="flex-table" cmbr-flexfixed-r>
+		<div class="flex-table-header grid-row-1-1" style="font-family: vt323; font-size: 2rem; color:fuchsia;">
+			<div>
+				<span x-text="'id'"></span>
+				<span x-text="'title'"></span>
+				<span x-text="'location'"></span>
+			</div>
+			<template x-for="(blogpost, index) in await $get('/api/blog/all/' + chosen);" :key="index">
+				<div :class="'flex-table-row grid-row-1-1'">
+					<div>
+						<span x-html="blogpost.id"></span>
+						<span x-html="blogpost.title"></span>
+						<span x-html="blogpost.location"></span>
+					</div>
+					<div :class="'blogging-font'">
+						<p x-html="blogpost.content"></p>
+					</div>
+				</div>
+			</template>
+		</div>
+	</div>

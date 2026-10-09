@@ -8,10 +8,9 @@
  * - øH/«![/H)'/]^)H'¬L/¬]'/H[*'v'{';{[\\
  * @author Camberden (Chrispy | Kippi)
  */
-const latestUpdate = "Sunday, September 20th, 2026";
+const latestUpdate = "Friday, October 09th, 2026";
 document.querySelector("#latest-update").innerText = latestUpdate;
 const camberden = document.querySelector("#camberden");
-const monickers = ["camberden", "観葉伝", "カンバデン", "}*'<'('H'[';<"];
 /**
  * 
  * @param {string} month
@@ -75,6 +74,7 @@ const convertToJapaneseDate = (date) => {
 	document.querySelector("#japanese-date").textContent = japaneseDate;
 }
 const randomizeMonicker = () => {
+	const monickers = ["camberden", "観葉伝", "カンバデン", "}*'<'('H'[';<"];
 	const m = Math.random();
 	if (m <= 0.2) {
 		camberden.lang = "jp";

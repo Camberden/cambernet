@@ -80,7 +80,6 @@ document.addEventListener("alpine:init", () => {
 			el.textContent = formattedDateAndTime;
 		}, 1000);
 	});
-
 	Alpine.directive('retrieval', function (el, { expression }) {
 		console.log(expression);
 		const ex = JSON.parse(expression);
@@ -95,7 +94,6 @@ document.addEventListener("alpine:init", () => {
 		};
 		el.appendChild(t);
 	});
-
 	// *=> end of Alpine Directives
 
 	// !==========| Alpine Store |==========!
@@ -243,7 +241,7 @@ const cmbrMdConfig = {
 	},
 	"promptURLs": true,
 	"renderingConfig": {
-		"singleLineBreaks": false,
+		"singleLineBreaks": true,
 		"codeSyntaxHighlighting": true,
 	},
 	"lineWrapping": false,
@@ -258,6 +256,50 @@ const cmbrMdConfig = {
 		"underscoresBreakWords": true
 	}
 }
+
+const cmbrMdConfigAlt = {
+	"autofocus": true,
+	"forceSync": true,
+	"toolbar": ["bold", "italic", "horizontal-rule", "|", "quote", "code", "|", "unordered-list", "ordered-list", "|", "link", "image", "table", "|", "preview", "side-by-side", "fullscreen"],
+	"hideIcons": [
+		"guide",
+		"heading"
+	],
+	"opacity": 1,
+	"indentWithTabs": true,
+	"initialValue": "Module 1",
+	"insertTexts": {
+		"horizontalRule": [
+			"\n\n<hr class='hr-cmbr-gradient'>\n\n",
+			"",
+		],
+		"image": [
+			"![](http: //",
+			")"],
+		"link": [
+			"['",
+			"'](http://)",
+		]
+	},
+	"promptURLs": true,
+	"renderingConfig": {
+		"singleLineBreaks": true,
+		"codeSyntaxHighlighting": true,
+	},
+	"lineWrapping": false,
+	"autosave": {
+		"enabled": true,
+		"uniqueId": "alty",
+		"delay": 1000
+	},
+	"parsingConfig": {
+		"allowAtxHeaderWithoutSpace": true,
+		"strikethrough": false,
+		"underscoresBreakWords": true
+	}
+}
+
+
 /**
  * @global @public @interface
  * @description - Camberden Personal Utilities:
@@ -266,6 +308,7 @@ const cmbrMdConfig = {
  */
 const CMBRutil = {
 	md: function () {
+		// var testMd = new SimpleMDE(cmbrMdConfig);
 		var testMd = new SimpleMDE(cmbrMdConfig);
 		return testMd;
 	},
@@ -325,6 +368,19 @@ const CMBRutil = {
 			this.cloudGen(targetEl, loadVals);
 		}, cloudSpeed * 1000);
 
+	},
+
+	iden: '',
+	identify: function (username) {
+		this.iden = username;
+	},
+	/**
+	 * @type {Number}
+	 * @description Determines which blog post is currently selected
+	 */
+	blogSelection: 1,
+	blogToggle: function (update) {
+		this.blogSelection = update;
 	},
 	/**
 	 * 
@@ -640,5 +696,6 @@ const sout = (x) => { console.log("<‰=== " + (x ?? "No Output") + " ===‰>");
 const braft = (l) => document.querySelector(`${l}`).appendChild(document.createElement("br"));
 
 (async () => {
+	// cmbrAlpineConfig();
 	CMBRutil.handleFormDefault(true);
 });

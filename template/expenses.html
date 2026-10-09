@@ -82,14 +82,14 @@
 				@click="toggleSelectedApplicable();">De-select Applicable</button>
 		</div>
 		<!-- CAR PAYMENT -->
-		<div class="flex-table-row grid-col-1-1-1-1"><input type="checkbox" id="car-check">CAR<span
+		<div class="flex-table-row grid-col-1-1-1-1 inactive-payment"><input type="checkbox" id="car-check">CAR<span
 				class="expense cash not-applicable" id="car-cost">0</span>
 			<span class="automated-payment">Automated: 4th</span>
 		</div>
 		<!-- FEDERAL STUDENT LOAN -->
-		<div class="flex-table-row grid-col-1-1-1-1 not-applicable"><input type="checkbox" id="nav-check">NAV<span
-				class="expense cash" id="nav-cost">0</span>
-			<span class="non-automated-payment">Inactive</span>
+		<div class="flex-table-row grid-col-1-1-1-1"><input type="checkbox" id="nav-check">NAV<span
+				class="expense cash applicable" id="nav-cost">0</span>
+			<span class="automated-payment">Automated: 1st</span>
 		</div>
 		<!-- PRIVATE STUDENT LOAN -->
 		<div class="flex-table-row grid-col-1-1-1-1">
@@ -102,8 +102,8 @@
 			<span class="non-automated-payment">NOT Automated</span>
 		</div>
 		<!-- RENTER'S INSURANCE -->
-		<div class="flex-table-row grid-col-1-1-1-1 not-applicable"><input type="checkbox" id="rti-check">RTI<span
-				class="expense cash" id="rti-cost">0</span>
+		<div class="flex-table-row grid-col-1-1-1-1 not-applicable inactive-payment"><input type="checkbox"
+				id="rti-check">RTI<span class="expense cash" id="rti-cost">0</span>
 			<span class="non-automated-payment">Inactive</span>
 		</div>
 		<!-- CAR INSURANCE -->
@@ -112,22 +112,24 @@
 			<span class="automated-payment">Automated: 30th</span>
 		</div>
 		<!-- PERSONAL LOAN -->
-		<div class="flex-table-row grid-col-1-1-1-1 not-applicable"><input type="checkbox" id="loa-check">LOA
-			<span class="expense cash" id="loa-cost">0</span>
+		<div class="flex-table-row grid-col-1-1-1-1"><input type="checkbox" id="loa-check">LOA
+			<span class="expense cash applicable" id="loa-cost">0</span>
 			<span class="non-automated-payment">Inactive</span>
 		</div>
 		<!-- WATER BILL -->
-		<div class="flex-table-row grid-col-1-1-1-1 not-applicable"><input type="checkbox" id="wat-check">WAT
-			<span class="expense cash" id="wat-cost">0</span>
+		<div class="flex-table-row grid-col-1-1-1-1 not-applicable inactive-payment"><input type="checkbox"
+				id="wat-check">WAT
+			<span class="expense cash not-applicable" id="wat-cost">0</span>
 			<span class="non-automated-payment">Inactive</span>
 		</div>
 		<!-- ELECTRICITY/POWER BILL -->
-		<div class="flex-table-row grid-col-1-1-1-1" class="not-applicable"><input type="checkbox" id="ele-check">ELE
+		<div class="flex-table-row grid-col-1-1-1-1 not-applicable inactive-payment"><input type="checkbox"
+				id="ele-check">ELE
 			<span class="expense cash" id="ele-cost">0</span>
 			<span class="non-automated-payment">Inactive</span>
 		</div>
 		<!-- INTERNET BILL -->
-		<div class="flex-table-row grid-col-1-1-1-1 not-applicable">
+		<div class="flex-table-row grid-col-1-1-1-1 inactive-payment not-applicable">
 			<input type="checkbox" id="int-check">INT
 			<span class="expense cash" id="int-cost">0</span>
 			<span class="non-automated-payment">Inactive</span>
@@ -138,8 +140,8 @@
 			<span class="automated-payment">Automated: 1st</span>
 		</div>
 		<!-- DONATION -->
-		<div class="flex-table-row grid-col-1-1-1-1"><input type="checkbox" id="don-check">DON<span
-				class="expense cash applicable" id="don-cost">0</span>
+		<div class="flex-table-row grid-col-1-1-1-1 inactive-payment"><input type="checkbox" id="don-check">DON<span
+				class="expense cash not-applicable" id="don-cost">0</span>
 			<span class="automated-payment">Automated: 1st</span>
 		</div>
 		<!-- GYM MEMBERSHIP -->
@@ -410,22 +412,22 @@
 
 
 	// |==========| LEGACY DASHBOARD EXPENSES |==========| //
-	const modal = document.querySelector(".modal");
-	const closeModal = document.getElementsByClassName("modal-close")[0];
+	// const modal = document.querySelector(".modal");
+	// const closeModal = document.getElementsByClassName("modal-close")[0];
 	let startbalance = document.getElementById("balance").value;
 	const startbalanceupdate = document.getElementById("balance");
-	const car = 1291.61;
-	const nav = 222.07;
+	const car = 0.00;
+	const nav = 303.00;
 	const sal = 884.15;
 	const ren = 200.00;
 	const rti = 0.00;
 	const ins = 97.68;
-	const loa = 0.00;
+	const loa = 218.28;
 	const wat = 15.00;
 	const ele = 70.27;
 	const int = 71.99;
 	const mus = 6.39;
-	const don = 10.00;
+	const don = 0.00;
 	const gym = 87.00;
 	let inp = 0.00; // CUSTOM INPUT: INP
 	const allExpenses = [car, nav, sal, ren, rti, ins, loa, wat, ele, int, mus, don, gym, inp];

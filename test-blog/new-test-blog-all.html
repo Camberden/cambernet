@@ -1,12 +1,13 @@
-<div id="all-notes-display">
+<div id="all-bp-disp">
 	<div class="flex-table">
-		<template x-for="(blogpost, index) in $get('/api/blog/all')" :key="index">
-			<div :class="' flex-table-row grid-col-1-1-1'" style='border: 0.1rem solid rgba(222, 184, 135, 0.156);'>
+		<template x-for="(blogpost, index) in $get('/api/blog/all/' + CMBRutil.iden)" :key="index">
+			<div :class="' flex-table-row grid-col-1-1-1'"
+				style='border: 0.1rem solid rgba(222, 184, 135, 0.156); color:aquamarine;'>
 				<span x-html="blogpost.id"></span>
 				<span x-html="blogpost.title"></span>
 				<span x-html="blogpost.location"></span>
 				<div :class="' flex-table-row grid-col-1'">
-					<span x-html="blogpost.content"></span>
+					<p x-html="blogpost.content" class='cmbr-pen'></p>
 				</div>
 		</template>
 	</div>

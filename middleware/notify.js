@@ -4,7 +4,7 @@ exports.notifyUser = (req, res, next) => {
 
 	try {
 		if (req.headers['hx-request']) {
-			console.log("HELO");
+			console.log("Hello; HX-Request Header Recognized.");
 		} else {
 			console.log("NO.")
 		}

@@ -12,9 +12,10 @@ app.get('/', (req, res, next) => {
 	next();
 });
 
-
 app.use('/', (req, res, next) => {
-	console.log(`${new Date().toLocaleString()} - ${req.method} ${req.path}`);
+	if (req.path.includes('/api')) {
+		console.log(`${new Date().toLocaleString()} - ${req.method} ${req.path}`);
+	}
 	res.setHeader(
 		'Content-Security-Policy',
 		"default-src 'self'; connect-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://dummyjson.com; frame-src https://www.youtube.com;" +

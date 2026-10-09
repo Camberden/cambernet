@@ -9,7 +9,6 @@ const multer = require('multer');
 const convert = require('heic-convert');
 const { charterDir } = require('../services/charterService');
 const { heiconversion } = require('../services/imageService');
-
 const { cookieJwtAuth } = require('../middleware/auth.js');
 const { notifyUser } = require('../middleware/notify.js');
 const { upload, uploadMiddleware } = require('../middleware/media');

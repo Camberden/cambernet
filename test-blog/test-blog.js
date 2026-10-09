@@ -183,6 +183,8 @@ function insertIndexedPost(db, indexedPost) {
 		db.close();
 	}
 };
+
+
 /**
  * 
  * @param {String} crud transaction option: create, update, read, delete 

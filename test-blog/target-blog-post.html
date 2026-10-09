@@ -1,0 +1,19 @@
+<div id="single-blog-post-display" x-data="{
+	blogItemSingle: {},
+}">
+	<div class="flex-table" x-effect="blogItemSingle = await $get('/api/blog/' + CMBRutil.blogSelection);">
+		<template x-for="item in blogItemSingle">
+			<div :class="'flex-table-row grid-col-7x-1'">
+				<span x-html="item.id"></span>
+				<span x-html="item.title"></span>
+				<span x-html="item.location"></span>
+				<span x-html="item.audio"></span>
+				<span x-html="item.photos"></span>
+				<span x-html="item.tags"></span>
+				<span x-html="item.content"></span>
+				<wbr>
+			</div>
+
+		</template>
+	</div>
+</div>

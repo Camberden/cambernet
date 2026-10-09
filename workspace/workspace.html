@@ -61,13 +61,15 @@
 			<!--|=====|-->
 		</div>
 
-		<div id="workspace-config">
+		<div id="workspace-config" x-data="{
+			parsedProcess: {},
+		}">
 			<span x-show="true" style="width:15rem; height:10rem; box-sizing: border-box; border: 0.5rem solid fuchia;">
 				<img width="50%" height="fit-content" src="../images/cmbr-sig-transform.svg" alt="emblem" />
 			</span>
 			<button hx-post="/api/auth/processes" hx-trigger="click" hx-headers='{"CMBR-Request": "regulate"}'
-				hx-target="#wksp-console" hx-swap="beforeend" @htmx:before-swap="JSON.parse($el);"
-				x-text="'Processes'"></button>
+				hx-target="#wksp-console" hx-swap="beforeend"
+				@htmx:before-swap="((w)=> JSON.parse($el); parsedProcess = await w )" x-text="'Processes'"></button>
 		</div>
 
 	</div>
@@ -77,14 +79,14 @@
 		<div class="button-grid-row"
 			style="border:0.2rem ridge burlywood; background-image: var(--mosky-1); padding: 0.8rem; ">
 
-			<button class="trigger-box" hx-get="../sections.html" hx-target="#wksp-center" hx-trigger="click"
-				hx-swap="innerHTML settle:250ms transition:true">Sitemap</button>
+			<!-- <button class="trigger-box" hx-get="../sections.html" hx-target="#wksp-center" hx-trigger="click"
+				hx-swap="innerHTML settle:250ms transition:true">Sitemap</button> -->
 			<button class="trigger-box" hx-get="../template/scuffle.html" hx-target="#wksp-center" hx-trigger="click"
 				hx-swap="innerHTML settle:250ms transition:true">Scuffle</button>
 			<button class="trigger-box" hx-get="../template/seg.html" hx-target="#wksp-center" hx-trigger="click"
 				hx-swap="innerHTML settle:250ms transition:true">Seg</button>
-			<button class="trigger-box" hx-get="../template/dummyjson.html" hx-target="#wksp-center" hx-trigger="click"
-				hx-swap="innerHTML settle:250ms transition:true">Dummyjson</button>
+			<!-- <button class="trigger-box" hx-get="../template/dummyjson.html" hx-target="#wksp-center" hx-trigger="click"
+				hx-swap="innerHTML settle:250ms transition:true">Dummyjson</button> -->
 			<button class="trigger-box" hx-get="../template/depository.html" hx-target="#wksp-center" hx-trigger="click"
 				hx-swap="innerHTML settle:250ms transition:true">New Note</button>
 			<button class="trigger-box" hx-get="../blog/new-blog-post.html" hx-target="#wksp-center" hx-trigger="click"

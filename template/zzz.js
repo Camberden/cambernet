@@ -36,3 +36,45 @@
 // 	};
 // },
 
+
+
+
+// ============
+
+
+// Dummy auto-suggest list
+const allSuggestions = ['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry', 'Fig', 'Grape', 'Honeydew'];
+
+app.get('/suggest', (req, res) => {
+	const query = req.query.query?.toLowerCase() || '';
+
+	const filtered = allSuggestions.filter(item => item.toLowerCase().includes(query));
+	const html = filtered.map(item => `<div class="suggestion">${item}</div>`).join('');
+
+	res.send(html || '<div class="suggestion">No results found</div>');
+});
+
+
+
+`
+<div class="tabs">
+       <button hx-get="/tab1" hx-target="#tab-content" hx-swap="innerHTML">Tab 1</button>
+       <button hx-get="/tab2" hx-target="#tab-content" hx-swap="innerHTML">Tab 2</button>
+       <button hx-get="/tab3" hx-target="#tab-content" hx-swap="innerHTML">Tab 3</button>
+   </div>
+
+   <div id="tab-content" class="tab-content">
+       <p>Select a tab to load content.</p>
+   </div>
+   `
+app.get('/tab1', (req, res) => {
+	res.send('<p>This is content for Tab 1. Welcome to the first tab!</p>');
+});
+
+app.get('/tab2', (req, res) => {
+	res.send('<p>This is content for Tab 2. Here is something different!</p>');
+});
+
+app.get('/tab3', (req, res) => {
+	res.send('<p>This is content for Tab 3. You\'ve reached the final tab.</p>');
+});
