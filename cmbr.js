@@ -307,6 +307,19 @@ const cmbrMdConfigAlt = {
  * @author Camberden (Chrispy | Kippi)
  */
 const CMBRutil = {
+	mainView: 'Home',
+	user: null,
+	getUser: function (currentUser) {
+		currentUser != null ? this.user = currentUser : this.user = null;
+		if (this.user === null) {
+			return false;
+		} else {
+			return true;
+		}
+	},
+	setUser: function (username) {
+		this.user = username;
+	},
 	md: function () {
 		// var testMd = new SimpleMDE(cmbrMdConfig);
 		var testMd = new SimpleMDE(cmbrMdConfig);

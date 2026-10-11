@@ -22,13 +22,16 @@
 	<title>Chrispy's Site</title>
 </head>
 
-<body x-ref="body" data-theme="dark">
+<body x-ref="body" data-theme="dark" x-data="{
+	siteUser: {},
+}">
+	<nav hx-get="/nav.html" hx-target="this" hx-trigger="load" hx-swap="innerHTML"
+		x-effect=" CMBRutil.user=$get('/api/auth/reactivate')" x-bg>
+	</nav>
+	<hr class="hr-push-down">
 
-	<main class="index-grid">
+	<main class=" index-grid" x-effect="CMBRutil.mainView = 'Home'">
 
-		<div class="signature-div">
-			<img id="signature" src="/images/cmbr-sig-transform.svg" alt="cmbr">
-		</div>
 
 		<div class="index-grid-reduced">
 			<div id="camberden-div">
@@ -60,9 +63,8 @@
 
 		<hr class="hr-cmbr-gradient">
 
-		<div class="sections-links" hx-get="/sections.html" hx-swap="innerHTML" hx-target="#sections-target"
-			hx-trigger="load">
-			<div id="sections-target"></div>
+		<div class="sections-links" hx-get="/one/one.html" hx-target="main" hx-swap="outerHTML" hx-trigger="click"
+			x-text="'Just One Stop'">
 		</div>
 		<hr class="hr-cmbr-gradient">
 
@@ -75,7 +77,6 @@
 		</footer>
 
 	</main>
-
 	<script src="action.js"></script>
 </body>
 

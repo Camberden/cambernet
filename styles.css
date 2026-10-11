@@ -2,26 +2,30 @@
 
 /* |==========| STYLES.CSS @ CAMBERDEN.COM |====================> */
 /* |==========| ORGANIZED EARLY 2026 |====================> */
+
 * {
+	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
 	border: 0;
 	font-size: 100%;
 	vertical-align: baseline;
+	scrollbar-color: burlywood cadetblue;
+	scroll-behavior: smooth;
 }
+
 
 @starting-style {
 	* {
+		height: 100vh;
 		margin: 0;
 		padding: 0;
 		border: 0;
 		font-size: 100%;
 		font: unset;
-		/* vertical-align: baseline; */
-		/* animation-play-state: paused; */
+		vertical-align: baseline;
+		animation-play-state: paused;
 	}
-
-	;
 }
 
 @namespace url("http://www.w3.org/1999/xhtml");
@@ -74,6 +78,39 @@
 	--clr-quinary-body: #27233A;
 	--clr-grid-box: #90e5ee1a;
 	--clr-gradient-common: linear-gradient(120deg, #f59b60 0%, #a1dbf8 100%);
+
+	--doi-font-primary: Arial, Helvetica, 'Myriad Pro', Verdana;
+	--doi-font-secondary: 'Times New Roman', 'Minion Pro', Georgia, TIMES;
+
+	--doi-font-normal: normal;
+	--doi-font-italic: italic;
+	--doi-font-bold: bold;
+
+	--doi-blue: #004185;
+	--doi-red: #D71921;
+	/* rgb(from var(--doi-red) calc(r + 40) calc(g + 40) b) */
+	--doi-yellow: #F3D9D1;
+	--doi-white: #FFFFFF;
+	--doi-black: #231F20;
+
+	--doi-blue-rgb: rgb(0, 65, 133);
+	--doi-red-rgb: rgb(215, 25, 33);
+	--doi-yellow-rgb: rgb(251, 227, 90);
+	--doi-white-rgb: rgb(255, 255, 255);
+	--doi-black-rgb: rgb(35, 31, 32);
+	--doi-black-50: rgb(from var(--doi-black) r g b / 50%);
+	--doi-monospace: aqua;
+
+	--red: 28;
+	--green: 150;
+	--blue: 130;
+
+	--ncco-flourish-gradient: linear-gradient(to bottom right,
+			rgb(from var(--doi-red) calc(r + 100) calc(g) calc(b)),
+			rgb(from var(--doi-red) calc(r + 30) calc(g) calc(b)),
+			var(--doi-yellow-rgb),
+			rgb(from var(--doi-blue) calc(r) calc(g) calc(b + 100)),
+			rgb(from var(--doi-blue) calc(r) calc(g) calc(b + 150)));
 
 	/* |==========| MOCHADIAN STYLES |====================> */
 	/* |==========| from https://mocha2007.github.io/tools/gradient_test.html |====================> */
@@ -461,13 +498,14 @@ ul {
 
 /* |==========| §NAVIGATION CHARTER |====================> */
 /* |==========| LEFT-SIDE DROPDOWN FOR SITE MAP NAVIGATION |====================> */
-nav {
+/* % RESTORE LEGACY NAV */
+/* nav {
 	display: flex;
 	flex-flow: row wrap;
 	width: 100%;
 	height: 3rem;
 	background-image: url("./images/cmbr-curtain.svg");
-}
+} */
 
 .nav-sail {
 	display: grid;
@@ -2904,4 +2942,198 @@ form>label {
 		margin-inline: 0.5rem;
 	}
 
+}
+
+
+
+/* <!-- % --> */
+
+#camberden-title {
+	user-select: none;
+	font-family: 'Permanent Marker';
+	font-size: 2.0rem;
+	text-shadow: 0rem 0rem var(--cmbr-blue);
+	background-image: linear-gradient(to top left,
+			rgb(from var(--doi-blue) calc(r) calc(g) calc(b + 150)),
+			rgb(from var(--doi-blue) calc(r) calc(g) calc(b + 100)),
+			var(--doi-yellow-rgb),
+			rgb(from var(--doi-red) calc(r + 30) calc(g) calc(b)),
+			rgb(from var(--doi-red) calc(r + 100) calc(g) calc(b)));
+	background-clip: border-box;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+
+
+	background-repeat: no-repeat;
+	background-size: 0% 100%;
+	background-position: 0% 88%;
+	border-bottom: 0.3rem solid var(--cmbr-violet);
+	transition: all 0.5s ease-in-out;
+}
+
+#camberden-title:hover {
+	cursor: pointer;
+	text-shadow: 0rem 0rem transparent;
+
+	background-image: linear-gradient(to bottom right,
+			rgb(from var(--doi-red) calc(r + 100) calc(g) calc(b)),
+			rgb(from var(--doi-red) calc(r + 30) calc(g) calc(b)),
+			var(--doi-yellow-rgb),
+			rgb(from var(--doi-blue) calc(r) calc(g) calc(b + 100)),
+			rgb(from var(--doi-blue) calc(r) calc(g) calc(b + 150)));
+	background-clip: border-box;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-position: 0% 88%;
+	border-bottom: 0.3rem solid var(--doi-red);
+	transition: all 0.5s ease-in-out;
+}
+
+.camberden-title-class {
+	cursor: pointer;
+	text-shadow: 0rem 0rem transparent;
+
+	background-image: linear-gradient(to bottom right,
+			rgb(from var(--doi-red) calc(r + 100) calc(g) calc(b)),
+			rgb(from var(--doi-red) calc(r + 30) calc(g) calc(b)),
+			var(--doi-yellow-rgb),
+			rgb(from var(--doi-blue) calc(r) calc(g) calc(b + 100)),
+			rgb(from var(--doi-blue) calc(r) calc(g) calc(b + 150)));
+	background-clip: border-box;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-position: 0% 88%;
+	transition: all 0.3s ease-in-out;
+}
+
+#camberden-title::before {
+	content: attr(item) "Camberden";
+}
+
+#camberden-flag {
+	width: 5rem;
+	height: 3rem;
+	border: 0.3rem solid transparent;
+}
+
+
+.navigation {
+	display: flex;
+	flex-direction: column;
+	column-gap: 3rem;
+
+	width: 100%;
+}
+
+.navigation-button {
+	/* color: var(--doi-red); */
+	font-weight: var(--doi-font-bold);
+	cursor: pointer;
+	user-select: none;
+	box-sizing: border-box;
+	padding: 0.5rem;
+	border-left: 0.5rem solid var(--doi-black);
+	border-right: 0.5rem solid var(--doi-black);
+	border-top: 0.5rem solid var(--doi-black);
+	border-bottom: 0.5rem solid var(--doi-blue);
+	background: var(--doi-black);
+	/* box-shadow: 0.2rem 0.2rem 0.2rem 0.2rem var(--doi-black); */
+	box-shadow: none;
+	transition: all 0.1s ease-in;
+}
+
+.navigation-button:hover {
+	color: var(--doi-yellow-rgb);
+	padding: 0.5rem;
+	border: 0.5rem solid var(--doi-blue);
+	background: var(--doi-black);
+	transition: all 0.1s ease-in;
+}
+
+.navigation-button>a {
+	box-sizing: content-box;
+	align-content: stretch;
+	width: max-content;
+	height: max-content;
+}
+
+
+.site-external {
+	color: var(--doi-red);
+}
+
+.site-internal {
+	/* color: var(--doi-yellow-rgb); */
+	color: var(--doi-yellow);
+	text-shadow: var(--doi-red) 1px 0 8px;
+}
+
+nav {
+	width: 100%;
+	z-index: 100;
+	display: flex;
+	/* flex: 1; */
+	flex-flow: row wrap;
+	align-items: center;
+	column-gap: 1rem;
+	position: fixed;
+
+	background: linear-gradient(var(--doi-black),
+			rgb(from var(--doi-black) calc(r + 3) calc(g + 5) calc(b + 0)));
+	box-shadow: 4rem 0rem 2rem 0rem var(--doi-black);
+}
+
+#navigation-notice {
+	flex: 1;
+	flex-flow: column nowrap;
+	align-content: center;
+	justify-content: center;
+	display: none;
+	z-index: 200;
+	top: 0;
+	right: 0;
+	position: fixed;
+	font-style: var(--doi-font-italic);
+	color: var(--doi-yellow-rgb);
+	height: 3rem;
+	background: var(--doi-blue);
+	border-left: 0.3rem solid var(--doi-red);
+	box-shadow: 0.3rem 0.3rem 0.6rem 0.3rem var(--doi-black);
+}
+
+#navigation-notice::before {
+	content: attr(item) "Access Denied: Page in Progress!";
+}
+
+#notice-bar {
+	flex: 1;
+	align-content: center;
+	justify-content: center;
+	position: fixed;
+	font-weight: var(--doi-font-bold);
+	font-size: 0.9rem;
+	text-align: center;
+	text-overflow: clip;
+	top: 0;
+	width: 16rem;
+	height: 0.5rem;
+	margin-top: 2.1rem;
+	border: 0.1rem solid var(--doi-red);
+	background-image: var(--ncco-flourish-gradient);
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+}
+
+.timeout-bar-animation {
+	animation-name: timeoutBar;
+	animation-duration: 3s;
+	animation-fill-mode: backwards;
+	animation-iteration-count: initial;
+	animation-timing-function: linear;
 }
