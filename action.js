@@ -8,7 +8,7 @@
  * - øH/«![/H)'/]^)H'¬L/¬]'/H[*'v'{';{[\\
  * @author Camberden (Chrispy | Kippi)
  */
-const latestUpdate = "Friday, October 09th, 2026";
+const latestUpdate = "Sunday, October 11th, 2026";
 document.querySelector("#latest-update").innerText = latestUpdate;
 const camberden = document.querySelector("#camberden");
 /**
@@ -100,32 +100,45 @@ const randomizeMonicker = () => {
 /**
  * @param {Object} album
  */
-const randomizePhotos = (album) => {
-	const infoDivBackground = document.getElementById("info-div-background");
-	infoDivBackground.style.animationPlayState = "paused";
-	infoDivBackground.parentElement.style.animationPlayState = "paused";
-	const m = Math.random();
-	infoDivBackground.style.animationPlayState = "running";
-	infoDivBackground.parentElement.style.animationPlayState = "running";
+// const randomizePhotos = (album) => {
+// 	const infoDivBackground = document.getElementById("info-div-background");
+// 	infoDivBackground.style.animationPlayState = "paused";
+// 	infoDivBackground.parentElement.style.animationPlayState = "paused";
+// 	const m = Math.random();
+// 	infoDivBackground.style.animationPlayState = "running";
+// 	infoDivBackground.parentElement.style.animationPlayState = "running";
 
-	let photoIndex = Math.round(m.toFixed(2) * album.length);
-	if (photoIndex < 1) {
-		++photoIndex;
-	}
-	infoDivBackground.style.backgroundImage = `url("${album[photoIndex]}")`;
-	infoDivBackground.parentElement.style.borderRight = `var(--cmbr-grid-box)`;
+// 	let photoIndex = Math.round(m.toFixed(2) * album.length);
+// 	if (photoIndex < 1) {
+// 		++photoIndex;
+// 	}
+// 	infoDivBackground.style.backgroundImage = `url("${album[photoIndex]}")`;
+// 	infoDivBackground.parentElement.style.borderRight = `var(--cmbr-grid-box)`;
 
-	// infoDivBackground.parentElement.style.borderImage = `var(--cmbr-gradient)`;
-}
+// 	// infoDivBackground.parentElement.style.borderImage = `var(--cmbr-gradient)`;
+// }
 
 (async (/*=====*| RUN |*=====*/) => {
 
-	const photos = await CMBRutil.connectCMBRjson(["travel-photos"]);
+	// const photos = await CMBRutil.connectCMBRjson(["travel-photos"]);
 	convertToJapaneseDate(formatter(latestUpdate));
-	randomizePhotos(photos);
+	// randomizePhotos(photos);
 	randomizeMonicker();
-	const slideshow = setInterval(() => {
-		randomizePhotos(photos);
-	}, 10000);
+	// const slideshow = setInterval(() => {
+	// 	randomizePhotos(photos);
+	// }, 10000);
+	// const killSlideshow = () => {
+	// 	clearInterval(slideshow);
+	// };
+	// document.querySelectorAll('.section-title').forEach((sectionTitle) => {
+
+	// 	sectionTitle.addEventListener('click', () => {
+	// 		// const infoDivBackground = document.getElementById("info-div-background");
+	// 		// infoDivBackground.style.backgroundImage = "none";
+	// 		// infoDivBackground.style.animationPlayState = "paused";
+	// 		// infoDivBackground.parentElement.style.animationPlayState = "paused";
+	// 		killSlideshow();
+	// 	});
+	// });
 
 })(/*=====*| END |*=====*/);

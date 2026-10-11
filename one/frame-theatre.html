@@ -1,0 +1,65 @@
+<div class="grid-col-1" x-data="{
+	folderData: {},
+	folderSelected: 'refdocsFOLDER',
+	folderSelect: function (item) {
+		let choice = item + 'FOLDER';
+		choice = this.folderSelected;
+	},
+}">
+	<!-- <style>
+		#info-div {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			margin-inline: auto;
+			padding-bottom: 3rem;
+			flex: 1;
+			/* flex:content; */
+		}
+
+		#info-div-background {
+			background-image: none;
+			background-size: cover;
+			width: 100%;
+			height: 100%;
+			opacity: 0%;
+			animation-name: info-div-shift;
+			animation-duration: 10s;
+			animation-delay: 1s;
+			animation-iteration-count: infinite;
+			animation-direction: normal;
+			animation-timing-function: ease-in-out;
+			animation-play-state: running;
+		}
+	</style> -->
+
+	<div>
+		<h1 class="h1-lamp" x-text="'Document Management'"></h1>
+		<i x-text="folderSelected"></i>
+		<hr class="hr-cmbr-gradient">
+		<button id="refdocsFOLDER" class="trigger-box" @click="folderSelected = $el.id" hx-get="/one/frame/refdocs.html"
+			hx-trigger="click" hx-target="#frame-theatre" hx-swap="innerHTML" x-text="$el.id">
+		</button>
+		<button id="blogFOLDER" class="trigger-box" @click="folderSelected = $el.id"
+			hx-get="/one/frame/blog-photos.html" hx-trigger="click" hx-target="#frame-theatre" hx-swap="innerHTML"
+			x-text="$el.id">
+		</button>
+		<button id="travelFOLDER" class="trigger-box" @click="folderSelected = $el.id"
+			hx-get="/one/frame/travel-photos.html" hx-trigger="click" hx-target="#frame-theatre" hx-swap="innerHTML"
+			x-text="$el.id">
+		</button>
+		<button id="artifactsFOLDER" class="trigger-box" @click="folderSelected = $el.id"
+			hx-get="/one/frame/artifacts.html" hx-trigger="click" hx-target="#frame-theatre" hx-swap="innerHTML"
+			x-text="$el.id">
+		</button>
+		<button id="graphicsFOLDER" class="trigger-box" @click="folderSelected = $el.id"
+			hx-get="/one/frame/graphics.html" hx-trigger="click" hx-target="#frame-theatre" hx-swap="innerHTML"
+			x-text="$el.id">
+		</button>
+		<button id="uploadsFOLDER" class="trigger-box" @click="folderSelected = $el.id" hx-get="/one/frame/uploads.html"
+			hx-trigger="click" hx-target="#frame-theatre" hx-swap="innerHTML" x-text="$el.id">
+		</button>
+	</div>
+
+	<div id="frame-theatre">
+	</div>
+</div>

@@ -75,6 +75,72 @@ router.get('/travel-photos', async (req, res, next) => {
 	}
 });
 
+router.get('/reference-docs', async (req, res, next) => {
+	console.log("Reference Docs Access")
+	try {
+		const togetFolder = './assets/reference-docs';
+		const fhouwdoughs = fs.readdirSync(togetFolder);
+		console.log("fuck the what")
+		if (fhouwdoughs) {
+			console.warn("Sending...");
+			res.json(fhouwdoughs);
+			next();
+		}
+	} catch (err) {
+		console.error("Issue");
+		res.next();
+	}
+});
+
+router.get('/fantasy-graphics', async (req, res, next) => {
+	console.log("Fantasy Graphics Access")
+	try {
+		const togetFolder = './assets/fantasy-graphics';
+		const fhouwdoughs = fs.readdirSync(togetFolder);
+		console.log("fuck the what")
+		if (fhouwdoughs) {
+			console.warn("Sending...");
+			res.json(fhouwdoughs);
+			next();
+		}
+	} catch (err) {
+		console.error("Issue");
+		res.next();
+	}
+});
+router.get('/artifacts', async (req, res, next) => {
+	console.log("Artifacts Access")
+	try {
+		const togetFolder = './assets/artifacts';
+		const fhouwdoughs = fs.readdirSync(togetFolder);
+		console.log("fuck the what")
+		if (fhouwdoughs) {
+			console.warn("Sending...");
+			res.json(fhouwdoughs);
+			next();
+		}
+	} catch (err) {
+		console.error("Issue");
+		res.next();
+	}
+});
+router.get('/blog-photos', async (req, res, next) => {
+	console.log("Blog Photos Access")
+	try {
+		const togetFolder = './assets/blog-photos';
+		const fhouwdoughs = fs.readdirSync(togetFolder);
+		console.log("fuck the what")
+		if (fhouwdoughs) {
+			console.warn("Sending...");
+			res.json(fhouwdoughs);
+			next();
+		}
+	} catch (err) {
+		console.error("Issue");
+		res.next();
+	}
+});
+
 router.get('/clouds', async (req, res) => {
 	if (!req.message) {
 		console.log('No message... yet!');

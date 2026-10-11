@@ -24,54 +24,130 @@
 
 <body x-ref="body" data-theme="dark" x-data="{
 	siteUser: {},
+	activeSection: 'Home',
 }">
-	<nav hx-get="/nav.html" hx-target="this" hx-trigger="load" hx-swap="innerHTML"
-		x-effect=" CMBRutil.user=$get('/api/auth/reactivate')" x-bg>
-	</nav>
+	<nav hx-get="nav.html" hx-trigger="load" hx-target="this" hx-swap="outerHTML"
+		x-effect="CMBRutil.siteUser = $get('/api/auth/reactivate')"></nav>
+
 	<hr class="hr-push-down">
+	<!-- <style>
+		.index-grid {
+			display: grid;
+			gap: 0.5rem;
+			grid-template-columns: repeat(1, 100%);
+			max-width: 60%;
+			margin-inline: auto;
+		}
+	</style> -->
+	<main class="index-grid" x-effect="CMBRutil.mainView = 'Home'">
 
-	<main class=" index-grid" x-effect="CMBRutil.mainView = 'Home'">
+		<div id="camberden-div">
+			<h1 id="camberden" lang="en-US">camberden</h1>
+			<div class="flex-table-r">
+				<div class="options" x-data="{
+				id: 1,
+				get expanded() {
+					return this.active === this.id
+				},
+				set expanded(value) {
+					this.active = value ? this.id : null
+				},
+			}" role="region">
+					<button id="chart-access" type="button" @click="expanded = !expanded"
+						hx-get="/template/mediatool.html" hx-trigger="load" hx-target="#chart-links"
+						hx-swap="innerHTML">
+						<div class="trigger-dropdown">
+							<span x-show="expanded" x-cloak>&UpArrow;</span>
+							<span x-show="!expanded" x-cloak>&DownArrow;</span>
+							<span class="vt323">Options</span>
+							<span x-show="expanded" x-cloak>&UpArrow;</span>
+							<span x-show="!expanded" x-cloak>&DownArrow;</span>
+						</div>
+					</button>
+					<div id="chart-dropdown" x-show="expanded" x-collapse>
+						<div id="chart-links">
+							<template x-show="expanded">
 
-
-		<div class="index-grid-reduced">
-			<div id="camberden-div">
-				<h1 id="camberden" lang="en-US">camberden</h1>
+							</template>
+						</div>
+					</div>
+				</div>
+				<div>
+					<button class="options2" hx-get="/template/interval-panel.html" hx-trigger="load" hx-target="this"
+						hx-swap="outerHTML" x-text="'Interval'">
+					</button>
+				</div>
 			</div>
 		</div>
 
-		<div id="info-div">
 
-			<div id="page-info">
-				<p>
-					Welcome to the <i class="admiration">camberden</i> corner.<br>
-					I'm the author, <i>Chrispy,</i> and this site serves as my personal
-					corner of the internet where I post my music and musings and an assortment
-					of modest software projects. Whatever I create here is meaningful enough
-					to me to justify its existence. One must endeavor to create meaning and
-					substance in the real world in ways which reveal themselves to the beholder.<br>
-					All the best,<br>
-					<span class="chrispy">🌾🌾🌾 Chrispy 🌾🌾🌾 </span>
-				</p>
+		<div id="indexer" class="index-item">
+			<!-- <style>
+				#info-div {
+					display: grid;
+					grid-template-columns: 1fr 1fr;
+					margin-inline: auto;
+					padding-bottom: 3rem;
+					flex: 1;
+				}
+
+				#info-div-frame {
+						box-sizing: content-box;
+						border-right: 0.5rem solid transparent;
+						margin-inline-end: 0%;
+						animation-name: info-div-load;
+						animation-duration: 10s;
+						animation-delay: 1s;
+						animation-iteration-count: infinite;
+						animation-direction: normal;
+						animation-timing-function: ease-in-out;
+				}
+
+				#info-div-background {
+					background-image: none;
+					background-size: cover;
+					width: 100%;
+					height: 100%;
+					opacity: 0%;
+					animation-name: info-div-shift;
+					animation-duration: 10s;
+					animation-delay: 1s;
+					animation-iteration-count: infinite;
+					animation-direction: normal;
+					animation-timing-function: ease-in-out;
+					animation-play-state: running;
+				}
+			</style> -->
+			<div id="info-div" hx-get='/one/indexinfo.html' hx-trigger="load" hx-target="this" hx-swap="innerHTML">
 			</div>
-
-			<div id="info-div-frame">
-				<div id="info-div-background">
-				</div>
-			</div>
-
 		</div>
 
 		<hr class="hr-cmbr-gradient">
+		<div id="sections">
+			<!-- <div class="section-title" hx-get="/one/one.html" hx-target="#page-info" hx-swap="innerHTML"
+				hx-trigger="click" x-show="!activeSection">
+				<span x-text="'Just One Stop'"></span>
+			</div> -->
+			<!-- <div class="section-title" hx-get="/one/indexinfo.html" hx-target="#indexer" hx-swap="innerHTML"
+				hx-trigger="click" x-show="activeSection !== 'Home'" @click="activeSection = 'Home'">
+				<span x-text="'Home'"></span>
+			</div> -->
+			<div class="section-title" hx-get="/template/step-pay-plan.html" hx-target="#indexer" hx-swap="innerHTML"
+				hx-trigger="click" x-show="activeSection !== 'Finance'" @click="activeSection = 'Finance'">
+				<span x-text="'Step Pay'"></span>
+			</div>
+			<div class="section-title" hx-get="/one/frame-theatre.html" hx-target="#indexer" hx-swap="innerHTML"
+				hx-trigger="click" x-show="activeSection !== 'Documents'" @click="activeSection = 'Documents'">
+				<span x-text="'Frame Theatres'"></span>
+			</div>
 
-		<div class="sections-links" hx-get="/one/one.html" hx-target="main" hx-swap="outerHTML" hx-trigger="click"
-			x-text="'Just One Stop'">
 		</div>
 		<hr class="hr-cmbr-gradient">
 
 
 		<!-- <hr class="hr-groove-bottom"> -->
 		<footer class="index-footer">
-			<p id="footer-text" class="marker">Made with ♡ by Chrispy</p>
+			<p id="footer-text" class="marker">Nearly Abandoned: Why? It's Hurting Me.</p>
 			<p class="marker">Last updated on <span x-ref="update" id="latest-update"></span></p>
 			<p lang="jp"><span id="japanese-date"></span></p>
 		</footer>
