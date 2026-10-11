@@ -1,0 +1,15 @@
+<div id="blog-linkage" @htmx.process($el);>
+	<template x-for="item in selectedBlogPost">
+		<div>
+			<p x-html="item.created_at.substring(0,10)"
+				x-effect="$refs.bp_title.innerHTML = item.created_at.substring(0,10)"></p>
+			<p x-html="item.location" x-effect="$refs.bp_location.innerHTML = item.location"></p>
+			<p x-html="item.created_at.substring(11,16) + ' HRS'"></p>
+			<p x-html="item.id" x-effect="$refs.bp_id.innerHTML = item.id"></p>
+			<p x-html="item.title" x-effect="$refs.bp_title.innerHTML = item.title"></p>
+			<p x-html="item.audio" x-effect="$refs.bp_audio.innerHTML = item.audio"></p>
+			<p x-html="item.photos" x-effect="$refs.bp_photos.innerHTML = item.photos"></p>
+			<p x-html="item.tags" x-effect="$refs.bp_tags.innerHTML = item.tags"></p>
+		</div>
+	</template>
+</div>

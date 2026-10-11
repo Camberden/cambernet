@@ -274,7 +274,7 @@ const cmbrMdConfigAlt = {
 			"",
 		],
 		"image": [
-			"![](http: //",
+			"![](http://",
 			")"],
 		"link": [
 			"['",
@@ -696,6 +696,5 @@ const sout = (x) => { console.log("<‰=== " + (x ?? "No Output") + " ===‰>");
 const braft = (l) => document.querySelector(`${l}`).appendChild(document.createElement("br"));
 
 (async () => {
-	// cmbrAlpineConfig();
 	CMBRutil.handleFormDefault(true);
 });

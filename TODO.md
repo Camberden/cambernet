@@ -319,3 +319,15 @@ x-target.error="my_form" merge content when the response has a 400 or 500 class 
 `
 ~~~ 
 What's this?
+
+Title
+---
+topic: '',
+date: {{date}},
+time: 1234hrs,
+---
+~~~
+
+## For 2026 to 2027
+- Let's do ```$fetch``` and ```$fetchson('./json_link', jsonItem='the _object')```;
+

@@ -1,0 +1,74 @@
+<div class="cmbr-item cmbr-item-left">
+	<span id="poemnum" class="marker-green"></span>
+	<div>
+		<button class="poem-buttons" value="previous">Previous</button>
+		<button class="poem-buttons" value="next">Next</button>
+	</div><br>
+
+	<div>
+		<span id="interval-panel" class="interval-fade"></span>
+	</div>
+</div>
+
+<div class="cmbr-item grid-row-2-1">
+	<div class="poem" style="user-select: none;">
+		<p>
+		<div class="writing" id="fortyping">
+		</div>
+		</p>
+	</div>
+	<div>
+		<form onSubmit="return false;" style="user-select: none; color: grey;">
+			<div class="typingfield" style="text-align: center; user-select: none;">
+				<input type="text" id="sampleTypingField" value="" onkeyup="typingTest()" autocomplete="off">
+			</div>
+		</form>
+	</div>
+</div>
+
+<div id="sutra-fields" class="cmbr-item grid-row-1-1 cmbr-item-right">
+	<div>
+		<span id="sutra-title" class="marker-green"></span>
+		<hr>
+		<p><span id="furigana-field" class="sutra-line-highlight"></span></p>
+		<p><span id="kanji-field" class="sutra-line-highlight"></span></p>
+		<p><span id="romaji-field" class="sutra-line-highlight"></span></p>
+		<p><span id="english-field" class="sutra-line-highlight"></span></p>
+	</div>
+	<div>
+		<hr class="hr-groove-bottom">
+		<button class="button-sutras" value="previous">Previous Line</button>
+		<button class="button-sutras" value="next">Next Line</button>
+		<hr class="hr-cmbr-gradient">
+		<select id="sutra-options" onchange="loadDifferentSutra()" value="something"></select>
+		<select id="sutra-line-options" onchange="loadDifferentLine()" value="something"></select>
+		<hr class="hr-groove-top">
+
+		<div class="sutra-typing-div" style="text-align: center; user-select: none;">
+			<input type="text" id="sutra-typing-field" value="" onkeyup="sutraType()" autocomplete="off">
+		</div>
+
+		<ul id="sutra-list"></ul>
+	</div>
+</div>
+
+<div></div>
+
+<div></div>
+
+<div></div>
+
+
+<div></div>
+<div id="rolyan-field">
+	<p id="rolyan" class="rolyan-writing">
+
+	</p>
+	<p class="rolyan-writing"></p>
+</div>
+<div></div>
+
+
+</main>
+
+<script src="../musings/musings.js"></script>

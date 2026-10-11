@@ -103,7 +103,7 @@ router.get('/all/:username', cookieJwtAuth, async (req, res) => {
       ...post,
     }));
     // tags: post.tags ? JSON.parse(post.tags) : [];
-    content: post.content ? markdownMarkup(content) : '';
+    content: post.content ? markdownMarkup(post.content) : '';
 
     console.log(content + 'This is content, ' + typeof content + 'This is content type, ' + typeof post.content + 'This is post.content type');
     pool.releaseConnection();

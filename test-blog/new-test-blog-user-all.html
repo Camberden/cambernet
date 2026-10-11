@@ -3,13 +3,13 @@
 	blogAllUsernameCount: 0,
 	blogYears: [2023, 2024, 2025, 2026,],
 	blogItem: {},
+	blogItemActive: 0,
 	returnOnePost: function () {
 		return this.blogAllUsernameParcel;
 	},
-}">
+	}">
 
 	<div class="grid-col-1-3-1">
-		<span class="segsquare"></span>
 		<select id="blog-post-year-select"
 			x-effect="blogAllUsernameParcel = await $get('/api/blog/all/' + CMBRutil.iden)">
 			<option value="all-years" x-text="'All Years'"></option>
@@ -18,18 +18,18 @@
 				</option>
 			</template>
 		</select>
-		<span class="segsquare"></span>
+		<wbr>
 	</div>
 	<br>
 	<hr class="hr-cmbr-dark-gradient">
 	<hr class="hr-groove-top">
 
-	<div style="width:10rem; height: 10rem; border: 0.3rem solid fuchsia;"></div>
 
-
-	<ul id=" blog-post-list" x-effect="CMBRutil.blogToggle(blogAllUsernameParcel.length)">
+	<ul id=" blog-post-list" x-data="{ blogHovered: 0, }" x-effect="CMBRutil.blogToggle(blogAllUsernameParcel.length)">
 		<template x-for="(blogpost, index) in blogAllUsernameParcel" :key="index">
-			<li :class="'flex-table-row grid-col-1-2'" x-on:click="CMBRutil.blogSelection = blogpost.id">
+			<li :class="'flex-table-row grid-col-1-2'" @click="CMBRutil.blogToggle(blogpost.id)"
+				@mouseenter="blogHovered = blogpost.id; blogItemActive = blogpost.id;"
+				:style="blogHovered === blogpost.id ? 'background-color:var(--cmbr-curtain-plum); color:goldenrod; cursor: pointer;' : 'background-color:inherit;'">
 				<b x-html="blogpost.id"></b>
 				<i x-html="blogpost.title"></i>
 			</li>

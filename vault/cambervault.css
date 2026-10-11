@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+/* |==========| STYLES.CSS @ CAMBERDEN.COM |====================> */
+/* |==========| ORGANIZED OCTOBER 2026 |====================> */
+
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+
+:root {
+	--cmbr-indigo: #000caa;
+	--cmbr-blue: #a1dbf8;
+	--cmbr-orange: #f59b60;
+	--cmbr-violet: #700caa;
+	--cmbr-green: #8acb88;
+	--cmbr-curtain-plum: #292540;
+	--cmbr-degrees: 120deg;
+	--cmbr-gradient: linear-gradient(var(--cmbr-degrees), var(--cmbr-indigo), var(--cmbr-blue), var(--cmbr-orange), var(--cmbr-violet));
+}
+
+hr {
+	background-image: linear-gradient(120deg, #000caa, #a1dbf8, #f59b60, #700caa);
+	width: 100%;
+	height: 0.5rem;
+	opacity: 50%;
+}

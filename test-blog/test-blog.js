@@ -21,12 +21,12 @@ let blogMapMarker;
 
 // ===> BLOG YOUTUBE PLAYER ===>
 // https://www.youtube.com/embed?listType=playlist&list=PLC77007E23FF423C6 // FOR PLAYLIST //
-// var player;
-// var done = false;
-// var playerTag = document.createElement("script");
-// playerTag.src = "https://www.youtube.com/iframe_api";
-// var firstScriptTag = document.getElementsByTagName("script")[0];
-// firstScriptTag.parentNode.insertBefore(playerTag, firstScriptTag);
+var player;
+var done = false;
+var playerTag = document.createElement("script");
+playerTag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName("script")[0];
+firstScriptTag.parentNode.insertBefore(playerTag, firstScriptTag);
 
 /* |==========| BLOG MAP |====================> */
 /* |==========| LEAFLET API BLOG MAP FUNCTIONS AND VALUES |====================> */
@@ -67,58 +67,58 @@ function changeCoordinates(latLng) {
 
 /* |==========| YOUTUBE PLAYER |====================> */
 /* |==========| YOUTUBE PLAYER API VARIABLES & FUNCTIONS |====================> */
-// function onYouTubeIframeAPIReady() {
-// 	player = new YT.Player("player", {
-// 		height: "100%",
-// 		width: "100%",
-// 		videoId: "VckCoZkCEu8",
-// 		playerVars: {
-// 			"playsinline": 0,
-// 			"disablekb": 1,
-// 			"autoplay": 1,
-// 			"fs": 1,
-// 			"hl": "ja"
-// 		},
-// 		events: {
-// 			"onReady": onPlayerReady,
-// 			"onStateChange": onPlayerStateChange,
-// 		}
-// 	});
-// };
-// function onPlayerReady(event) {
-// 	event.target.playVideo();
-// };
-// function onPlayerStateChange(event) {
-// 	if (event.data == YT.PlayerState.PLAYING && !done) {
-// 		setTimeout(console.info("Sixty-five-thousand."), 65000);
-// 		done = true;
-// 	}
-// };
-// function pauseVideo() {
-// 	player.pauseVideo();
-// };
-// /**
-//  * @global
-//  * @function pauseVideoOnConsole
-//  * @description Prevents autoplay of audio & video by the embedded YouTube player.
-//  * This serves to pause the YouTube player for the corresponding blog post after loading,
-//  * with a console group to indicate which post's player is being paused. 
-//  * This is necessary due to the asynchronous and nested nature of the YouTube Iframe API which has shown for months
-//  * to ignore global method calls to the Player Object within this JavaScript file, blog.js.
-//  * Those global method calls proved reactive in the browser at runtime when passed as parameters to console methods on May 20th, 2026.
-//  * The setTimeout ensures that pause functionality is delivered after the player has had time to initialize and start playing,
-//  * thus smoothly preventing autoplay as intended.
-//  * @emits console.info of the Player Object's pauseVideo() method.
-//  */
-// function pauseVideoOnConsole() {
-// 	(setTimeout(() => {
-// 		// console.clear();
-// 		console.groupCollapsed("Pausing Blog Post " + currentlyReadingNumber + " YouTube Player");
-// 		console.info("Audio: " + player.videoTitle);
-// 		pauseVideo();
-// 		console.groupEnd();
-// 	}, 1000));
-// }
+function onYouTubeIframeAPIReady() {
+	player = new YT.Player("player", {
+		height: "100%",
+		width: "100%",
+		videoId: "VckCoZkCEu8",
+		playerVars: {
+			"playsinline": 0,
+			"disablekb": 1,
+			"autoplay": 1,
+			"fs": 1,
+			"hl": "ja"
+		},
+		events: {
+			"onReady": onPlayerReady,
+			"onStateChange": onPlayerStateChange,
+		}
+	});
+};
+function onPlayerReady(event) {
+	event.target.playVideo();
+};
+function onPlayerStateChange(event) {
+	if (event.data == YT.PlayerState.PLAYING && !done) {
+		setTimeout(console.info("Sixty-five-thousand."), 65000);
+		done = true;
+	}
+};
+function pauseVideo() {
+	player.pauseVideo();
+};
+/**
+ * @global
+ * @function pauseVideoOnConsole
+ * @description Prevents autoplay of audio & video by the embedded YouTube player.
+ * This serves to pause the YouTube player for the corresponding blog post after loading,
+ * with a console group to indicate which post's player is being paused. 
+ * This is necessary due to the asynchronous and nested nature of the YouTube Iframe API which has shown for months
+ * to ignore global method calls to the Player Object within this JavaScript file, blog.js.
+ * Those global method calls proved reactive in the browser at runtime when passed as parameters to console methods on May 20th, 2026.
+ * The setTimeout ensures that pause functionality is delivered after the player has had time to initialize and start playing,
+ * thus smoothly preventing autoplay as intended.
+ * @emits console.info of the Player Object's pauseVideo() method.
+ */
+function pauseVideoOnConsole() {
+	(setTimeout(() => {
+		// console.clear();
+		console.groupCollapsed("Pausing Blog Post " + currentlyReadingNumber + " YouTube Player");
+		console.info("Audio: " + player.videoTitle);
+		pauseVideo();
+		console.groupEnd();
+	}, 1000));
+}
 
 // |==========| BLOG FUNCTIONS |====================> //
 /* |==========| VALUES FOR WRITTEN BLOG CONTENT |====================> */

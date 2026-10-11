@@ -26,88 +26,19 @@
 
 	<nav id="nav" hx-get="/nav.html" hx-target="#nav" hx-trigger="load" hx-swap="innerHTML" x-bg></nav>
 
+
 	<main class="index-grid" style="align-items: center; justify-items: center;">
 		<hr class="hr-push-down">
 
-		<div id="mdeditor-handle" class="dashboard-item" style="text-align: left;" x-data="{
-			value: '# Markdown Testing 1 \n Quibusdam velit sequi sint aliquid atque. Non voluptate recusandae perferendis. Dolor maxime vero autem quam esse sunt rerum. Perferendis corporis veniam praesentium ab sit ipsam harum culpa. Voluptatem aspernatur officiis sapiente.',
-			init() {
-				let editor = CMBRutil.md();
-				editor.value(this.value);
-				editor.isSideBySideActive() ? console.log() : $store.navStore.toggle();
-				editor.codemirror.on('change', ()=> {
-					this.value = editor.value();
-				});
-			},
-		}">
+		<button class="trigger-box" hx-get="./frame-theatre.html" hx-trigger="click" hx-target="#frame-theatre"
+			hx-swap="outerHTML">Frame!</button>
+		<hr hcg>
 
-			<input x-ref="mdinput" type='hidden' name='mdinput' :value="value" />
-			<textarea x-ref="editor"></textarea>
-		</div>
+		<div id="frame-theatre" style="height: 3rem; width: 5rem; border: 0.3rem solid indianred;"></div>
+
+
 		<hr class="hr-push-down">
 
-
-
-		<div>
-			<div id="new-todopost-handle" class="cmbr-pen" x-data="{
-				selectedTodoId: null,
-				selectedTodoInfo: null,
-				toggleSelectedTodo: function(id, info) {
-						this.selectedTodoId = id;
-						this.selectedTodoInfo = info;
-						console.log( 'this.selectedTodoId:'  + this.selectedTodoId);
-						console.log( 'this.selectedTodoInfo:'  + this.selectedTodoInfo);
-					},
-				}">
-				<div>
-					<div id="all-todos-display">
-						<h2 class="marker-green">Todoposts | Selected: <span x-text="selectedTodoId"></span></h2>
-						<hr class=" hr-cmbr-dark-gradient">
-						<hr class="hr-groove-top">
-						<hr class="hr-cmbr-gradient">
-						<div class="flex-table">
-							<template x-for="(todopost, index) in $get('/api/todos')" :key="index">
-								<div :class="'flex-table-row grid-col-5x-1'"
-									@click="toggleSelectedTodo(todopost.id, todopost.info)"
-									:style="selectedTodoId === todopost.id ? 'background-color: #333; color: #fff;' : ''">
-									<span x-html="todopost.id"></span>
-									<span x-html="todopost.info"></span>
-									<span x-html="todopost.created_at"></span>
-									<button class="trigger-box" style="border-color:goldenrod;"
-										hx-get="./update-td.html" hx-trigger="click" hx-target="#alter-todos"
-										hx-swap="innerHTML swap:500ms settle:500ms transition:true"
-										x-effect="htmx.process($el)" x-text="'Update'">
-									</button>
-									<button class="trigger-box" style="border-color:darkred;"
-										:hx-delete="'/api/todos/' + todopost.id" hx-trigger="click"
-										hx-target="#alter-todos" hx-swap="innerHTML"
-										hx-confirm="'Are you sure you want to delete this todo?'"
-										x-effect="htmx.process($el)" x-text="'Delete'" @click="$store.site.reroute();">
-									</button>
-								</div>
-							</template>
-							<div :class="'flex-table-row grid-col-5x-1'">
-								<span x-text="'-'"></span>
-								<span x-text="'-'"></span>
-								<span x-text="'-'"></span>
-								<button class="trigger-box" hx-get="./new-td.html" hx-target="#alter-todos"
-									hx-trigger="click" hx-swap="innerHTML" x-text="'Create New Todo'">
-								</button>
-								<span class="trigger-box" x-text="''"></span>
-							</div>
-							<hr class="hr-push-down">
-						</div>
-					</div>
-
-				</div>
-
-				<div id="alter-todos" hx-get='./new-td.html' hx-trigger='load' hx-target='#alter-todos'
-					hx-swap='innerHTML' x-effect="htmx.process($el)">
-				</div>
-			</div>
-
-
-		</div>
 
 
 	</main>

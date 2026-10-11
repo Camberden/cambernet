@@ -1,6 +1,7 @@
 #! /bin/bash
-# % ===== DISPLAY DIVISION ===== % #
-
+# % ================================================================= % #
+# % ===================== DISPLAY DIVISION ========================== % #
+# % ================================================================= % #
 timerunner () {
 	rt=$(tput sgr0); r=$(tput setaf 1); g=$(tput setaf 2); y=$(tput setaf 3); c=$(tput setaf 6); b=$(tput bold);
 	start="$(date +%s)"
@@ -15,7 +16,6 @@ lang-paths () {
 	echo -n "$X =====> "; which $X ;
 	done
 }
-
 black-echo () {
 	tput setaf 0 ; echo "$1" ; tput sgr0 
 }
@@ -82,9 +82,9 @@ build-slowly() {
 		c=$(tput setaf "${j}") ;
 		u=$(tput bold) ;
 		printf '%s' "${u}${c}${buildstr:$i:1}${rt}" ;
-		sleep 0.2 ;
+		sleep 0.1 ;
 	done
-	sleep 0.2;
+	sleep 0.1;
 	echo ;
 }
 notes-do () {
@@ -123,7 +123,9 @@ notes-do () {
 	"
 }
 
-# % ===== ENVIRONMENT DIVISION ===== % #
+# % ================================================================= % #
+# % =================== ENVIRONMENT DIVISION ======================== % #
+# % ================================================================= % #
 timerunner
 IFS=,;
 local_user=$USER \
@@ -340,8 +342,6 @@ if [ "$rsync_dry_run" == false ] && [ "$message" == "d" ] ; then
 	closeout false ;
 fi 
 
-
-
 if [ "$rsync_enabled" == true ] && [ "$message" == "z" ] ; then
 	build-echo "=====> [RSYNC DISABLED] =====> " 3;
 	git reset ;
@@ -365,7 +365,6 @@ if [ "$rsync_enabled" == true ] && [ "$message" == "x" ] ; then
 	yq -i .configuration.rsync.pull=true runner.yaml
 	closeout false ;
 fi 
-
 
 if [ "$git_enabled" == false ] && [ "$message" == "g" ] ; then
 	build-echo "=====> [GIT ENABLED] =====> " 7;
@@ -422,3 +421,6 @@ fi
 #@ $2 Rsync Dry Run? true | false
 #@ $3 Git Enabled? true | false
 #@ $4 Rsync Enabled? true | false
+# ^ ================================================================= ^ #
+# ^ ========================== END DIVISION ========================= ^ #
+# ^ ================================================================= ^ #

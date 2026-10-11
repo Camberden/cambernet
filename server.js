@@ -18,7 +18,7 @@ app.use('/', (req, res, next) => {
 	}
 	res.setHeader(
 		'Content-Security-Policy',
-		"default-src 'self'; connect-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://dummyjson.com; frame-src https://www.youtube.com;" +
+		"default-src 'self'; connect-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://dummyjson.com; frame-src 'self' https://jummb.us https://www.youtube.com;" +
 		"script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com https://unpkg.com/leaflet@1.9.4/dist/leaflet.js.map https://www.youtube.com;" +
 		"style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com https://maxcdn.bootstrapcdn.com; img-src 'self' data: https:; font-src 'self' data: https://maxcdn.bootstrapcdn.com; " +
 		"worker-src blob: http://localhost:3020/*;"

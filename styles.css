@@ -751,6 +751,7 @@ button>#chart-access:hover {
 
 /* |==========| §HORIZONTAL RULES <hr> |====================> */
 /* |==========| WIDE VARIETY OF CONTENT SPACERS AND ACCENTS |====================> */
+[hcg],
 .hr-cmbr-gradient {
 	background-image: var(--cmbr-gradient);
 	width: 100%;
@@ -758,6 +759,7 @@ button>#chart-access:hover {
 	opacity: 50%;
 }
 
+[hcg]:nth-of-type(odd),
 .hr-cmbr-gradient:nth-of-type(odd) {
 	-webkit-transform: scaleX(-1);
 	transform: scaleX(-1);
@@ -841,7 +843,6 @@ button>#chart-access:hover {
 	font-weight: 500;
 	font-size: 1.0rem;
 	text-align: left;
-
 	padding: 1rem;
 	line-height: 1rem;
 }

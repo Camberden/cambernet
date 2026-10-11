@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/1.11/simplemde.min.css">
 	<script src="https://cdn.jsdelivr.net/simplemde/1.11/simplemde.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js"></script>
 	<script src="https://unpkg.com/@popperjs/core@2"></script>
 	<script src="https://unpkg.com/tippy.js@6"></script>
 	<script defer src="https://cdn.jsdelivr.net/npm/@imacrayon/alpine-ajax@0.12.6/dist/cdn.min.js"></script>
@@ -40,17 +41,16 @@
 
 	<main id="blog-main" class="flex-grid-cmbr grid-col-1-3-1" x-data="{
 		blogData: {},
-selectedBlogPost: {},
-		settleBp: function () {
-			document.getElementById('blog-post-id').innerHTML = this.selectedBlogPost.id;
-			document.getElementById('blog-post-title').innerHTML = this.selectedBlogPost.title;
-			document.getElementById('blog-post-location').innerHTML = this.selectedBlogPost.location;
-			document.getElementById('blog-post-created_at').innerHTML = this.selectedBlogPost.created_at;
-			document.getElementById('blog-post-audio').innerHTML = this.selectedBlogPost.audio;
-			document.getElementById('blog-post-photos').innerHTML = this.selectedBlogPost.photos;
-			document.getElementById('blog-post-tags').innerHTML = this.selectedBlogPost.tags;
-			document.getElementById('blog-post-content').innerHTML = this.selectedBlogPost.content;
-		},
+		selectedBlogPost: {
+			id: null,
+			title: null,
+			location: null,
+			created_at: null,
+			audio: null,
+			photos: null,
+			tags: [],
+			content: '<hr>',
+	},
 		}">
 
 		<!-- % LEFT -->
@@ -69,52 +69,56 @@ selectedBlogPost: {},
 		<article id="blog-post-articles" class="blogging-font" x-data>
 			<div class="blog-post-header">
 
-				<button class="trigger-box" @click="settleBp(selectedBlogPost);">settle</button>
-
 				<div hx-get="/user.html" hx-trigger="load" hx-target="#postAuthor" hx-swap='innerHTML'>
 				</div>
 
+				<div class="button-grid-row">
+					<button class="trigger-box" hx-get="./newestblog.html" hx-trigger="click"
+						hx-target="#blog-post-target" hx-swap="innerHTML transition:true" x-text="'User Latest'">
+					</button>
+
+					<button class="trigger-box" @click="selectedBlogPost = await $get('/api/blog/' + CMBRutil.blogSelection); 
+						$nextTick(() => { selectedBlogPost.forEach(item => (console.log(item))) });">selectedBlogPostDoer</button>
 
 
-
-				<button class="trigger-box" hx-get="./new-test-blog-newest.html" hx-trigger="click"
-					hx-target="#blog-post-target" hx-swap="innerHTML transition:true" x-text="'User Latest'">
-				</button>
-
-				<button class="trigger-box"
-					@click="selectedBlogPost = await $get('/api/blog/' + CMBRutil.blogSelection);">selectedBlogPostDoer</button>
-				<button @click="await JSON.stringify(selectedBlogPost, null, 2)">____</button>
-
-
-				<button class="trigger-box" hx-target="#blog-post-target" hx-get="./target-blog-post.html"
-					hx-trigger="click" hx-swap="innerHTML">Get Recent Post as User 4</button>
-				<!-- <button class="trigger-box" hx-get="./new-test-blog-all.html" hx-target="#blog-post-target"
+					<button class="trigger-box" hx-target="#blog-post-target" hx-get="./target-blog-post.html"
+						hx-trigger="click" hx-swap="innerHTML">Get Recent Post as User 4</button>
+					<!-- <button class="trigger-box" hx-get="./new-test-blog-all.html" hx-target="#blog-post-target"
 					hx-trigger="click" hx-swap="innerHTML">Get All Blog
 					Posts</button> -->
 
+					<button class="trigger-box" hx-get="./genblog.html" hx-target="#blog-post-target" hx-trigger="click"
+						hx-swap="innerHTML">Generate Post</button>
 
-				<!-- <button class="trigger-box" hx-get="./new-test-blog-page.html" hx-target="#blog-post-target"
-					hx-trigger="click" hx-swap="innerHTML">Post New Blog Post</button> -->
+					<button class="trigger-box" hx-get="../blog/new-blog-post.html" hx-target="#blog-post-target"
+						hx-trigger="click" hx-swap="innerHTML">New with List</button>
 
-				<button id="previous-bp" class="trigger-box">Previous</button>
-				<button id="next-bp" class="trigger-box">Next</button>
+
+					<button id="previous-bp" class="trigger-box"
+						@click="selectedBlogPost = await $get('/api/blog/' + (CMBRutil.blogSelection -= 1))">Previous</button>
+					<button id=" next-bp" class="trigger-box"
+						@click="selectedBlogPost = await $get('/api/blog/' + (CMBRutil.blogSelection += 1))">Next</button>
+				</div>
 			</div>
-			<div>
-				<div>
-					<p id="blog-post-created_at" x-ref="bp_date"></p>
-					<p id="blog-post-location" x-ref="bp_location"></p>
-					<p id="blog-post-time" x-ref="bp_time"></p>
-				</div>
-				<div id="blog-post-field" x-data>
-					<hr class="hr-groove-top">
-
-					<p id="blog-post-content" x-ref="bp_content"></p>
-				</div>
-				<!--! ! !-->
-				<div id="blog-post-target" style="max-width: 60rem; overflow-y: scroll;" @htmx.process($el);>
-				</div>
-
+			<div @htmx.process($el);>
+				<template x-for=" item in selectedBlogPost">
+					<div>
+						<p x-html="item.created_at.substring(0,10)"
+							x-effect="$refs.bp_title.innerHTML = item.created_at.substring(0,10)"></p>
+						<p x-html="item.location" x-effect="$refs.bp_location.innerHTML = item.location"></p>
+						<p x-html="item.created_at.substring(11,16) + ' HRS'"></p>
+						<p x-html="item.id" x-effect="$refs.bp_id.innerHTML = item.id"></p>
+						<p x-html="item.title" x-effect="$refs.bp_title.innerHTML = item.title"></p>
+						<p x-html="item.audio" x-effect="$refs.bp_audio.innerHTML = item.audio"></p>
+						<p x-html="item.photos" x-effect="$refs.bp_photos.innerHTML = item.photos"></p>
+						<p x-html="item.tags" x-effect="$refs.bp_tags.innerHTML = item.tags"></p>
+					</div>
+				</template>
 			</div>
+			<!--! ! !-->
+			<div id="blog-post-target" style="max-width: 60rem; overflow-y: scroll;" @htmx.process($el);>
+			</div>
+
 
 
 
@@ -125,7 +129,7 @@ selectedBlogPost: {},
 		<div class="blog-item" id="blog-post-media">
 			<!-- <span class="vt323" id="auth-status"></span> -->
 			<h3 id="postAuthor"></h3>
-			<span id="blog-post-id" x-ref="bp_id"></span>
+			<span id="blog-post-id" x-ref="bp_id" x-html="selectedBlogPost.id"></span>
 			<h4>
 				<span id="blog-post-title" x-ref="bp_title">
 				</span>
