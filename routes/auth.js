@@ -155,11 +155,11 @@ router.get('/reactivate', cookieJwtAuth, async (req, res) => {
 	pool.releaseConnection();
 	try {
 		if (req.user) {
-			res.send(req.user.payload.username);
+			res.json(req.user.payload.username);
 			pool.releaseConnection();
 		} else {
 			console.log("No token found in cookies.");
-			const noIden = '';
+			const noIden = null;
 			pool.releaseConnection();
 			res.send(noIden);
 		}

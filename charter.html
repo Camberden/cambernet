@@ -1,0 +1,59 @@
+<div x-data="{ 
+	atFrameTheatre: false,
+    charter: {
+		folders: [
+					['uploads', '/images/uploads/'],
+                    ['refdocs', '/assets/reference-docs/'],
+                    ['travel', '/assets/travel-photos/'],
+                    ['artifacts', '/assets/artifacts/'],
+                    ['graphics', '/assets/fantasy-graphics/'],
+                    ['blog', '/assets/blog-photos/'],
+					['residents', '/assets/segregation-residents/'],
+					['officers', '/assets/segregation-officers/'],
+                ],
+        links: {
+                internal: [
+                    // ['dashboard', 'Dashboard'],
+                    // ['workspace', 'Workspace'],
+                    // ['cloudspace', 'Cloudspace'],
+                    // ['depot', 'Depot'],
+                    // ['musings', 'Musings'],
+                    // ['blog', 'Blogging Page'],
+                    // ['test-blog', 'Test Blog'],
+                    // ['music', 'Original Music'],
+                    // ['one', 'Onestop'],
+                ],
+                external: [
+                    ['Checkpoint', 'https://www.youtube.com/watch?v=XgqTrvcAySA',],
+                    ['Anki Web', 'https://ankiweb.net/'],
+                    ['Clozemaster', 'https://www.clozemaster.com'],
+                    ['Jisho', 'https://jisho.org'],
+                    ['NHK Yasashii', 'https://www3.nhk.or.jp/news/easy/',],
+                    ['Course Schedule', '/assets/reference-docs/refdoc-acc149-syllabus.pdf'],
+                    // ['Coursework', 'https://account.cengage.com/login?',],
+                    ['Maps', 'https://maps.google.com',],
+                    ['Internal Jobs', 'https://wd108.myworkday.com/wday/authgwy/nc/login.html',],
+                    ['Intranet', 'https://int.dac.nc.gov',],
+                    ['Fiori', 'https://portal.osc.nc.gov/app',],
+                    ['Alpine JS', 'https://alpinejs.dev/'],
+                    ['Alpine Components', 'https://alpinejs.dev/components'],
+                    ['Alpine Toolbox', 'https://www.alpinetoolbox.com/dist/tools/'],
+                    ['Alpine Ajax', 'https://alpine-ajax.js.org'],
+                ],
+            },
+        },
+        
+    }">
+
+    <template x-if="atFrameTheatre">
+        <div>
+            <template x-for="file in charter.folders" , :key="index">
+                <button :id="file[0] + 'FOLDER'" class="trigger-box" @click="folderSelected = $el.id"
+                    :hx-get="'/one/frame/' + file[0]" hx-trigger="click" hx-target="#frame-theatre" hx-swap="innerHTML"
+                    x-text="$el.id">
+                </button>
+            </template>
+        </div>
+    </template>
+
+</div>

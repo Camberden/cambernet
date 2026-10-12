@@ -3,7 +3,7 @@
  }">
 	<!-- Trigger -->
 	<span x-on:click="openModal = true">
-		<button type="button" class="trigger-box" x-text="Alpine.store('nauth').valid ? 'Logout' : 'Login'">
+		<button type="button" class="options2" x-text="CMBRutil.getUser(CMBRutil.user) ? 'Logout' : 'Login'">
 		</button>
 	</span>
 
@@ -21,13 +21,13 @@
 				style="position: relative; min-height: auto; max-width: auto; padding:4rem;">
 				<div class="modal-field">
 					<!-- ! Auth True ! -->
-					<template x-if="Alpine.store('nauth').valid === true">
+					<template x-if="CMBRutil.getUser(CMBRutil.user) === true">
 						<div hx-get="../template/logout.html" hx-target="this" hx-trigger="load" hx-swap="outerHTML"
 							x-text="'Logout'" @load="console.log(Alpine.store('nauth').valid)">
 						</div>
 					</template>
 					<!-- ! Auth False ! -->
-					<template x-if="Alpine.store('nauth').valid === false" x-show="Alpine.store('nauth').valid">
+					<template x-if="CMBRutil.getUser(CMBRutil.user) === false">
 						<div hx-get="../template/login.html" hx-target="this" hx-trigger="load" hx-swap="outerHTML"
 							x-text="'Login'" @load="console.log(Alpine.store('nauth').valid)">
 						</div>

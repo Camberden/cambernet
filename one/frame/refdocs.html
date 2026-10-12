@@ -1,42 +1,31 @@
 <div x-data="{
-	modalVar: 'photos',
 	folderData: {},
-	imageRequest: {
-		uploads: '/images/uploads/',
-		travel: '/assets/travel-photos/',
-		artifacts: '/assets/artifacts/',
-		officers: '/assets/segregation-officers/',
-		residents: '/assets/segregation-residents/'
-	}
-	 }">
+	 }" x-effect="folderData = await $get('/api/media/reference-docs');">
 
-	<button class="trigger-box" @click="folderData = await $get('/api/media/reference-docs')">
-		Reference Documents
-	</button>
-
-	<div class="cmbr-pen flex-grid-cmbr flex-table-r" hx-get="/api/media/reference-docs" hx-target="#info-div-frame"
-		hx-trigger="load" hx-swap="innerHTML" x-effect="JSON.stringify(folderData, null, 2)" x-data>
+	<div class="cmbr-pen flex-grid-cmbr flex-table-r" x-effect="JSON.stringify(folderData, null, 2)" x-data>
 		<template x-for="(item, index) in folderData" :key="index">
 			<div>
 				<template x-if="!item.endsWith('.pdf')">
-					<figure>
+					<button @click="CMBRutil.framefile = '/assets/reference-docs/' + item" x-text="item"></button>
+					<!-- <figure @click="CMBRutil.framefile = '/assets/reference-docs/' + item">
 						<img :src="'/assets/reference-docs/' + item" width="300" height="200"
 							@mouseover="$tooltip(item); $el.style='outline: 0.1rem solid magenta; cursor: pointer;'"
 							@mouseout="$el.style='outline:none;'" />
 						<figcaption class='vt323'>
 							<a :href="'/assets/reference-docs/' + item" x-text="'→ Link'"></a>
 						</figcaption>
-					</figure>
+					</figure> -->
 				</template>
 				<template x-if="item.endsWith('.pdf')">
-					<figure>
+					<button @click="CMBRutil.framefile = '/assets/reference-docs/' + item" x-text="item"></button>
+					<!-- <figure @click="CMBRutil.framefile = '/assets/reference-docs/' + item">
 						<img :src="'/images/cmbr-sig.png'" width="150" height="100"
 							@mouseover="$tooltip(item); $el.style='outline: 0.1rem solid magenta; cursor: pointer;'"
 							@mouseout="$el.style='outline:none;'" />
 						<figcaption class='vt323'>
 							<a :href="'/assets/reference-docs/' + item" target="'_blank'" x-text="'→ Link'"></a>
 						</figcaption>
-					</figure>
+					</figure> -->
 				</template>
 			</div>
 		</template>

@@ -1,13 +1,9 @@
 <div x-data="{ 
 	folderData: {},
-	 }">
+	 }" x-effect="folderData = await $get('/api/media/fantasy-graphics')">
 
-	<button class="trigger-box" @click="folderData = await $get('/api/media/fantasy-graphics')">
-		Graphics
-	</button>
 
-	<div class="cmbr-pen flex-grid-cmbr flex-table-r" hx-get="/api/media/fantasy-graphics" hx-target="#info-div-frame"
-		hx-trigger="load" hx-swap="innerHTML" x-effect="JSON.stringify(folderData, null, 2)">
+	<div class="cmbr-pen flex-grid-cmbr flex-table-r" x-effect="JSON.stringify(folderData, null, 2)">
 		<template x-for="(item, index) in folderData" :key="index">
 			<div>
 				<figure>

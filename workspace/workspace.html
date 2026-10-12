@@ -38,12 +38,18 @@
 		style="border:0.2rem; padding:0.1rem; border: 0.2rem ridge burlywood; padding: 0.8rem;" x-data="{
 		}">
 
-		<div id="workspace-notifier" value="loginlogout" hx-get="../template/exmodal.html" hx-target="#loginlogout"
+		<div id="workspace-notifier" value="loginlogout" hx-get="../template/login.html" hx-target="#loginlogout"
 			hx-trigger="load delay:1200ms" hx-swap="outerHTML transition:true">
 			<button id="loginlogout" class="trigger-box">
 				<img width="100%" height="100%" src="../images/squares-fade.svg" alt="loading..." cmbr-loading />
 			</button>
 		</div>
+		<!-- <div id="workspace-notifier" value="loginlogout" hx-get="../template/exmodal.html" hx-target="#loginlogout"
+			hx-trigger="load delay:1200ms" hx-swap="outerHTML transition:true">
+			<button id="loginlogout" class="trigger-box">
+				<img width="100%" height="100%" src="../images/squares-fade.svg" alt="loading..." cmbr-loading />
+			</button>
+		</div> -->
 
 		<!--|=====|-->
 		<div id="workspace-console" class="vt323 grid-col-1-3-1" style="border-left: 0.3rem ridge grey; border-right: 0.3rem ridge grey; background-color: black;

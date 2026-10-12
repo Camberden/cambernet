@@ -8,18 +8,13 @@
 		officers: '/assets/segregation-officers/',
 		residents: '/assets/segregation-residents/'
 	}
-	 }">
+	 }" x-effect="folderData = await $get('/api/media/travel-photos')">
 
-	<button class="trigger-box" @click="folderData = await $get('/api/media/travel-photos')">
-		Show Travel Photos
-	</button>
-
-	<div class="cmbr-pen flex-grid-cmbr flex-table-r" hx-get="/api/media/travel-photos" hx-target="#info-div-frame"
-		hx-trigger="load" hx-swap="innerHTML" x-effect="JSON.stringify(folderData, null, 2)" x-data>
+	<div class="cmbr-pen flex-grid-cmbr flex-table-r" x-effect="JSON.stringify(folderData, null, 2)" x-data>
 		<template x-for="(item, index) in folderData" :key="index">
 			<div>
 				<figure>
-					<img :src="'/assets/travel-photos/' + item" width="300" height="200"
+					<img :src="'/assets/travel-photos/' + item" width="200" height="200"
 						@mouseover="$tooltip(item); $el.style='outline: 0.1rem solid magenta; cursor: pointer;'"
 						@mouseout="$el.style='outline:none;'" />
 					<figcaption class='vt323'>

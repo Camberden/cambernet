@@ -320,6 +320,12 @@ const CMBRutil = {
 	setUser: function (username) {
 		this.user = username;
 	},
+	interval: null,
+	killInterval: function (timer) {
+		clearInterval(timer);
+		console.log("Interval Cleared: " + timer);
+	},
+	framefile: '',
 	md: function () {
 		// var testMd = new SimpleMDE(cmbrMdConfig);
 		var testMd = new SimpleMDE(cmbrMdConfig);

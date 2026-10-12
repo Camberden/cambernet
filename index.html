@@ -12,6 +12,7 @@
 	<script src="https://unpkg.com/tippy.js@6"></script>
 	<script defer src="https://cdn.jsdelivr.net/npm/@imacrayon/alpine-ajax@0.12.6/dist/cdn.min.js"></script>
 	<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
 	<script defer src="https://unpkg.com/alpinejs-fetch@latest/dist/api.min.js"></script>
 	<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.20/index.global.min.js"></script>
@@ -25,11 +26,15 @@
 <body x-ref="body" data-theme="dark" x-data="{
 	siteUser: {},
 	activeSection: 'Home',
+	purgeInterval: function() {
+		CMBRutil.killInterval(CMBRutil.interval); 
+	},
 }">
 	<nav hx-get="nav.html" hx-trigger="load" hx-target="this" hx-swap="outerHTML"
-		x-effect="CMBRutil.siteUser = $get('/api/auth/reactivate')"></nav>
+		x-effect="siteUser = $get('/api/auth/reactivate')"></nav>
 
 	<hr class="hr-push-down">
+
 	<!-- <style>
 		.index-grid {
 			display: grid;
@@ -42,9 +47,9 @@
 	<main class="index-grid" x-effect="CMBRutil.mainView = 'Home'">
 
 		<div id="camberden-div">
-			<h1 id="camberden" lang="en-US">camberden</h1>
-			<div class="flex-table-r">
-				<div class="options" x-data="{
+			<h1 hx-get="/one/camberden.html" hx-trigger="load" hx-target="this" hx-swap="outerHTML">camberden</h1>
+			<div id="camberden-bar" class="button-grid-row">
+				<div class="options1" x-data="{
 				id: 1,
 				get expanded() {
 					return this.active === this.id
@@ -72,10 +77,24 @@
 						</div>
 					</div>
 				</div>
-				<div>
-					<button class="options2" hx-get="/template/interval-panel.html" hx-trigger="load" hx-target="this"
-						hx-swap="outerHTML" x-text="'Interval'">
-					</button>
+
+
+
+				<div value="loginlogout" hx-get="../template/exmodal.html" hx-target="#loginlogout"
+					hx-trigger="load delay:1200ms" hx-swap="outerHTML transition:true">
+					<div id="loginlogout">
+						<img width="100%" height="100%" src="../images/squares-fade.svg" alt="loading..."
+							cmbr-loading />
+					</div>
+				</div>
+
+				<div x-data="{}">
+					<template x-if="siteUser !== null">
+						<p class="marker" x-text="siteUser" x-effect="CMBRutil.setUser(siteUser)"></p>
+					</template>
+				</div>
+				<div class="options2" hx-get="/template/interval-panel.html" hx-trigger="load" hx-target="this"
+					hx-swap="outerHTML" x-text="'Interval'">
 				</div>
 			</div>
 		</div>
@@ -118,7 +137,7 @@
 					animation-play-state: running;
 				}
 			</style> -->
-			<div id="info-div" hx-get='/one/indexinfo.html' hx-trigger="load" hx-target="this" hx-swap="innerHTML">
+			<div id="slideshow-div" hx-get='/one/indexinfo.html' hx-trigger="load" hx-target="this" hx-swap="outerHTML">
 			</div>
 		</div>
 
@@ -128,16 +147,18 @@
 				hx-trigger="click" x-show="!activeSection">
 				<span x-text="'Just One Stop'"></span>
 			</div> -->
-			<!-- <div class="section-title" hx-get="/one/indexinfo.html" hx-target="#indexer" hx-swap="innerHTML"
+			<div class="section-title" hx-get="/one/indexinfo.html" hx-target="#indexer" hx-swap="innerHTML"
 				hx-trigger="click" x-show="activeSection !== 'Home'" @click="activeSection = 'Home'">
 				<span x-text="'Home'"></span>
-			</div> -->
+			</div>
 			<div class="section-title" hx-get="/template/step-pay-plan.html" hx-target="#indexer" hx-swap="innerHTML"
-				hx-trigger="click" x-show="activeSection !== 'Finance'" @click="activeSection = 'Finance'">
+				hx-trigger="click" x-show="activeSection !== 'Finance'"
+				@click="activeSection = 'Finance'; purgeInterval();">
 				<span x-text="'Step Pay'"></span>
 			</div>
 			<div class="section-title" hx-get="/one/frame-theatre.html" hx-target="#indexer" hx-swap="innerHTML"
-				hx-trigger="click" x-show="activeSection !== 'Documents'" @click="activeSection = 'Documents'">
+				hx-trigger="click" x-show="activeSection !== 'Documents'"
+				@click="activeSection = 'Documents'; purgeInterval();">
 				<span x-text="'Frame Theatres'"></span>
 			</div>
 
@@ -146,10 +167,7 @@
 
 
 		<!-- <hr class="hr-groove-bottom"> -->
-		<footer class="index-footer">
-			<p id="footer-text" class="marker">Nearly Abandoned: Why? It's Hurting Me.</p>
-			<p class="marker">Last updated on <span x-ref="update" id="latest-update"></span></p>
-			<p lang="jp"><span id="japanese-date"></span></p>
+		<footer class="index-footer" hx-get='/footer.html' hx-trigger="load" hx-target="this" hx-swap="outerHTML">
 		</footer>
 
 	</main>

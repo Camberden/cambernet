@@ -9,8 +9,7 @@
  * @author Camberden (Chrispy | Kippi)
  */
 const latestUpdate = "Sunday, October 11th, 2026";
-document.querySelector("#latest-update").innerText = latestUpdate;
-const camberden = document.querySelector("#camberden");
+// document.querySelector("#latest-update").innerText = latestUpdate;
 /**
  * 
  * @param {string} month
@@ -73,57 +72,13 @@ const convertToJapaneseDate = (date) => {
 	}
 	document.querySelector("#japanese-date").textContent = japaneseDate;
 }
-const randomizeMonicker = () => {
-	const monickers = ["camberden", "観葉伝", "カンバデン", "}*'<'('H'[';<"];
-	const m = Math.random();
-	if (m <= 0.2) {
-		camberden.lang = "jp";
-		camberden.setAttribute("style", "font-family: Yusei Magic;");
-		camberden.innerHTML = monickers[1];
-	} else if (m <= 0.4) {
-		camberden.lang = "jp";
-		camberden.setAttribute("style", "font-family: Yusei Magic;");
-		camberden.innerHTML = monickers[2];
-	} else if (m <= 0.6) {
-		camberden.removeAttribute("font-family");
-		camberden.lang = "la-fonipa";
-		camberden.innerHTML = monickers[0].replace("c", "k");
-		camberden.classList.add("eremoran-kiptascript");
-		camberden.setAttribute("style", "font-family: eremoran-kiptascript;");
-	} else if (m <= 0.8) {
-		camberden.innerHTML = monickers[3];
-	} else {
-		camberden.innerHTML = monickers[0];
-	}
-	camberden.style.opacity = "100%";
-}
-/**
- * @param {Object} album
- */
-// const randomizePhotos = (album) => {
-// 	const infoDivBackground = document.getElementById("info-div-background");
-// 	infoDivBackground.style.animationPlayState = "paused";
-// 	infoDivBackground.parentElement.style.animationPlayState = "paused";
-// 	const m = Math.random();
-// 	infoDivBackground.style.animationPlayState = "running";
-// 	infoDivBackground.parentElement.style.animationPlayState = "running";
-
-// 	let photoIndex = Math.round(m.toFixed(2) * album.length);
-// 	if (photoIndex < 1) {
-// 		++photoIndex;
-// 	}
-// 	infoDivBackground.style.backgroundImage = `url("${album[photoIndex]}")`;
-// 	infoDivBackground.parentElement.style.borderRight = `var(--cmbr-grid-box)`;
-
-// 	// infoDivBackground.parentElement.style.borderImage = `var(--cmbr-gradient)`;
-// }
 
 (async (/*=====*| RUN |*=====*/) => {
 
 	// const photos = await CMBRutil.connectCMBRjson(["travel-photos"]);
-	convertToJapaneseDate(formatter(latestUpdate));
+	// convertToJapaneseDate(formatter(latestUpdate));
 	// randomizePhotos(photos);
-	randomizeMonicker();
+	// randomizeMonicker();
 	// const slideshow = setInterval(() => {
 	// 	randomizePhotos(photos);
 	// }, 10000);
