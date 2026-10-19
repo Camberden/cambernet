@@ -389,6 +389,7 @@ const CMBRutil = {
 
 	},
 
+
 	iden: '',
 	identify: function (username) {
 		this.iden = username;
@@ -614,6 +615,13 @@ const CMBRutil = {
 			return true;
 		} else if (document.location.href.includes(baseHyperlinks[0])) {
 			return false;
+		} else {
+			return false;
+		}
+	},
+	atSiteBlog: function () {
+		if (document.location.href.includes("blog.html")) {
+			return true;
 		} else {
 			return false;
 		}

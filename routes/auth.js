@@ -155,19 +155,19 @@ router.get('/reactivate', cookieJwtAuth, async (req, res) => {
 	pool.releaseConnection();
 	try {
 		if (req.user) {
+			console.log("User reactivated: " + req.user.payload.username);
 			res.json(req.user.payload.username);
 			pool.releaseConnection();
 		} else {
-			console.log("No token found in cookies.");
-			const noIden = null;
-			pool.releaseConnection();
-			res.send(noIden);
+			console.log("No token-user in cookies.");
+			res.json({ identity: "No user." });
 		}
 	} catch (err) {
-		console.log("No token or token invalid: " + err.message);
+		console.log("Reactivation Triggered: " + err.message);
 		pool.releaseConnection();
 	};
 	pool.releaseConnection();
+	res.end();
 });
 router.post('/logout', async (req, res) => {
 	res.get('jwt_token');

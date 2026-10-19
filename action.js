@@ -8,7 +8,7 @@
  * - øH/«![/H)'/]^)H'¬L/¬]'/H[*'v'{';{[\\
  * @author Camberden (Chrispy | Kippi)
  */
-const latestUpdate = "Sunday, October 11th, 2026";
+const latestUpdate = "Sunday, October 18th, 2026";
 // document.querySelector("#latest-update").innerText = latestUpdate;
 /**
  * 
@@ -72,28 +72,3 @@ const convertToJapaneseDate = (date) => {
 	}
 	document.querySelector("#japanese-date").textContent = japaneseDate;
 }
-
-(async (/*=====*| RUN |*=====*/) => {
-
-	// const photos = await CMBRutil.connectCMBRjson(["travel-photos"]);
-	// convertToJapaneseDate(formatter(latestUpdate));
-	// randomizePhotos(photos);
-	// randomizeMonicker();
-	// const slideshow = setInterval(() => {
-	// 	randomizePhotos(photos);
-	// }, 10000);
-	// const killSlideshow = () => {
-	// 	clearInterval(slideshow);
-	// };
-	// document.querySelectorAll('.section-title').forEach((sectionTitle) => {
-
-	// 	sectionTitle.addEventListener('click', () => {
-	// 		// const infoDivBackground = document.getElementById("info-div-background");
-	// 		// infoDivBackground.style.backgroundImage = "none";
-	// 		// infoDivBackground.style.animationPlayState = "paused";
-	// 		// infoDivBackground.parentElement.style.animationPlayState = "paused";
-	// 		killSlideshow();
-	// 	});
-	// });
-
-})(/*=====*| END |*=====*/);

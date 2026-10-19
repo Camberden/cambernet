@@ -30,8 +30,7 @@
 		CMBRutil.killInterval(CMBRutil.interval); 
 	},
 }">
-	<nav hx-get="nav.html" hx-trigger="load" hx-target="this" hx-swap="outerHTML"
-		x-effect="siteUser = $get('/api/auth/reactivate')"></nav>
+	<nav hx-get="nav.html" hx-trigger="load" hx-target="this" hx-swap="outerHTML"></nav>
 
 	<hr class="hr-push-down">
 
@@ -49,36 +48,6 @@
 		<div id="camberden-div">
 			<h1 hx-get="/one/camberden.html" hx-trigger="load" hx-target="this" hx-swap="outerHTML">camberden</h1>
 			<div id="camberden-bar" class="button-grid-row">
-				<div class="options1" x-data="{
-				id: 1,
-				get expanded() {
-					return this.active === this.id
-				},
-				set expanded(value) {
-					this.active = value ? this.id : null
-				},
-			}" role="region">
-					<button id="chart-access" type="button" @click="expanded = !expanded"
-						hx-get="/template/mediatool.html" hx-trigger="load" hx-target="#chart-links"
-						hx-swap="innerHTML">
-						<div class="trigger-dropdown">
-							<span x-show="expanded" x-cloak>&UpArrow;</span>
-							<span x-show="!expanded" x-cloak>&DownArrow;</span>
-							<span class="vt323">Options</span>
-							<span x-show="expanded" x-cloak>&UpArrow;</span>
-							<span x-show="!expanded" x-cloak>&DownArrow;</span>
-						</div>
-					</button>
-					<div id="chart-dropdown" x-show="expanded" x-collapse>
-						<div id="chart-links">
-							<template x-show="expanded">
-
-							</template>
-						</div>
-					</div>
-				</div>
-
-
 
 				<div value="loginlogout" hx-get="../template/exmodal.html" hx-target="#loginlogout"
 					hx-trigger="load delay:1200ms" hx-swap="outerHTML transition:true">
@@ -86,12 +55,6 @@
 						<img width="100%" height="100%" src="../images/squares-fade.svg" alt="loading..."
 							cmbr-loading />
 					</div>
-				</div>
-
-				<div x-data="{}">
-					<template x-if="siteUser !== null">
-						<p class="marker" x-text="siteUser" x-effect="CMBRutil.setUser(siteUser)"></p>
-					</template>
 				</div>
 				<div class="options2" hx-get="/template/interval-panel.html" hx-trigger="load" hx-target="this"
 					hx-swap="outerHTML" x-text="'Interval'">
