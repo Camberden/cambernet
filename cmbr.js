@@ -309,17 +309,24 @@ const cmbrMdConfigAlt = {
 const CMBRutil = {
 	mainView: 'Home',
 	user: null,
+	identified: false,
 	getUser: function (currentUser) {
-		currentUser != null ? this.user = currentUser : this.user = null;
+		// currentUser != null ? this.user = currentUser : this.user = null;
+		console.log("Current User: " + currentUser);
 		if (this.user === null) {
+			this.identified = false;
 			return false;
 		} else {
 			return true;
 		}
 	},
 	setUser: function (username) {
+		console.log("Setting User: " + this.user);
+		console.log("Identified: " + this.identified);
 		this.user = username;
+		this.idenitfied = true;
 	},
+
 	interval: null,
 	killInterval: function (timer) {
 		clearInterval(timer);
@@ -702,17 +709,17 @@ const CMBRutil = {
 			});
 
 	},
-	retrieveParcel: async function (site, query) {
+	retrieveParcel: async function (site) {
 		return fetch(site)
 			.then(data => data.json())
 			.then(data => {
-				// console.log(data);
-				console.log("QUERY BEFORE RESOLUTION: " + query[0]);
+				console.log(data);
+				// console.log("QUERY BEFORE RESOLUTION: " + query[0]);
 				return data;
 			})
-			.then((data) => {
-				return data[query];
-			});
+		// .then((data) => {
+		// 	return data[query];
+		// });
 	},
 }
 

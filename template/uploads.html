@@ -13,8 +13,8 @@
 		Show Uploads
 	</button>
 
-	<div class="cmbr-pen flex-grid-cmbr flex-table-r" hx-get="/api/media/uploads" hx-target="#info-div-frame"
-		hx-trigger="load" hx-swap="innerHTML" x-effect="JSON.stringify(folderData, null, 2)">
+	<div class="cmbr-pen flex-grid-cmbr flex-table-r" hx-get="/api/media/uploads" hx-target="this" hx-trigger="load"
+		hx-swap="innerHTML" x-effect="JSON.stringify(folderData, null, 2)">
 		<template x-for="(item, index) in folderData" :key="index">
 			<div>
 				<figure>

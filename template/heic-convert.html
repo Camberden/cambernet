@@ -1,9 +1,38 @@
-<div id="heiconvert-handle">
+<div id="heiconvert-handle" x-data="{
+	submitted: false,
+	toggleSubmitted: function() {
+		this.submitted = ! this.submitted;
+	},
+	submissionProcess: function() {
+		this.toggleSubmitted();
+		const submittedTimeout = setTimeout(()=> {
+			this.toggleSubmitted();
+			clearTimeout(submittedTimeout);
+		}, 5000);
+	},
+	recentUploads: {},
+}">
+
+
 	<!-- <template> -->
 	<h2 class="marker-green">Single Heic2Jpeg</h2>
-	<form action="/api/media/upload" method="POST" enctype="multipart/form-data">
+	<form hx-boost="true" action="/api/media/upload" method="POST" enctype="multipart/form-data">
 		<input type="file" name="heic-photo" />
-		<button type="submit" value="'Get me heic to jpg!'" class="trigger-box"></button>
+		<button type="submit" x-text="'Get me heic to jpg!'" class="trigger-box" @click="submissionProcess()"></button>
 	</form>
-	<!-- </template> -->
+
+	<div x-show="submitted" x-effect="recentUploads = await $get('/api/media/uploads')">
+		<template x-for="(item, index) in recentUploads" :key="index">
+			<div>
+				<figure>
+					<img :src="'/images/uploads/' + item" width="200" height="200"
+						@mouseover="$tooltip(item); $el.style='outline: 0.3rem solid transparent; cursor: pointer;'"
+						@mouseout="$el.style='outline:none;'" />
+					<figcaption>
+						<a :href="'/images/uploads/' + item" x-text="'/images/uploads/' + item"></a>
+					</figcaption>
+				</figure>
+			</div>
+		</template>
+	</div>
 </div>

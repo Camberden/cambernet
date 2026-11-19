@@ -147,7 +147,20 @@ router.post('/processes', notifyUser, async (req, res) => {
 		...row,
 	}));
 
-	res.send(resultRows);
+	res.json(resultRows);
+	pool.releaseConnection();
+	res.end();
+});
+router.get('/processes', notifyUser, async (req, res) => {
+	await pool.getConnection();
+	const [rows] = await pool.query("SHOW processlist;");
+	// const resultRows = (rows[0]).toString();
+	// resultRows = rows[0];
+	const resultRows = rows.map(row => ({
+		...row,
+	}));
+
+	res.json(resultRows);
 	pool.releaseConnection();
 	res.end();
 });
@@ -155,12 +168,25 @@ router.get('/reactivate', cookieJwtAuth, async (req, res) => {
 	pool.releaseConnection();
 	try {
 		if (req.user) {
+			res.json(
+				{
+					identity: req.user.payload.username,
+					identityNumber: req.user.payload.id,
+					isAuthenticated: true
+				}
+			);
+			console.log("User reactivated: " + res.identity);
 			console.log("User reactivated: " + req.user.payload.username);
-			res.json(req.user.payload.username);
 			pool.releaseConnection();
 		} else {
 			console.log("No token-user in cookies.");
-			res.json({ identity: "No user." });
+			res.json(
+				{
+					identity: null,
+					identityNumber: null,
+					isAuthenticated: false
+				}
+			);
 		}
 	} catch (err) {
 		console.log("Reactivation Triggered: " + err.message);

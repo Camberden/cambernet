@@ -38,7 +38,7 @@ router.post('/upload', upload.single('heic-photo'), function (req, res) {
 			console.log('Uploaded file cleaned up successfully');
 		}
 	});
-	res.redirect('/');
+	// res.redirect('/');
 });
 
 router.get('/uploads', async (req, res, next) => {
@@ -48,13 +48,13 @@ router.get('/uploads', async (req, res, next) => {
 		const fhouwdoughs = fs.readdirSync(togetFolder);
 		console.log("fuck the what")
 		if (fhouwdoughs) {
-			console.warn("What the fuck")
+			console.warn("fhouwdough prawsess...");
 			res.json(fhouwdoughs);
 			next();
 		}
 	} catch (err) {
 		console.error("Issue");
-		res.next();
+		next();
 	}
 });
 
@@ -65,13 +65,14 @@ router.get('/travel-photos', async (req, res, next) => {
 		const fhouwdoughs = fs.readdirSync(togetFolder);
 		console.log("fuck the what")
 		if (fhouwdoughs) {
-			console.warn("Sending...");
+			console.warn("fhouwdough senn ding prawsess...");
+
 			res.json(fhouwdoughs);
 			next();
 		}
 	} catch (err) {
 		console.error("Issue");
-		res.next();
+		next();
 	}
 });
 
@@ -82,13 +83,14 @@ router.get('/reference-docs', async (req, res, next) => {
 		const fhouwdoughs = fs.readdirSync(togetFolder);
 		console.log("fuck the what")
 		if (fhouwdoughs) {
-			console.warn("Sending...");
+			console.warn("senn dingh fhouwdough prawsess...");
+
 			res.json(fhouwdoughs);
 			next();
 		}
 	} catch (err) {
 		console.error("Issue");
-		res.next();
+		next();
 	}
 });
 
@@ -202,23 +204,23 @@ router.post('/clouds', cookieJwtAuth, async (req, res) => {
 
 router.delete('/clouds/:id', cookieJwtAuth, async (req, res) => {
 	console.log("Todos API: router.delete(`/:id`) [const { deleteCloudId } = req.params;]");
-	pool.releaseConnection();
+	// pool.releaseConnection();
+	await pool.getConnection();
 	try {
 
-		const deleteCloudId = parseInt(req.params.id).toFixed(0);
+		const deleteCloudId = req.params.id;
 		const user_id = req.user.payload.id;
 		console.log("Fetching delete param:", deleteCloudId);
 		console.log("Id type:", typeof deleteCloudId);
 
-		await pool.getConnection();
 
 		// Check ownership
-		const [cloudposts] = await pool.execute(
+		const { cloudposts } = pool.execute(
 			'SELECT user_id FROM clouds WHERE id = ?',
 			[deleteCloudId]
 		);
 
-		if (cloudposts.length === 0) {
+		if (cloudposts[0] === 0) {
 			pool.releaseConnection();
 			return res.status(404).json({ error: 'cloudposts not found' });
 		}

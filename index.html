@@ -26,11 +26,17 @@
 <body x-ref="body" data-theme="dark" x-data="{
 	siteUser: {},
 	activeSection: 'Home',
+	setSiteUser: function(iden) {
+		this.siteUser = iden;
+	},
+	getSiteUser: function() {
+		return this.siteUser;
+	},
 	purgeInterval: function() {
 		CMBRutil.killInterval(CMBRutil.interval); 
 	},
 }">
-	<nav hx-get="nav.html" hx-trigger="load" hx-target="this" hx-swap="outerHTML"></nav>
+	<!-- <nav hx-get="nav.html" hx-trigger="load" hx-target="this" hx-swap="outerHTML"></nav> -->
 
 	<hr class="hr-push-down">
 
@@ -45,61 +51,30 @@
 	</style> -->
 	<main class="index-grid" x-effect="CMBRutil.mainView = 'Home'">
 
-		<div id="camberden-div">
+		<div id="camberden-div" x-effect="siteUser = CMBRutil.retrieveParcel('../api/auth/reactivate');">
+
 			<h1 hx-get="/one/camberden.html" hx-trigger="load" hx-target="this" hx-swap="outerHTML">camberden</h1>
 			<div id="camberden-bar" class="button-grid-row">
 
-				<div value="loginlogout" hx-get="../template/exmodal.html" hx-target="#loginlogout"
-					hx-trigger="load delay:1200ms" hx-swap="outerHTML transition:true">
-					<div id="loginlogout">
-						<img width="100%" height="100%" src="../images/squares-fade.svg" alt="loading..."
-							cmbr-loading />
-					</div>
+
+				<div style="border: 0.2rem ridge transparent; width: 12rem;">
+					<template x-for="(spec, index) in siteUser" :key="index">
+						<div class="vt323" style="color: burlywood;">
+							<span x-show="index === 'identity'" x-html="spec"
+								:x-effect="index === 'identity' ? CMBRutil.setUser(spec) : console.log(spec)"></span>
+						</div>
+					</template>
+
 				</div>
-				<div class="options2" hx-get="/template/interval-panel.html" hx-trigger="load" hx-target="this"
-					hx-swap="outerHTML" x-text="'Interval'">
+
+				<div style="color:burlywood;" hx-get="/template/interval-panel.html" hx-trigger="load" hx-target="this"
+					hx-swap="innerHTML" x-text="'Interval'">
 				</div>
 			</div>
 		</div>
 
 
 		<div id="indexer" class="index-item">
-			<!-- <style>
-				#info-div {
-					display: grid;
-					grid-template-columns: 1fr 1fr;
-					margin-inline: auto;
-					padding-bottom: 3rem;
-					flex: 1;
-				}
-
-				#info-div-frame {
-						box-sizing: content-box;
-						border-right: 0.5rem solid transparent;
-						margin-inline-end: 0%;
-						animation-name: info-div-load;
-						animation-duration: 10s;
-						animation-delay: 1s;
-						animation-iteration-count: infinite;
-						animation-direction: normal;
-						animation-timing-function: ease-in-out;
-				}
-
-				#info-div-background {
-					background-image: none;
-					background-size: cover;
-					width: 100%;
-					height: 100%;
-					opacity: 0%;
-					animation-name: info-div-shift;
-					animation-duration: 10s;
-					animation-delay: 1s;
-					animation-iteration-count: infinite;
-					animation-direction: normal;
-					animation-timing-function: ease-in-out;
-					animation-play-state: running;
-				}
-			</style> -->
 			<div id="slideshow-div" hx-get='/one/indexinfo.html' hx-trigger="load" hx-target="this" hx-swap="outerHTML">
 			</div>
 		</div>
@@ -114,17 +89,17 @@
 				hx-trigger="click" x-show="activeSection !== 'Home'" @click="activeSection = 'Home'">
 				<span x-text="'Home'"></span>
 			</div>
-			<div class="section-title" hx-get="/template/step-pay-plan.html" hx-target="#indexer" hx-swap="innerHTML"
+			<!-- <div class="section-title" hx-get="/template/step-pay-plan.html" hx-target="#indexer" hx-swap="innerHTML"
 				hx-trigger="click" x-show="activeSection !== 'Finance'"
 				@click="activeSection = 'Finance'; purgeInterval();">
 				<span x-text="'Step Pay'"></span>
-			</div>
-			<div class="section-title" hx-get="/one/frame-theatre.html" hx-target="#indexer" hx-swap="innerHTML"
+			</div> -->
+			<!-- <div class="section-title" hx-get="/one/frame-theatre.html" hx-target="#indexer" hx-swap="innerHTML"
 				hx-trigger="click" x-show="activeSection !== 'Documents'"
 				@click="activeSection = 'Documents'; purgeInterval();">
 				<span x-text="'Frame Theatres'"></span>
-			</div>
-
+			</div> -->
+			<div class="section-title"><a href="workspace/workspace.html">workspace console</a></div>
 		</div>
 		<hr class="hr-cmbr-gradient">
 

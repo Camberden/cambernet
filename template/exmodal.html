@@ -1,14 +1,11 @@
 <!-- ^ Alpine Modal for Generated Menus follwing inputs. ^ -->
 <div id="exmodal-handle" x-data="{ 
 	openModal: false,
-	userResponse: {},
- }" @load="userResponse = await $get('/api/auth/reactivate')">
-	<span x-on:click="openModal = true">
-		<!-- <button type="button" class="options2" x-text="JSON.stringify(userResponse, 2, null) ? 'Login' : 'Logout'"> -->
-		<button type="button" class="options2"
-			x-text="JSON.stringify(userResponse, 2, null).length < 3 ? 'Login' : 'Logout'">
+ }">
+	<div x-on:click="openModal = true">
+		<button type="button" class="trigger-box" x-text="CMBRutil.user === null ? 'Login' : 'Logout'">
 		</button>
-	</span>
+	</div>
 
 	<!-- Modal -->
 	<div x-show="openModal" style="display: none" x-on:keydown.escape.prevent.stop="openModal = false" role="dialog"

@@ -3023,7 +3023,8 @@ form>label {
 }
 
 
-nav:hover>#camberden-title {
+nav:hover>#camberden-title,
+div>#camberden-title {
 	cursor: pointer;
 	text-shadow: 0rem 0rem transparent;
 

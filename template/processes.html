@@ -1,0 +1,17 @@
+<div id="process-handle" x-data="{
+	parsedProcess: {},
+
+}" x-effect="parsedProcess = await $get('/api/auth/processes')">
+	<template x-for="proc in parsedProcess">
+		<div>
+			<span x-text="'|===| Process |====>'" style="color:cornflowerblue;"></span>
+			<template x-for="(item, index) in proc" :key="index">
+				<div>
+					<span x-text="'| ' + index + '|===> '"></span>
+					<span x-text="' ' + item + '...'"></span>
+				</div>
+			</template>
+			<span x-text="'|===| End Process |===|'" style="color:coral;"></span>
+		</div>
+	</template>
+</div>

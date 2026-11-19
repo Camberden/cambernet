@@ -25,37 +25,45 @@
 	<title>Chrispy's Workspace</title>
 </head>
 
-<body x-ref="body" data-theme="dark">
+<body x-ref="body" data-theme="dark" x-data="{
+	siteUser: {},
+	activeSection: 'Workspace',
+	setSiteUser: function(iden) {
+		this.siteUser = iden;
+	},
+	getSiteUser: function() {
+		return this.siteUser;
+	},
+}">
 
-	<nav id="nav" hx-get="/nav.html" hx-target="#nav" hx-trigger="load" hx-swap="innerHTML" x-bg></nav>
+	<!-- <nav id="nav" hx-get="/nav.html" hx-target="#nav" hx-trigger="load" hx-swap="innerHTML" x-bg></nav> -->
 
 	<hr class="hr-push-up">
 	<hr class="hr-cmbr-gradient">
-	<button class="trigger-box" hx-get="../template/depository.html" hx-target="#wksp-center" hx-trigger="click"
-		hx-swap="innerHTML settle:250ms transition:true">New Note</button>
 	<!--^^-->
 	<div id="workspace-monitor" class="grid-col-1-3-1"
 		style="border:0.2rem; padding:0.1rem; border: 0.2rem ridge burlywood; padding: 0.8rem;" x-data="{
-		}">
+		}" x-effect="siteUser = CMBRutil.retrieveParcel('../api/auth/reactivate');">
 
-		<div id="workspace-notifier" value="loginlogout" hx-get="../template/login.html" hx-target="#loginlogout"
+		<div id="workspace-notifier" value="loginlogout" hx-get="../template/exmodal.html" hx-target="#loginlogout"
 			hx-trigger="load delay:1200ms" hx-swap="outerHTML transition:true">
+			<span id="camberden-title"></span><span class="vt323" style="color:indianred;" x-text="'.net'"></span>
 			<button id="loginlogout" class="trigger-box">
 				<img width="100%" height="100%" src="../images/squares-fade.svg" alt="loading..." cmbr-loading />
 			</button>
 		</div>
-		<!-- <div id="workspace-notifier" value="loginlogout" hx-get="../template/exmodal.html" hx-target="#loginlogout"
-			hx-trigger="load delay:1200ms" hx-swap="outerHTML transition:true">
-			<button id="loginlogout" class="trigger-box">
-				<img width="100%" height="100%" src="../images/squares-fade.svg" alt="loading..." cmbr-loading />
-			</button>
-		</div> -->
 
 		<!--|=====|-->
-		<div id="workspace-console" class="vt323 grid-col-1-3-1" style="border-left: 0.3rem ridge grey; border-right: 0.3rem ridge grey; background-color: black;
+		<div id="workspace-console" class="vt323 grid-col-1" style="border-left: 0.3rem ridge grey; border-right: 0.3rem ridge grey; background-color: black;
 			 font-size: 1rem; color: mediumturquoise; max-height: 20rem; overflow-y: scroll;">
-			<div x-html="'&hksearow;'"></div>
-			<div id="wksp-console" style="text-align:left;" x-data>
+			<div id="wksp-console" style="text-align:left; border: 0.5rem inset black;" x-data>
+				<div class="flex-table-r"><span x-html="'&hksearow;'"></div>
+				<template x-for="(spec, index) in siteUser" :key="index">
+					<div :class="'flex-table-row grid-col-1'">
+						<span x-show="index === 'identity'" x-html="'Welcome, ' + spec + '.'"
+							:x-effect="index === 'identity' ? CMBRutil.setUser(spec) : console.log(spec)"></span>
+					</div>
+				</template>
 				<div x-clock></div>
 				<div x-text="baseHyperlinks[0] + ' | ' + baseHyperlinks[1]"></div>
 				<div x-text="document.location"></div>
@@ -66,54 +74,53 @@
 					<img width="100%" height="100%" src="../images/squares-fade.svg" alt="loading..." cmbr-loading />
 				</div>
 			</div>
-			<div x-html="'&hkswarow;'"></div>
 			<!--|=====|-->
 		</div>
 
 		<div id="workspace-config" x-data="{
 			parsedProcess: {},
 			}">
-			<span x-show="true" style="width:15rem; height:10rem; box-sizing: border-box; border: 0.5rem solid fuchia;"
-				x-effect="parsedProcess = await $fetch('/api/auth/processes');">
+			<span x-show="true" style="width:15rem; height:10rem; box-sizing: border-box; border: 0.5rem solid fuchia;">
 				<img width=" 50%" height="fit-content" src="../images/cmbr-sig-transform.svg" alt="emblem" />
 			</span>
-			<button hx-post="/api/auth/processes" hx-trigger="click delay:1s" hx-target="#wksp-console"
-				hx-swap="beforeend" x-effect="JSON.parse(parsedProcess, null, 2)" x-text="'Processes'" x-data>
+			<button class="trigger-box" hx-get="../template/processes.html" hx-trigger="click delay:1s"
+				hx-target="#wksp-console" hx-swap="beforeend" x-text="'Processes'" x-data>
 			</button>
-			<template x-for="(item, index) in parsedProcess" :key="index">
-
-			</template>
 		</div>
-
 	</div>
 	<!--^^-->
-	<hr class="hr-cmbr-gradient">
+	<hr class=" hr-cmbr-gradient">
 	<div id="wksp-button-control">
 		<div class="button-grid-row"
 			style="border:0.2rem ridge burlywood; background-image: var(--mosky-1); padding: 0.8rem; ">
 
-			<!-- <button class="trigger-box" hx-get="../sections.html" hx-target="#wksp-center" hx-trigger="click"
-				hx-swap="innerHTML settle:250ms transition:true">Sitemap</button> -->
+			<button class="trigger-box" hx-get="../sections.html" hx-target="#wksp-center" hx-trigger="click"
+				hx-swap="innerHTML settle:250ms transition:true">Sitemap</button>
 			<button class="trigger-box" hx-get="../template/scuffle.html" hx-target="#wksp-center" hx-trigger="click"
 				hx-swap="innerHTML settle:250ms transition:true">Scuffle</button>
 			<button class="trigger-box" hx-get="../template/seg.html" hx-target="#wksp-center" hx-trigger="click"
 				hx-swap="innerHTML settle:250ms transition:true">Seg</button>
 			<button class="trigger-box" hx-get="../template/interval-panel.html" hx-target="#wksp-center"
 				hx-trigger="click" hx-swap="innerHTML settle:250ms transition:true">Panel</button>
-			<!-- <button class="trigger-box" hx-get="../template/dummyjson.html" hx-target="#wksp-center" hx-trigger="click"
-				hx-swap="innerHTML settle:250ms transition:true">Dummyjson</button> -->
+			<button class="trigger-box" hx-get="../template/dummyjson.html" hx-target="#wksp-center" hx-trigger="click"
+				hx-swap="innerHTML settle:250ms transition:true">Dummyjson</button>
 			<button class="trigger-box" hx-get="../blog/new-blog-post.html" hx-target="#wksp-center" hx-trigger="click"
-				hx-swap="innerHTML settle:250ms transition:true">New Blog Post</button>
+				hx-swap="innerHTML settle:250ms transition:true">New Blog
+				Post</button>
+			<button class="trigger-box" hx-get="../template/depository.html" hx-target="#wksp-center" hx-trigger="click"
+				hx-swap="innerHTML settle:250ms transition:true">New Note</button>
 			<button class="trigger-box" hx-get="../template/heic-convert.html" hx-target="#wksp-center"
 				hx-trigger="click" hx-swap="innerHTML settle:250ms transition:true">Heic to Jpeg</button>
 			<button class="trigger-box" hx-get="../template/mdeditor.html" hx-target="#wksp-center" hx-trigger="click"
-				hx-swap="innerHTML settle:250ms transition:true">Markdown Editor</button>
+				hx-swap="innerHTML settle:250ms transition:true">Markdown
+				Editor</button>
 			<button class="trigger-box" hx-get="../template/greatregions.html" hx-target="#wksp-center"
 				hx-trigger="click" hx-swap="innerHTML settle:250ms transition:true">Great Regions</button>
 			<button class="trigger-box" hx-get="../template/rainfall.html" hx-target="#wksp-center" hx-trigger="click"
 				hx-swap="innerHTML settle:250ms transition:true">Rainfall</button>
 			<button class="trigger-box" hx-get="../template/cmbrstyle.html" hx-target="#wksp-center" hx-trigger="click"
-				hx-swap="innerHTML settle:250ms transition:true">cmbr Styles</button>
+				hx-swap="innerHTML settle:250ms transition:true">cmbr
+				Styles</button>
 			<button class="trigger-box" hx-get="../template/mediatool.html" hx-target="#wksp-dash" hx-trigger="click"
 				hx-swap="innerHTML settle:250ms transition:true">Mediatool</button>
 			<button class="trigger-box" hx-get="../template/travel-photos.html" hx-target="#wksp-center"
@@ -145,7 +152,8 @@
 				hx-target="#wksp-dash" hx-trigger="click" hx-swap="beforeend transition:true show:bottom">PSLF
 				Calc</button>
 			<button class="trigger-box dashboard-button" hx-get="../template/step-pay-plan.html" hx-target="#wksp-dash"
-				hx-trigger="click" hx-swap="beforeend transition:true show:bottom">Step Pay Plan</button>
+				hx-trigger="click" hx-swap="beforeend transition:true show:bottom">Step Pay
+				Plan</button>
 		</div>
 
 		<!-- <button class="trigger-box" hx-get="../template/mediatool.html" hx-target="#wksp-center" hx-trigger="click"
