@@ -1,0 +1,21 @@
+<div id="camberden-div" x-effect="siteUser = CMBRutil.retrieveParcel('../api/auth/reactivate');">
+
+	<h1 hx-get=template/camberden.html" hx-trigger="load" hx-target="this" hx-swap="outerHTML">camberden</h1>
+	<div id="camberden-bar" class="button-grid-row">
+
+
+		<div style="border: 0.2rem ridge transparent; width: 12rem;">
+			<template x-for="(spec, index) in siteUser" :key="index">
+				<div class="vt323" style="color: burlywood;">
+					<span x-show="index === 'identity'" x-html="spec"
+						:x-effect="index === 'identity' ? CMBRutil.setUser(spec) : console.log(spec)"></span>
+				</div>
+			</template>
+
+		</div>
+
+		<div style="color:burlywood;" hx-get="/template/interval-panel.html" hx-trigger="load" hx-target="this"
+			hx-swap="innerHTML" x-text="'Interval'">
+		</div>
+	</div>
+</div>

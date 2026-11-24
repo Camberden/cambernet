@@ -1,73 +1,121 @@
-<div x-data="{ 
+<div id="sections-handle" x-data="{ 
     atHome: CMBRutil.atSiteIndex(),
-    atLegacyHome: CMBRutil.atLegacyIndex(),
+    atVday: CMBRutil.atSiteVday(),
     basePath: document.location.origin + '/',
     homePage:  'Homepage ↺',
     sitemap: {
         links: {
                 internal: [
-                    // ['dashboard', 'Dashboard'],
+
+                    ['cloudspace', 'Cloudspace'],
                     ['workspace', 'Workspace'],
-                    ['cloudspace', 'Cloudspace'],
-                    ['depot', 'Depot'],
-                    ['worksite', 'Worksite'],
-                    ['blog', 'Blogging Page'],
-                    ['test-blog', 'Test Blog'],
-                    ['cloudspace', 'Cloudspace'],
-                    ['one', 'Onestop'],
+                    ['testblog', 'Testblog'],
+                    ['blog', 'Netjournal'],
+                    ['music', 'Original Music'],
+                    ['expeditions', 'Expeditions'],
+                    ['studies', 'Studies'],
+                    ['fantasypad', 'Fantasypad'],
+                    ['happy-veterans-day', 'Happy Veteran\'s Day!']
                 ],
-                external: [
-                    ['Checkpoint', 'https://www.youtube.com/watch?v=XgqTrvcAySA',],
-                    ['Anki Web', 'https://ankiweb.net/'],
-                    ['Clozemaster', 'https://www.clozemaster.com'],
-                    ['Jisho', 'https://jisho.org'],
-                    ['NHK Yasashii', 'https://www3.nhk.or.jp/news/easy/',],
-                    ['Maps', 'https://maps.google.com',],
-                    ['Intranet', 'https://int.dac.nc.gov',],
-                    ['Fiori', 'https://portal.osc.nc.gov/app',],
-                ]
+                external: {
+                    'language': [
+                        ['Jisho', 'https://jisho.org'],
+                        ['Anki Web', 'https://ankiweb.net/'],
+                        ['Clozemaster', 'https://www.clozemaster.com'],
+                        ['NHK Yasashii', 'https://www3.nhk.or.jp/news/easy/',],
+                    ],
+                    'coursework': [
+                        ['Course Schedule', '/assets/reference-docs/refdoc-acc149-syllabus.pdf'],
+                        ['Coursework', 'https://account.cengage.com/login?',],
+                    ],
+                    'workplace': [
+                        ['NCCO.us', 'https://ncco.us',],
+                        ['Outlook', 'https://outlook.office365.com/mail/inbox'],
+                        ['Internal Jobs', 'https://wd108.myworkday.com/wday/authgwy/nc/login.html',],
+                        ['Intranet', 'https://int.dac.nc.gov',],
+                        ['Fiori', 'https://portal.osc.nc.gov/app',],
+                    ],
+                    'programming': [
+                        ['Camberden.net', 'https://camberden.net'],
+                        ['Alpine Components', 'https://alpinejs.dev/components'],
+                        ['Alpine Toolbox', 'https://www.alpinetoolbox.com/dist/tools/'],
+                        ['Alpine Ajax', 'https://alpine-ajax.js.org'],
+                    ],
+                    'exploration': [
+                        ['Google Maps', 'https://maps.google.com',],
+                        ['Open Maps', 'https://www.openstreetmap.org/dashboard',],
+                    ],
+                    'military': [
+                        ['r/newtothenavy', 'https://www.reddit.com/r/newtothenavy/',],
+                        ['My Navy Rates', 'https://mynavyrates.org/rates',],
+                    ],
+                    'background': [
+                        ['Checkpoint', 'https://www.youtube.com/watch?v=XgqTrvcAySA',],
+                        ['Strawberry+', 'https://www.youtube.com/watch?v=j42T6o-XwMU',],
+                    ],
+                },
             },
         },
-        
     }">
 
     <template x-if="atHome">
         <div>
-            <template x-for="link in sitemap.links.internal" , :key="index">
+            <template x-for="link in sitemap.links.internal" :key="index">
                 <div :class="'section-title'">
-                    <a x-text="link[1]" :href="basePath + link[0] + '/' + link[0] + '.html'"
-                        :data-route="'/' + link[0] + '/'">
+                    <a x-text="link[1]" :href="basePath + link[0]">
                     </a>
                 </div>
             </template>
         </div>
     </template>
 
+
     <template x-if="!atHome">
-        <div :class="'section-title'">
-            <a x-text="homePage" :href="basePath + 'index.html'" :data-route="'/'">
+        <div>
+            <b class="chrispy" style="background-image: var(--cmbr-legacy-gradient); font-size: 1.3rem;"
+                x-text="'Internal'"></b>
+            <hr class="hr-cmbr-legacy-gradient"><br>
+        </div>
+    </template>
+    <template x-if="!atHome">
+        <div :class="'section-title'" :style="'padding:0.1rem'">
+            <a x-text="homePage" :href="basePath" :data-route="'/'">
             </a>
         </div>
     </template>
 
     <template x-if="!atHome">
-        <div x-effect=" displaySection() ">
-            <template x-for=" link in sitemap.links.internal" , :key="index">
+        <div>
+            <template x-for=" link in sitemap.links.internal" :key="index">
                 <div :class="'section-title'" :style="'padding:0.1rem'">
-                    <a x-text="link[1]" :href="basePath + link[0] + '/' + link[0] + '.html'"
-                        :data-route="'/' + link[0] + '/'">
+                    <a x-text="link[1]" :href="basePath + link[0]" :data-route="'/' + link[0] + '/'">
                     </a>
                 </div>
             </template>
+            <br>
         </div>
     </template>
 
     <template x-if="!atHome">
         <div>
-            <template x-for="link in sitemap.links.external">
-                <div :class="'section-title'" :style="'padding:0.1rem'">
-                    <a x-text="link[0]" :href="link[1]">
-                    </a>
+            <b class="chrispy" style="background-image: var(--cmbr-legacy-gradient); font-size: 1.3rem;"
+                x-text="'External'"></b>
+            <hr class="hr-cmbr-legacy-gradient"><br>
+        </div>
+    </template>
+
+    <template x-if="!atHome">
+        <div class="grid-col-1-1">
+            <template x-for="(category, index) in Object.keys(sitemap.links.external)" :key="index">
+                <div style="padding: 0.1rem; border-bottom: 0.3rem ridge black !important;">
+                    <b class="lora-bold" style="color:cornflowerblue; font-size: 1.1rem;" x-text="category"></b>
+                    <hr class="hr-cmbr-dark-gradient">
+                    <template x-for="link in sitemap.links.external[category]">
+                        <div :class="'section-title'" :style="'padding:0.1rem'">
+                            <a x-text="link[0]" :href="link[1]" :target="'#'">
+                            </a>
+                        </div>
+                    </template>
                 </div>
             </template>
         </div>

@@ -1,35 +1,87 @@
 {
-  "urls": {
-    "prodUrlPrimary": "https://camberden.com/",
-    "prodUrlSecondary": "https://camberden.github.io/",
-    "devUrlPrimary": "http://localhost:5500/",
-    "devUrlSecondary": "http://localhost:4240/"
+  "mdeConfig": {
+    "autofocus": true,
+    "forceSync": true,
+    "toolbar": [
+      "bold",
+      "italic",
+      "horizontal-rule",
+      "|",
+      "quote",
+      "code",
+      "|",
+      "unordered-list",
+      "ordered-list",
+      "|",
+      "link",
+      "image",
+      "table",
+      "|",
+      "preview",
+      "side-by-side",
+      "fullscreen"
+    ],
+    "hideIcons": [
+      "guide",
+      "heading"
+    ],
+    "opacity": 1,
+    "indentWithTabs": true,
+    "initialValue": "Module 1",
+    "insertTexts": {
+      "horizontalRule": [
+        "\n\n<hr class='hr-cmbr-gradient'>\n\n",
+        ""
+      ],
+      "image": [
+        "![](http: //",
+        ")"
+      ],
+      "link": [
+        "['",
+        "'](http://)"
+      ]
+    },
+    "promptURLs": true,
+    "renderingConfig": {
+      "singleLineBreaks": true,
+      "codeSyntaxHighlighting": true
+    },
+    "lineWrapping": false,
+    "autosave": {
+      "enabled": true,
+      "uniqueId": "chrispy",
+      "delay": 1000
+    },
+    "parsingConfig": {
+      "allowAtxHeaderWithoutSpace": true,
+      "strikethrough": false,
+      "underscoresBreakWords": true
+    }
   },
-  "sections": {
-    "homepage": "Homepage ↺",
-    "dashboard": "Personal Dashboard",
-    "workspace": "Coding Workspace",
-    "blog": "Blogging Page",
-    "language": "Language Resource",
-    "accounting": "Accounting Resource",
-    "travel": "Travel Page",
-    "lifecraft": "Lifecraft Page",
-    "musings": "Musings Page",
-    "fantasy": "Fantasyland",
-    "segregation": "Segregation",
-    "mainframe": "Mainframe",
-    "music": "Original Music"
-  },
+  "tunes": [
+    {
+      "title": "Meaning",
+      "year": 2021,
+      "album": "The Rush of Feeling",
+      "link": "../assets/music-tracks/music-meaning.mp4",
+      "photoLink": "../assets/artifacts/art-meaning-paper.jpeg",
+      "lyrical": true,
+      "completed": true
+    }
+  ],
   "bookmarks": {
     "Checkpoint": "https://www.youtube.com/watch?v=XgqTrvcAySA",
     "Clozemaster": "https://www.clozemaster.com",
     "Jisho": "https://jisho.org",
     "NHK Yasashii": "https://www3.nhk.or.jp/news/easy/",
     "Coursework": "https://www.mheducation.com",
-    "Maps": "https://maps.google.com",
+    "Maps": "https://www.openstreetmap.org/dashboard",
+    "NCCO.us": "https://ncco.us",
     "Internal Jobs": "https://wd108.myworkday.com/wday/authgwy/nc/login.html",
     "Intranet": "https://int.dac.nc.gov",
-    "Fiori": "https://portal.osc.nc.gov/app"
+    "Fiori": "https://portal.osc.nc.gov/app",
+    "Outlook": "https://outlook.office365.com/mail/inbox"
   },
   "travel-photos": {
     "path": "assets/travel-photos/",
@@ -111,10 +163,167 @@
       "assets/travel-photos/photo-nc-us-45.jpeg",
       "assets/travel-photos/photo-nc-us-46.jpeg",
       "assets/travel-photos/photo-nc-us-47.jpeg",
-      "assets/travel-photos/photo-nc-us-48.jpeg"
+      "assets/travel-photos/photo-nc-us-48.jpeg",
+      "assets/travel-photos/photo-nc-us-49.jpeg",
+      "assets/travel-photos/photo-nc-us-50.jpeg",
+      "assets/travel-photos/photo-nc-us-51.jpeg",
+      "assets/travel-photos/photo-nc-us-52.jpeg",
+      "assets/travel-photos/photo-nc-us-53.jpeg"
     ]
   },
-  "default": {
-    "none": null
-  }
+  "tubeVideos": [
+    "https://www.youtube.com/watch?v=j42T6o-XwMU",
+    "https://www.youtube.com/watch?v=XgqTrvcAySA",
+    "https://www.youtube.com/watch?v=ranOCJbP93I",
+    "https://www.youtube.com/watch?v=1c49TSDH8GY",
+    "https://www.youtube.com/watch?v=3g7v8gQ9PfY",
+    "https://www.youtube.com/watch?v=sjpmizWJ_Ko",
+    "https://www.youtube.com/watch?v=fXkyJR0gZV8",
+    "https://www.youtube.com/watch?v=9rp2YuHWMho",
+    "https://www.youtube.com/watch?v=rVXGB_QenyQ",
+    "https://www.youtube.com/watch?v=K8ZLe_uVuuI",
+    "https://www.youtube.com/watch?v=wYsfNBEfehw",
+    "https://www.youtube.com/watch?v=K8ZLe_uVuuI",
+    "https://www.youtube.com/watch?v=6uNkTqNSulY",
+    "https://www.youtube.com/watch?v=6QOUNvMX-ws"
+  ],
+  "tubeVideoLinks": [
+    {
+      "title": "Olympics In Space",
+      "link": "https://www.youtube.com/watch?v=6uNkTqNSulY"
+    }
+  ],
+  "studyDocs": [
+    "../assets/reference-docs/refdoc-usn-ad-pay-2025.pdf",
+    "../assets/reference-docs/refdoc-usn-drill-pay-2025.pdf",
+    "../assets/reference-docs/refdoc-usn-prt-2025.pdf",
+    "../assets/reference-docs/refdoc-mat171-manual.pdf",
+    "../assets/reference-docs/refdoc-mat171-transformations.pdf",
+    "../assets/reference-docs/refdoc-duolingo-japanese-vocab.pdf",
+    "../assets/reference-docs/refdoc-chzc-chant2020.pdf",
+    "../assets/reference-docs/refdoc-chzc-condensed.pdf",
+    "../assets/reference-docs/refdoc-oryoki-guide.pdf",
+    "../assets/reference-docs/refdoc-acc220-acronyms.pdf",
+    "../assets/reference-docs/refdoc-nc-college-equivalence.pdf",
+    "../assets/reference-docs/refdoc-mysql-phpadmin-setup.pdf"
+  ],
+  "studyImages": [
+    "../assets/reference-docs/refdoc-celsius-fahrenheit.png",
+    "../assets/reference-docs/refdoc-fraction-decimal.png",
+    "../assets/reference-docs/refdoc-imperial-distance.jpg",
+    "../assets/reference-docs/refdoc-liquid-us-customary.png"
+  ],
+  "grGeneralPhotos": [
+    "../assets/gr/gr-00001.jpeg",
+    "../assets/gr/gr-00002.jpeg",
+    "../assets/gr/gr-00003.jpeg",
+    "../assets/gr/gr-00004.jpeg",
+    "../assets/gr/gr-00005.jpeg",
+    "../assets/gr/gr-00006.jpeg",
+    "../assets/gr/gr-00007.jpeg",
+    "../assets/gr/gr-00008.jpeg",
+    "../assets/gr/gr-00009.jpeg",
+    "../assets/gr/gr-00010.jpeg",
+    "../assets/gr/gr-00011.jpeg",
+    "../assets/gr/gr-00012.jpeg",
+    "../assets/gr/gr-00013.jpeg",
+    "../assets/gr/gr-00014.jpeg",
+    "../assets/gr/gr-DashieMark.jpeg",
+    "../assets/gr/gr-esperanto.jpeg",
+    "../assets/gr/gr-HEbuilds1.jpeg",
+    "../assets/gr/gr-HEbuilds2.jpeg",
+    "../assets/gr/gr-HEbuilds3.jpeg",
+    "../assets/gr/gr-M1.jpeg",
+    "../assets/gr/gr-M2.jpeg",
+    "../assets/gr/gr-M3.jpeg",
+    "../assets/gr/gr-M4.jpeg",
+    "../assets/gr/gr-M5.jpeg",
+    "../assets/gr/gr-Outposts.jpeg",
+    "../assets/gr/gr-Peninsula.jpeg",
+    "../assets/gr/gr-seldo-old.jpeg",
+    "../assets/gr/gr-skin_20131215042619175529.jpeg"
+  ],
+  "expeditionary": [
+    "../assets/expeditionary/photo-nc-e001-6170.jpeg",
+    "../assets/expeditionary/photo-nc-e001-6186.jpeg",
+    "../assets/expeditionary/photo-nc-e001-6187.jpeg",
+    "../assets/expeditionary/photo-nc-e001-6188.jpeg",
+    "../assets/expeditionary/photo-nc-e001-6192.jpeg",
+    "../assets/expeditionary/photo-nc-e001-6204.jpeg",
+    "../assets/expeditionary/photo-nc-e001-6212.jpeg",
+    "../assets/expeditionary/photo-nc-e001-6219.jpeg",
+    "../assets/expeditionary/photo-nc-e001-6221.jpeg",
+    "../assets/expeditionary/photo-nc-e001-6228.jpeg",
+    "../assets/expeditionary/photo-nc-e001-6231.jpeg",
+    "../assets/expeditionary/photo-nc-e001-6233.jpeg",
+    "../assets/expeditionary/photo-nc-e001-6240.jpeg",
+    "../assets/expeditionary/photo-nc-e001-6244.jpeg",
+    "../assets/expeditionary/photo-nc-e001-6246.jpeg",
+    "../assets/expeditionary/photo-nc-e001-6253.jpeg",
+    "../assets/expeditionary/photo-nc-e001-6256.jpeg",
+    "../assets/expeditionary/photo-nc-e001-6262.jpeg",
+    "../assets/expeditionary/photo-nc-e001-6264.jpeg",
+    "../assets/expeditionary/photo-nc-e001-6268.jpeg",
+    "../assets/expeditionary/photo-nc-e001-6270.jpeg",
+    "../assets/expeditionary/photo-nc-e001-6273.jpeg",
+    "../assets/expeditionary/photo-nc-e001-6275.jpeg",
+    "../assets/expeditionary/photo-nc-e001-6281.jpeg",
+    "../assets/expeditionary/photo-nc-e001-6285.jpeg",
+    "../assets/expeditionary/photo-nc-e001-6286.jpeg"
+  ],
+  "netjournal": [
+    "../depository/netjournal/44_hours",
+    "../depository/netjournal/a_bit_disenchanted",
+    "../depository/netjournal/a_prolonged_fast",
+    "../depository/netjournal/a_red_crane",
+    "../depository/netjournal/bar_hopping",
+    "../depository/netjournal/beginning",
+    "../depository/netjournal/buying_my_bicycle",
+    "../depository/netjournal/cambermark",
+    "../depository/netjournal/campaign_2025",
+    "../depository/netjournal/chunk_manipulation",
+    "../depository/netjournal/clozemaster",
+    "../depository/netjournal/courage_to_be_disliked",
+    "../depository/netjournal/decoupling_uniform_and_identity",
+    "../depository/netjournal/do_it_again",
+    "../depository/netjournal/emotionally_burdensome",
+    "../depository/netjournal/equivalent_education",
+    "../depository/netjournal/exacerbated_executive_dysfunction",
+    "../depository/netjournal/feeling_the_nostalgia",
+    "../depository/netjournal/friday_the_13th",
+    "../depository/netjournal/high_protein",
+    "../depository/netjournal/ill_aspire",
+    "../depository/netjournal/inner_cartography",
+    "../depository/netjournal/investments",
+    "../depository/netjournal/managed_enthusiasm",
+    "../depository/netjournal/missing_nothing",
+    "../depository/netjournal/mountain_is_mountain",
+    "../depository/netjournal/mountains_and_rivers",
+    "../depository/netjournal/multi-layered_redemption_arc",
+    "../depository/netjournal/no_mountain_laurel",
+    "../depository/netjournal/note-taking_method",
+    "../depository/netjournal/other_roles",
+    "../depository/netjournal/outset_of_new_journeys",
+    "../depository/netjournal/over_a_week_ahead",
+    "../depository/netjournal/pick_up",
+    "../depository/netjournal/previous_tradition",
+    "../depository/netjournal/reclaim_my_sunshine",
+    "../depository/netjournal/relinquish_positives",
+    "../depository/netjournal/resolve-is-taking-flight-again",
+    "../depository/netjournal/screen-facing",
+    "../depository/netjournal/shiny_veneer",
+    "../depository/netjournal/sleep_again",
+    "../depository/netjournal/sleep_and_live",
+    "../depository/netjournal/spelling",
+    "../depository/netjournal/strict_liability",
+    "../depository/netjournal/tashikaka_and_shikaka",
+    "../depository/netjournal/the_spark",
+    "../depository/netjournal/this_new_place",
+    "../depository/netjournal/tied_to_my_activities",
+    "../depository/netjournal/touch_papers",
+    "../depository/netjournal/tyrant_of_the_self",
+    "../depository/netjournal/unfettered",
+    "../depository/netjournal/vested",
+    "../depository/netjournal/water_is_water"
+  ]
 }

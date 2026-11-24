@@ -39,6 +39,9 @@ const nonStaticDev = "http://localhost:3020";
  * @description Intializes ALPine DAta, MAgics, DIrectives, and STores
  */
 document.addEventListener("alpine:init", () => {
+
+	// !==========| Alpine Data |==========!
+
 	// !==========| Alpine Magics |==========!
 	Alpine.magic('tooltip', el => message => {
 		let instance = tippy(el, { content: message, trigger: 'manual' });
@@ -108,6 +111,19 @@ document.addEventListener("alpine:init", () => {
 			setInterval(() => { document.location = this.page }, 1000);
 		}
 	});
+	Alpine.store('cmbr', () => ({
+		siteUser: {},
+		activeSection: 'Home',
+		setSiteUser: function (iden) {
+			this.siteUser = iden;
+		},
+		getSiteUser: function () {
+			return this.siteUser;
+		},
+		purgeInterval: function () {
+			CMBRutil.killInterval(CMBRutil.interval);
+		},
+	}));
 	Alpine.store('modal', {
 		open: false,
 		toggle() {
@@ -172,6 +188,11 @@ document.addEventListener("alpine:init", () => {
 	// *=> end of Alpine Store
 });
 
+
+/* |====================>
+* Tunes
+|====================> */
+
 /**
 	 * @param {string} title
 	 * @param {number} year
@@ -203,11 +224,16 @@ const cmbrTunes = [ // ../assets/music-tracks/music-
 	trackFruityFrolicField = new Tune("Fruity Frolic Field", 2016, "Audioshi Isle", "../assets/music-tracks/music-fruity-frolic-field.mp3", "../assets/artifacts/audioshi-isle.jpeg", true, false),
 	trackSixthMissionThrowback = new Tune("Sixth Mission Throwback", 2020, "Draft Compendium", "../assets/music-tracks/music-sixth-mission-throwback.mp3", "../assets/artifacts/foxfire.jpeg", true, false),
 	trackAGamesPostlude = new Tune("A Game's Postlude", 2012, "The Later Days of MusicalYoshi", "../assets/music-tracks/music-a-games-postlude.mp3", "../assets/artifacts/foxfire.jpeg", true, false),
+	trackOpeningThematicStatement = new Tune("Opening Thematic Statement", 2012, "The Later Days of MusicalYoshi", "../assets/music-tracks/music-opening-thematic-statement.mp4", "../assets/artifacts/foxfire.jpeg", true, false),
 	trackFirstDungeon = new Tune("First Dungeon", 2010, "The Later Days of MusicalYoshi", "../assets/music-tracks/music-first-dungeon.mp3", "../assets/artifacts/foxfire.jpeg", true, false),
 	trackSixthMission = new Tune("Sixth Mission", 2010, "The Later Days of MusicalYoshi", "../assets/music-tracks/music-sixth-mission.m4a", "../assets/artifacts/foxfire.jpeg", true, false),
 	trackSecondCommune = new Tune("Second Commune", 2008, "The Early Days of MusicalYoshi", "../assets/music-tracks/music-second-commune.m4a", "../assets/artifacts/foxfire.jpeg", true, false),
 	trackSuperScapegraceOriginal = new Tune("SUPER Scapegrace (Original)", 2008, "The Early Days of MusicalYoshi", "../assets/music-tracks/music-super-scapegrace-original.m4a", "../assets/artifacts/foxfire.jpeg", true, false),
 ];
+
+/* |====================>
+* Markdown
+|====================> */
 
 const cmbrMdConfig = {
 	"autofocus": true,
@@ -235,10 +261,10 @@ const cmbrMdConfig = {
 	},
 	"promptURLs": true,
 	"renderingConfig": {
-		"singleLineBreaks": true,
+		"singleLineBreaks": false,
 		"codeSyntaxHighlighting": true,
 	},
-	"lineWrapping": false,
+	"lineWrapping": true,
 	"autosave": {
 		"enabled": true,
 		"uniqueId": "chrispy",
@@ -249,12 +275,12 @@ const cmbrMdConfig = {
 		"strikethrough": false,
 		"underscoresBreakWords": true
 	}
-}
+};
 
-const cmbrMdConfigAlt = {
+const cmbrMdPlain = {
 	"autofocus": true,
 	"forceSync": true,
-	"toolbar": ["bold", "italic", "horizontal-rule", "|", "quote", "code", "|", "unordered-list", "ordered-list", "|", "link", "image", "table", "|", "preview", "side-by-side", "fullscreen"],
+	"toolbar": ["horizontal-rule", "|", "code", "|", "link", "|", "preview"],
 	"hideIcons": [
 		"guide",
 		"heading"
@@ -267,32 +293,130 @@ const cmbrMdConfigAlt = {
 			"\n\n<hr class='hr-cmbr-gradient'>\n\n",
 			"",
 		],
-		"image": [
-			"![](http://",
-			")"],
-		"link": [
-			"['",
-			"'](http://)",
-		]
 	},
-	"promptURLs": true,
-	"renderingConfig": {
-		"singleLineBreaks": true,
-		"codeSyntaxHighlighting": true,
-	},
-	"lineWrapping": false,
-	"autosave": {
-		"enabled": true,
-		"uniqueId": "alty",
-		"delay": 1000
-	},
-	"parsingConfig": {
-		"allowAtxHeaderWithoutSpace": true,
-		"strikethrough": false,
-		"underscoresBreakWords": true
-	}
-}
+};
 
+const CMBRmarkedConfig = {
+	name: 'heading',
+	level: 'block',
+	start(src) { return src.match('##')?.index; },
+	tokenizer(src, tokens) {
+		const rule = /^(#{1,6})[ \t]+([^\r\n]+?)[ \t]*#*\r?(?:\n+|$)/;
+		const match = rule.exec(src);
+		if (match) {
+			return {
+				type: 'heading',
+				raw: match[0],
+				depth: match[1].length,
+				text: match[2].trim()
+			};
+		}
+		// return false to use original heading tokenizer
+		return false;
+	},
+};
+
+const cmbrThematicBreak = {
+	name: 'cmbrThematicBreak',
+	level: 'block',
+	start(src) { return src.match(/^ {0,3}\*{3,}[ \t]*(?:\r?\n|$)/)?.index; },
+	tokenizer(src) {
+		const rule = /^ {0,3}\*{3,}[ \t]*(?:\r?\n|$)/;
+		const match = rule.exec(src);
+		if (match) {
+			return {
+				type: 'cmbrThematicBreak',
+				raw: match[0],
+			};
+		}
+	},
+	renderer() {
+		return '<hr class="hr-cmbr-gradient">\n';
+	},
+};
+
+const descriptionList = {
+	name: 'descriptionList',
+	level: 'block',                                     // Is this a block-level or inline-level tokenizer?
+	start(src) { return src.match(/^---[ \t]*(?:\r?\n|$)/)?.index; }, // Hint to Marked.js to stop and check for a match
+	tokenizer(src, tokens) {
+		const rule = /^---[ \t]*\r?\n([\s\S]*?)\r?\n---[ \t]*(?:\r?\n|$)/; // Match a complete fenced metadata section
+		const match = rule.exec(src);
+		if (match) {
+			const token = {                                 // Token to generate
+				type: 'descriptionList',                      // Should match "name" above
+				raw: match[0],                                // Text to consume from the source
+				text: match[1].trim(),                        // Additional custom properties
+				tokens: []                                    // Array where child inline tokens will be generated
+			};
+			this.lexer.inline(token.text, token.tokens);    // Queue this data to be processed for inline tokens
+			return token;
+		}
+	},
+	renderer(token) {
+		return `<dl x-show="false">${this.parser.parseInline(token.tokens)}</dl>`; // parseInline to turn child tokens into HTML
+	}
+};
+
+const description = {
+	name: 'description',
+	level: 'inline',                                 // Is this a block-level or inline-level tokenizer?
+	start(src) { return src.match(/^[^:\r\n]+:/)?.index; }, // Hint to Marked.js to stop and check for a match
+	tokenizer(src, tokens) {
+		const rule = /^([^:\r\n]+):[ \t]*(?:(?:\r?\n[ \t]*-[ \t]+[^\r\n]*)+(?:\r?\n|$)|[^\r\n]*(?:\r?\n|$))/; // Match a scalar or a YAML-style list value
+		const match = rule.exec(src);
+		if (match) {
+			const lines = match[0].split(/\r?\n/);
+			const key = lines[0].slice(0, lines[0].indexOf(':')).trim();
+			const listValues = lines.slice(1)
+				.map((line) => line.match(/^[ \t]*-[ \t]+(.*)$/)?.[1].trim())
+				.filter((value) => value !== undefined);
+			const values = listValues.length
+				? listValues
+				: [lines[0].slice(lines[0].indexOf(':') + 1).trim()];
+
+			return {                                         // Token to generate
+				type: 'description',                           // Should match "name" above
+				raw: match[0],                                 // Text to consume from the source
+				dt: this.lexer.inlineTokens(key),              // Additional custom properties, including
+				dd: values.map((value) => [{                   //   any further-nested inline tokens
+					type: 'text',
+					raw: value,
+					text: value,
+					escaped: false,
+				}])
+			};
+		}
+	},
+	renderer(token) {
+		const values = token.dd
+			.map((value) => `\n<dd>${this.parser.parseInline(value)}</dd>`)
+			.join('');
+		return `\n<dt>${this.parser.parseInline(token.dt)}</dt>${values}`;
+	},
+	childTokens: ['dt'],                       // Any child tokens to be visited by walkTokens
+};
+
+// };
+
+function walkTokens(token) {                        // Post-processing on the completed token tree
+	if (token.type === 'strong') {
+		token.text += ' walked';
+		token.depth += 1;
+		token.tokens = this.Lexer.lexInline(token.text)
+	}
+	if (token.type === 'hr') {
+		token.text += ' <hr class="hr-cmbr-gradient">';
+		token.depth += 1;
+		token.tokens = this.Lexer.lexInline(token.text)
+	}
+
+}
+marked.use({ extensions: [cmbrThematicBreak, descriptionList, description], walkTokens });
+
+/* |====================>
+% CMBRutil
+|====================> */
 
 /**
  * @global @public @interface
@@ -328,59 +452,10 @@ const CMBRutil = {
 	},
 	framefile: '',
 	md: function () {
+		var testMd = new SimpleMDE(cmbrMdPlain);
 		// var testMd = new SimpleMDE(cmbrMdConfig);
-		var testMd = new SimpleMDE(cmbrMdConfig);
 		return testMd;
 	},
-	/**
-	 * 
-	 * @param {HTMLElement} targetEl 
-	 * @param {String[]} loadVals
-	 */
-	cloudGen: function (targetEl, loadVals) {
-
-		const cloudSpeed = (Math.random() * 10 + 10).toFixed(0);
-		const cloudDelay = (Math.random() * 8).toFixed(0);
-		// const cloudDelay = 0;
-		// const cloudHeight = ((Math.random() * 10) + (loadVals[1].length)).toFixed(0);
-		// const cloudHeight = ((Math.random() * 10) + 10).toFixed(0);
-		const cloudWidth = ((Math.random() * 5) + 10).toFixed(0);
-		const cloudPad = (loadVals[1].length / 10).toFixed(1);
-		/**
-		 * @type {HTMLElement} div
-		 */
-		const div = document.createElement("div");
-		const dt = document.createElement("dt");
-		const dtTxt = document.createTextNode(loadVals[2] + " | " + loadVals[0]);
-		dt.appendChild(dtTxt);
-		const dd = document.createElement("dd");
-		const ddTxt = document.createTextNode(loadVals[1]);
-		dd.setAttribute('style', `padding-left: ${cloudPad}px; padding-right: ${cloudPad}px;`);
-		dd.appendChild(ddTxt);
-		div.appendChild(dt);
-		div.appendChild(dd);
-		div.setAttribute('class', 'cmbr-cloud');
-		div.setAttribute('style', `
-			value: ${loadVals[2]};
-			width: ${cloudWidth}rem;
-			height: ${cloudWidth}rem;
-			animation-duration: ${cloudSpeed - cloudDelay}s;
-			animation-delay: ${cloudDelay}s;
-		`);
-		targetEl.onclick = function () {
-			console.log("Cloud Clicked: " + loadVals[0] + " | " + loadVals[1] + " | " + loadVals[2]);
-			return loadVals[2];
-		};
-		targetEl.appendChild(div);
-		const cloudTimeout = setTimeout(() => {
-			while (targetEl.lastChild) {
-				targetEl.removeChild(targetEl.lastChild);
-			}
-			this.cloudGen(targetEl, loadVals);
-			clearTimeout(cloudTimeout);
-		}, cloudSpeed * 1000);
-	},
-
 
 	iden: '',
 	identify: function (username) {
@@ -521,71 +596,25 @@ const CMBRutil = {
 			}
 		}
 	},
-	// dataTheme: function () {
-	// 	document.querySelectorAll(".data-theme-button").forEach(button => {
-	// 		button.onclick = function () {
-	// 			switch (button.id) {
-	// 				case "dark":
-	// 					document.querySelector("body").setAttribute("data-theme", "dark");
-	// 					button.style.color = "initial";
-	// 					document.getElementById("light").style.color = "transparent";
-	// 					document.getElementById("legacy").style.color = "transparent";
-	// 					// document.getElementById("paperesque").style.color = "transparent";
-	// 					break;
-	// 				case "light":
-	// 					document.querySelector("body").setAttribute("data-theme", "light");
-	// 					button.style.color = "initial";
-	// 					document.getElementById("dark").style.color = "transparent";
-	// 					document.getElementById("legacy").style.color = "transparent";
-	// 					// document.getElementById("paperesque").style.color = "transparent";
+	/* |====================>
+	! Links, URLparams, Endpoints
+	|====================> */
 
-	// 					break;
-	// 				case "legacy":
-	// 					document.querySelector("body").setAttribute("data-theme", "legacy");
-	// 					button.style.color = "initial";
-	// 					document.getElementById("dark").style.color = "transparent";
-	// 					document.getElementById("light").style.color = "transparent";
-	// 					// document.getElementById("paperesque").style.color = "transparent";
 
-	// 					break;
-	// 				case "paperesque":
-	// 					document.querySelector("body").setAttribute("data-theme", "paperesque");
-	// 					button.style.color = "initial";
-	// 					document.getElementById("dark").style.color = "transparent";
-	// 					document.getElementById("light").style.color = "transparent";
-	// 					// document.getElementById("legacy").style.color = "transparent";
+	/* |====================>
+		! atSite fn
+		|====================> */
 
-	// 					break;
-	// 				default:
-	// 					console.log("Light, Dark, and Lavendarium.");
-	// 					break;
-	// 			}
-	// 		}
-	// 	});
-	// 	document.getElementById(document.querySelector("body").getAttribute("data-theme")).style.color = "initial";
-	// },
-	/** @returns {Boolean} `true` if file:// protocol | `false` otherwise */
-	acceptableProtocol: function () {
-		if (document.location.protocol === "file:") {
-			// console.log("<‰ File Protocol Detected ‰>");
-			return false;
-		} else {
-			// console.log("<‰ CORS Acceptable Protocol Detected ‰>");
-			return true;
-		}
-	},
-	atLegacyIndex: function () {
-		if (this.acceptableProtocol() && document.location.href.endsWith("legacyindex.html")) {
+	/**
+	 * @param {string} site 
+	 * @returns {Boolean} boolean
+	 * @description Checks if the current site URL includes the specified site string
+	 */
+	atSite: function (site) {
+		if (document.location.href.includes(site)) {
 			return true;
 		} else {
 			return false;
-		}
-	},
-	staticLinkTransform: function (page) {
-		if (document.location.origin !== nonStaticSite || document.location.protocol !== 'http') {
-			return '../' + page;
-		} else {
-			return '/' + page;
 		}
 	},
 	/** 
@@ -597,25 +626,57 @@ const CMBRutil = {
 	atSiteIndex: function () {
 		if (document.location.href.endsWith("legacyindex.html")) {
 			return false;
-		} else if (this.acceptableProtocol() && document.location.href.endsWith("index.html")) {
-			return true;
 		} else if (baseHyperlinks.includes(document.location.href)) {
 			return true;
 		} else if (document.location.href.endsWith("index.html")) {
 			return true;
-		} else if (document.location.href.endsWith(document.location.port + "/")) {
-			return true;
-		} else if (document.location.href.includes(baseHyperlinks[0])) {
-			return false;
+			/*
+			$ Removed following reindexing; prevents <nav> from being displayed outside index on nested pages.
+			} else if (document.location.href.endsWith(document.location.port + "/")) {
+				return true; 
+			*/
 		} else {
 			return false;
 		}
 	},
 	atSiteBlog: function () {
-		if (document.location.href.includes("blog.html")) {
+		if (document.location.href.includes("blog")) {
 			return true;
 		} else {
 			return false;
+		}
+	},
+	atSiteExpeditions: function () {
+		if (document.location.href.includes("expeditions")) {
+			return true;
+		} else {
+			return false;
+		}
+	},
+	atSiteVday: function () {
+		if (document.location.href.includes("happy-veterans-day")) {
+			return true;
+		} else {
+			return false;
+		}
+	},
+
+	/**
+	 * @param {string} page
+	 * @returns {string} The relative URL pattern based on document location and protocol
+	 * @description Transforms an internal page URL pattern based on whether the
+	 * static site or the server-side site is running based on the
+	 * current document location and protocol
+	 * @example
+	 * const pageLink = CMBRutil.staticLinkTransform("page.html");
+	 * @yields {string} '../' Concatenation: static-site.com/page.html from static-site.com/nested/nested.html
+	 * @yields {string} '/' Concatenation: server-side-site.com/page.html from server-side-site.com/nested/nested.html
+	 */
+	staticLinkTransform: function (page) {
+		if (document.location.origin !== nonStaticSite || document.location.protocol !== 'http') {
+			return '../' + page;
+		} else {
+			return '/' + page;
 		}
 	},
 	// Function to update URL parameters
@@ -640,6 +701,17 @@ const CMBRutil = {
 			updateURLParameter("search", this.value); // Update 'search' parameter
 		});
 	},
+
+	/**
+	 * @constant
+	 * @description default YouTube video ID: John Cage - 4:33
+	 */
+	tubeVideo: '6uNkTqNSulY',
+
+	/* |====================>
+	! JSON & Fetch API
+	|====================> */
+
 	/** 
 	 * @description Reads cmbr.json
 	 * @borrows cmbr.json
@@ -648,17 +720,18 @@ const CMBRutil = {
 	 * 
 	 */
 	connectCMBRjson: async function (query) {
+
 		return fetch(`${document.location.origin}/config/cmbr.json`)
 			.then(data => data.json())
 			.then(data => {
 				// console.log(data);
-				console.log("QUERY BEFORE RESOLUTION: " + query[0]);
+				console.log("CMBRutil.connectCMBRjson Query: " + query);
 				return data;
 			})
 			.then((data) => {
-				query[0] == "travel-photos" ? console.log("QUERY 0 SAME: " + query[0]) : console.log("QUERY 0 NOT SAME: " + query[0]);
-				query[1] == 1 ? console.log("QUERY 1 SAME: " + query[1]) : console.log("QUERY 1 NOT SAME: " + query[1]);
-				console.log("QUERY LENGTH: " + query.length);
+				// // query[0] == "travel-photos" ? console.log("QUERY 0 SAME: " + query[0]) : console.log("QUERY 0 NOT SAME: " + query[0]);
+				// // query[1] == 1 ? console.log("QUERY 1 SAME: " + query[1]) : console.log("QUERY 1 NOT SAME: " + query[1]);
+				// // console.log("QUERY LENGTH: " + query.length);
 				switch (query[0]) {
 					case "travel-photos":
 						if (query.length == 1) {
@@ -668,52 +741,94 @@ const CMBRutil = {
 						}
 						// console.log(data[query[0]].items[query[1]]);
 						return (data[query[0]].items[query[1]]);
-						break;
-						break;
 					case "sections":
 						// console.log("sections");
 						return data["sections"];
-						break;
+					case "tubeVideos":
+						return data["tubeVideos"];
+					case "studyDocs":
+						return data["studyDocs"];
+					case "grGeneralPhotos":
+						return data["grGeneralPhotos"];
+					case "expeditionary":
+						return data["expeditionary"];
+					case "netjournal":
+						return data["netjournal"];
 					case "blog":
 						if (query.length == 1) {
 							// console.log(data[query[0]]);
 							return (data[query[0]]);
-							break;
 						}
 						let post = ("post-" + query[1]);
 						sout("blog as post = " + post);
 						// console.log(data[query[0]][post]);
 						return (data[query[0]][post]);
-						break;
-						break;
-
 					default:
 						sout("Bad Query at connectCMBRjson.");
-						return data;
+						return "CMBR Bad Query";
 				}
 			});
 
 	},
-	retrieveParcel: async function (site) {
-		return fetch(site)
+
+	/** 
+	 * @description Reads a JSON file or URL
+	 * @param {string} JSONorSite
+	 * @param {Array} query
+	 * @implements {Promise<Object>} 
+	 * 
+	 */
+	retrieveParcel: async function (JSONorSite, query) {
+		return fetch(JSONorSite)
 			.then(data => data.json())
 			.then(data => {
-				console.log(data);
-				// console.log("QUERY BEFORE RESOLUTION: " + query[0]);
+				console.log("Retrieval from: " + JSONorSite);
+				console.log("Fetching Datapoint at Site: " + query[0]);
 				return data;
 			})
-		// .then((data) => {
-		// 	return data[query];
-		// });
+			.then((data) => {
+				return data[query];
+			});
+	},
+
+	/* |====================>
+	! Defaults
+	|====================> */
+
+	/**
+	 * @description Handles all page forms, preventing reload upon form submission
+	 * @param {boolean} configured - Toggle boolean for default (reloading) prevention
+	 * - CONFIGURED: Applies current form submission handling and default prevention
+	 * - NONCONFIGURED: Returns page to normal form submission reloading
+	 * @fires window#onload - Fires immediately if cmbr.js is linked
+	 * @global
+	 */
+	handleFormDefault(configured) {
+		window.onload = function () {
+			if (configured) {
+				console.log("Running and configured!");
+				document.querySelectorAll("form").forEach(form => {
+					form.addEventListener("submit", (e) => { e.preventDefault(); });
+				});
+			} else {
+				console.log("Running! (configuration disabled)");
+			}
+		}
 	},
 }
 
-// ----- GLOBAL FUNCTION EXPRESSION INVOKATIONS ----- //
+// |=====| GLOBAL FUNCTION EXPRESSION INVOKATIONS |=====| //
+/* |====================>
+* Site Section Display
+|====================> */
 const displaySite = () => { document.getElementById("current-site").innerHTML = document.location.host };
 const displaySection = () => { document.getElementById("current-section").innerHTML = (window.location.pathname).slice(window.location.pathname.lastIndexOf("/") + 1, -5).toLowerCase(); };
-const sout = (x) => { console.log("<‰=== " + (x ?? "No Output") + " ===‰>"); } //x += ("|=====* ");
+/* |====================>
+* Console Log Utils
+|====================> */
+const sout = (x) => { console.log("<‰=== " + (x ?? "No Output") + " ===‰>"); };
 const braft = (l) => document.querySelector(`${l}`).appendChild(document.createElement("br"));
 
 (async () => {
 	CMBRutil.handleFormDefault(true);
-});
+})();

@@ -1,0 +1,128 @@
+/* !  §INDEX.HTML SPECIFIC |=====|>
+INDEX
+/* !  STYLES THAT MOSTLY BEFIT THE SPLASH PAGE |====================> */
+
+.cmbr-grid {
+	border: 0.3rem dotted transparent;
+	/* border: 0.3rem dotted greenyellow; */
+}
+
+@media screen and (max-width: 1200px) {
+
+	#current-section {
+		display: none;
+	}
+
+	.cmbr-speech-box {
+		width: 80%;
+	}
+
+	.data-theme-button {
+		display: none;
+	}
+
+	/* % 1 1 1 % */
+	.cmbr-grid {
+		border: 0.3rem dotted transparent;
+		/* border: 0.3rem dotted orange; */
+	}
+
+
+	.cmbr-item-left {
+		/* flex: 20%; */
+		position: relative;
+		order: 1;
+		height: 15rem;
+		z-index: 10;
+	}
+
+	.cmbr-item-center {
+		flex: 80%;
+		order: 3;
+
+	}
+
+	.cmbr-item-right {
+		/* flex: 20%; */
+		flex-direction: row;
+		order: 2;
+		position: relative;
+		height: 15rem;
+		z-index: 10;
+	}
+
+}
+
+@media screen and (max-width: 900px) {
+
+	.cmbr-grid {
+		border: 0.3rem dotted transparent;
+		/* border: 0.3rem dotted orangered; */
+	}
+
+	.cmbr-speech-box {
+		width: 90%;
+	}
+
+	.cmbr-item-left {
+		flex: 20%;
+		order: 1;
+		position: relative;
+		height: 15rem;
+		z-index: 10;
+	}
+
+	.cmbr-item-center {
+		flex: 80%;
+		order: 3;
+	}
+
+	.cmbr-item-right {
+		flex: 20%;
+		flex-direction: row;
+		order: 2;
+		position: relative;
+		height: 15rem;
+		z-index: 10;
+	}
+
+}
+
+@media screen and (max-width: 700px) {
+
+	/* % 1 % */
+	.cmbr-grid {
+		border: 0.3rem dotted transparent;
+		/* border: 0.3rem dotted darkred; */
+	}
+
+	.cmbr-speech-box {
+		width: 100%;
+	}
+
+	.cmbr-item-left {
+		flex: 80%;
+		order: 2;
+		position: relative;
+		height: 15rem;
+		z-index: 10;
+	}
+
+	.cmbr-item-center {
+		flex: 80%;
+		order: 3;
+	}
+
+	.cmbr-item-right {
+		flex: 80%;
+		flex-direction: row;
+		order: 1;
+		position: relative;
+		height: 15rem;
+		z-index: 10;
+	}
+
+	.cmbr-item-lower {
+		order: 2;
+	}
+}

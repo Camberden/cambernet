@@ -1,7 +1,6 @@
 <div id="process-handle" x-data="{
-	parsedProcess: {},
 
-}" x-effect="parsedProcess = await $get('/api/auth/processes')">
+}" x-effect="parsedProcess = $get('/api/auth/processes')">
 	<template x-for="proc in parsedProcess">
 		<div>
 			<span x-text="'|===| Process |====>'" style="color:cornflowerblue;"></span>
