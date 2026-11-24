@@ -1,4 +1,4 @@
-<nav x-show="false" x-data="{
+<nav x-data="{
                 navHovering: false,
                 navCord: coordinates,
                 charter: {
@@ -71,6 +71,8 @@
                 <!-- <img src="assets/radix-icons/hamburger-menu.svg" /> -->
         </div>
         <span id="camberden-title"></span>
+        <div class="vt323" hx-get="../template/user.html" hx-trigger="load" hx-target="this" hx-swap="innerHTML">
+        </div>
         <div id="navigation-bottom" x-transition>
                 <button class="navigation-button" x-show="navHovering"><a href="https://camberden.net"
                                 target="_blank">Home</a></button>

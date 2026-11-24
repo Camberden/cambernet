@@ -34,6 +34,9 @@
 	getSiteUser: function() {
 		return this.siteUser;
 	},
+	purgeInterval: function() {
+		CMBRutil.killInterval(CMBRutil.interval); 
+	},
 }">
 
 	<!-- <nav id="nav" hx-get="/nav.html" hx-target="#nav" hx-trigger="load" hx-swap="innerHTML" x-bg></nav> -->
@@ -80,6 +83,10 @@
 		<div id="workspace-config" x-data="{
 			parsedProcess: {},
 			}">
+
+
+			<div hx-get="../template/user.html" hx-trigger="load delay:500ms" hx-target="this" hx-swap="innerHTML">
+			</div>
 			<span x-show="true" style="width:15rem; height:10rem; box-sizing: border-box; border: 0.5rem solid fuchia;">
 				<img width=" 50%" height="fit-content" src="../images/cmbr-sig-transform.svg" alt="emblem" />
 			</span>

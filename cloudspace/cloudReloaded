@@ -1,0 +1,12 @@
+<div style="display:contents">
+	<template x-for="(cloud, index) in getClouds()" :key="index" x-data>
+		<div style="outline: 10px double orange; height: 5rem; width: 100%;">
+			<template x-if="index < 10">
+				<div style="position: sticky; display: contents;"
+					x-effect="routeCloudProperties($el, [cloud.title, cloud.thought, cloud.id])"
+					@click="grabCloud(parseInt(cloud.id))" x-show="shownCloud">
+				</div>
+			</template>
+		</div>
+	</template>
+</div>

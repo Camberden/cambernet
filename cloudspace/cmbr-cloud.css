@@ -1,0 +1,83 @@
+	.cmbr-cloud {
+
+		user-select: none;
+		text-align: center;
+		align-content: center;
+		box-sizing: border-box;
+		width: 10rem;
+		height: 10rem;
+		background-image: url('../images/cmbr-cloud.png');
+		background-clip: border-box;
+		clip-path: inset 100px;
+		background-position: center;
+		background-size: contain;
+		background-repeat: no-repeat;
+		text-wrap: wrap;
+		overflow: hidden;
+
+		opacity: 0%;
+		position: sticky;
+		left: 0%;
+		animation-name: cloud-float;
+		animation-play-state: running !important;
+		animation-duration: 5;
+		animation-delay: 0;
+		animation-direction: normal;
+		animation-timing-function: linear;
+		animation-iteration-count: 1;
+
+	}
+
+	.cmbr-cloud:hover {
+		background-color: var(--cmbr-blass-frame);
+		border-radius: 50%;
+		cursor: pointer;
+	}
+
+	.cmbr-cloud:active {
+		/* background-color: black; */
+		background-blend-mode: darken;
+	}
+
+	@keyframes cloud-float {
+		0% {
+			opacity: 0%;
+			left: 0%;
+		}
+
+		20% {
+			opacity: 100%;
+			left: 20%
+		}
+
+		40% {
+			opacity: 100%;
+			left: 40%;
+		}
+
+		60% {
+			opacity: 75%;
+			left: 60%;
+		}
+
+		75% {
+			opacity: 25%;
+			left: 75%;
+		}
+
+		85% {
+			opacity: 0%;
+			left: 85%;
+		}
+
+		95% {
+			opacity: 0%;
+			left: 95%;
+		}
+
+		100% {
+			opacity: 0%;
+			left: 100%;
+		}
+
+	}

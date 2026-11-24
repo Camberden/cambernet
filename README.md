@@ -32,3 +32,11 @@ Personal webpage including an assortment of visualizers and tools for personal u
 ###### Gratitude
 * Special thanks to Luna for being my coding mentor.
 I'm proud to say that this has become an enjoyable hobby.
+
+##### HTMX NOTIFIER
+* 250ms AT BUTTON: settle to #alter; AT#ALTER  
+  * @htmx:before-swap="notice = event.detail.serverResponse; @htmx:after-swap="$store.notifier.toggle()"
+* 500ms
+* 750ms AT #ALTER: hx-trigger="htmx:before-settle" hx-swap="innerHTML settle:750ms" SETTING NOTICE AT #NOTIFIER
+* 1s
+* 1250ms

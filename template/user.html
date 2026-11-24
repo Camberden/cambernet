@@ -1,0 +1,9 @@
+<div style="border: 0.2rem ridge transparent; width: 12rem;" x-data>
+	<template x-for="(spec, index) in siteUser" :key="index">
+		<div class="vt323" style="color: burlywood;">
+			<samp class="rarr" x-show="index === 'identity'" x-html="spec"
+				:x-effect="index === 'identity' ? CMBRutil.setUser(spec) : console.log('Reactivated: ' + spec)"></samp>
+		</div>
+	</template>
+	<img x-show="!siteUser" width="100%" height="100%" src="../images/squares-fade.svg" alt="loading..." cmbr-loading />
+</div>

@@ -1,0 +1,5 @@
+<div style="text-align: center; justify-content: center; list-style-type: none;" x-effect="$store.notifier.trigger()">
+	<template x-for="note in parseNotice()">
+		<div x-html="note" x-show="$store.notifier.open === true"></div>
+	</template>
+</div>

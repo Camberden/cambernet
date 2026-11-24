@@ -151,7 +151,7 @@ router.get('/clouds', async (req, res) => {
 		const connection = await pool.getConnection();
 		console.log("cloud before query");
 		const [clouds] = await connection.execute(
-			'SELECT cl.id, cl.title, cl.thought, cl.weight, cl.compelled, u.username FROM clouds cl JOIN users u ON cl.user_id = u.id ORDER BY cl.compelled DESC'
+			'SELECT cl.id, cl.user_id, cl.title, cl.thought, cl.weight, cl.compelled, u.username FROM clouds cl JOIN users u ON cl.user_id = u.id ORDER BY cl.compelled DESC'
 		);
 		console.log("cloud after query before release");
 		connection.release();
@@ -160,6 +160,7 @@ router.get('/clouds', async (req, res) => {
 		// Parse JSON fields
 		const parsedClouds = clouds.map(cloud => ({
 			id: cloud.id,
+			username: cloud.username,
 			title: cloud.title,
 			thought: cloud.thought,
 			weight: cloud.weight,
@@ -172,6 +173,8 @@ router.get('/clouds', async (req, res) => {
 		res.status(500).json({ error: 'Failed to fetch clouds' });
 	}
 });
+
+
 
 router.post('/clouds', cookieJwtAuth, async (req, res) => {
 
@@ -215,18 +218,19 @@ router.delete('/clouds/:id', cookieJwtAuth, async (req, res) => {
 
 
 		// Check ownership
-		const { cloudposts } = pool.execute(
+		const [cloudposts] = await pool.execute(
 			'SELECT user_id FROM clouds WHERE id = ?',
 			[deleteCloudId]
 		);
 
-		if (cloudposts[0] === 0) {
+		if (cloudposts.length === 0) {
 			pool.releaseConnection();
 			return res.status(404).json({ error: 'cloudposts not found' });
 		}
 
 		if (cloudposts[0].user_id !== user_id) {
 			pool.releaseConnection();
+			console.log("Unauthorized delete attempt by user:", user_id);
 			return res.status(403).json({ error: 'Unauthorized' });
 		}
 

@@ -21,9 +21,22 @@
 	<title>Dusty Depot</title>
 </head>
 
-<body x-ref="body" data-theme="dark">
-
-	<nav id="nav" hx-get="/nav.html" hx-target="#nav" hx-trigger="load" hx-swap="innerHTML" x-bg></nav>
+<body x-ref="body" data-theme="dark" x-data="{
+	
+	siteUser: {},
+	activeSection: 'Workspace',
+	setSiteUser: function(iden) {
+		this.siteUser = iden;
+	},
+	getSiteUser: function() {
+		return this.siteUser;
+	},
+	purgeInterval: function() {
+		CMBRutil.killInterval(CMBRutil.interval); 
+	},
+}" x-effect="siteUser = await $get('/api/auth/reactivate')">
+	<nav id="nav" hx-get="/nav.html" hx-target="#nav" hx-trigger="load" hx-swap="innerHTML" x-bg>
+	</nav>
 
 	<main class="index-grid" style="align-items: center; justify-items: center;" x-data="{
 		notice: {},
@@ -51,24 +64,24 @@
 		<div id="alter" @htmx:before-swap="notice = event.detail.serverResponse;"
 			@htmx:after-swap="$store.notifier.toggle()"
 			style="width:30rem; height:3rem; border: 0.3rem solid transparent;" hx-get="notice.html"
-			hx-target="#notifier" hx-trigger="htmx:after-settle" hx-swap="innerHTML settle:250ms transition:true"
+			hx-target="#notifier" hx-trigger="htmx:after-settle" hx-swap="innerHTML settle:1s transition:true"
 			x-show="$store.notifier.open === false">
 			<i x-text="'Cloud Selected: ' + cloudSelected"></i>
 		</div>
 		<!-- ! NOTIFIER ! %-->
 		<div id="notifier" style="width:30rem; height:3rem; border: 0.3rem solid transparent;"
-			x-show="$store.notifier.open === true;" hx-get="newercloud.html" hx-trigger="intersect delay:1s"
-			hx-target="#cloudDataList" hx-swap="outerHTML settle:250ms transition:true"
+			x-show="$store.notifier.open === true;" hx-get="../cloudspace/newercloud.html"
+			hx-trigger="intersect delay:500ms" hx-target="#cloudDataList" hx-swap="outerHTML settle:1s transition:true"
 			@htmx:after-swap.delay.1s="$store.notifier.toggle()">
 			<img width="100%" height="100%" src="../images/squares-fade.svg" alt="loading..." cmbr-loading />
 		</div>
 
-		<div id="all-clouds-display" class="grid-col-1-1" hx-get="newercloud.html"
-			hx-trigger="submit[event.target.matches('form')] from:body" hx-target="#cloudDataList"
-			hx-swap="outerHTML settle:250ms transition:true">
+		<div id="all-clouds-display" class="grid-col-1-1" hx-get="../cloudspace/newercloud.html"
+			hx-trigger="submit[event.target.matches('form')] from:body delay:500ms" hx-target="#cloudDataList"
+			hx-swap="outerHTML settle:1s transition:true">
 			<div>
 				<!-- ! CREATE ! %-->
-				<form id=" new-cloud-form" hx-post='/api/media/clouds' hx-trigger="submit" hx-target="#alter"
+				<form id="new-cloud-form" hx-post='/api/media/clouds' hx-trigger="submit" hx-target="#alter"
 					hx-swap="none settle:1s">
 					<label for="title" x-text="'Cloud Title'"></label>
 					<input type="text" name="title" :id=$id('title') required>
@@ -87,11 +100,14 @@
 			<div id="cloudDataList">
 				<dl>
 					<template x-for="cloud in getClouds">
-						<div class=" grid-col-1-1-1-1" @mouseenter="cloudSelected = cloud.id"
+						<div class=" grid-col-5x-1" @mouseenter="cloudSelected = cloud.id"
 							:style="cloudSelected === cloud.id ? 'background-color:darkslategrey; color:goldenrod; cursor: pointer;' : 'background-color:inherit;'"
 							style="width:30rem; height:fit-content; text-align: left; border: 0.1rem solid cornflowerblue;">
 							<div>
 								<b x-html="cloud.id"></b>
+							</div>
+							<div>
+								<b x-html="cloud.username"></b>
 							</div>
 							<div>
 								<dt x-html="cloud.title"></dt>

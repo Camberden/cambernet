@@ -1,0 +1,52 @@
+<section id="alter" @htmx:before-swap="notice = event.detail.serverResponse;"
+	@htmx:after-settle="$store.notifier.toggle()" style="height:5rem; border: 0.5rem solid chartreuse;"
+	hx-get="notice.html" hx-target="#notifier" hx-trigger="htmx:after-settle once" hx-swap="innerHTML">
+	<div x-show="$store.notifier.open === false">
+		<h1>SELECTED @ ALTER</h1>
+		<i x-text="'Cloud Selected: ' + cloudSelected"></i>
+	</div>
+
+	<!-- ! NOTIFIER ! %-->
+	<div id="notifier" x-show="$store.notifier.open === true"></div>
+
+	<!-- ^ Shows when notifier on. ^ -->
+	<slot hx-get="newercloud.html" hx-trigger="htmx:after-swap from:(#notifier)" hx-target="#cloudDataList"
+		hx-swap="outerHTML transition:true" x-show="$store.notifier.open === true;">
+	</slot>
+
+	<slot hx-get="cloudReloaded" hx-trigger="htmx:after-swap from:(#notifier)" hx-target="#cloud-zone"
+		hx-swap="innerHTML transition:delay.500ms" x-show="$store.notifier.open === true;">
+	</slot>
+	<img width="100%" height="100%" src="../images/squares-fade.svg" alt="loading..." cmbr-loading />
+</section>
+
+
+
+
+<div id="cloudDataList">
+	<dl>
+		<template x-for="cloud in sky">
+			<div class=" grid-col-5x-1" @mouseenter="cloudSelected = cloud.id"
+				:style="cloudSelected === cloud.id ? 'background-color:darkslategrey; color:goldenrod; cursor: pointer;' : 'background-color:inherit;'"
+				style="width:30rem; height:fit-content; text-align: left; border: 0.1rem solid cornflowerblue;">
+				<div>
+					<b x-html="cloud.id"></b>
+				</div>
+				<div>
+					<b x-html="cloud.username"></b>
+				</div>
+				<div>
+					<dt x-html="cloud.title"></dt>
+				</div>
+				<div>
+					<dd x-html="cloud.thought"></dd>
+				</div>
+				<div>
+					<button style="border-color:darkred;" :hx-delete="'/api/media/clouds/' + cloud.id"
+						hx-trigger="click" hx-target="#alter" hx-swap="none settle:1s transition:true"
+						x-effect="htmx.process($el)" x-text="'Delete'"></button>
+				</div>
+			</div>
+		</template>
+	</dl>
+</div>

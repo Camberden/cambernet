@@ -1,0 +1,13 @@
+<div id="newclouds-handle" style="display: contents;">
+
+	<template x-for="1 in 1">
+		<div class="cmbr-cloud" x-effect="routeCloudProperties($el, [cloud.title, cloud.thought, cloud.id])"
+			@click="grabCloud(parseInt(cloud.id))">
+			<h1 x-html="cloud.id"></h1>
+			<dt x-text="cloud.title">
+			</dt>
+			<dd x-text="cloud.thought">
+			</dd>
+		</div>
+	</template>
+</div>

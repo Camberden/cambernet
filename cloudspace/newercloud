@@ -1,0 +1,26 @@
+<!-- ! TEMPLATE ! -->
+<dl>
+	<template x-for="cloud in getClouds()">
+		<div class=" grid-col-5x-1" @mouseenter="cloudSelected = cloud.id"
+			:style="cloudSelected === cloud.id ? 'background-color:darkslategrey; color:goldenrod; cursor: pointer;' : 'background-color:inherit;'"
+			style="width:30rem; height:fit-content; text-align: left; border: 0.1rem solid cornflowerblue;">
+			<div>
+				<b x-html="cloud.id"></b>
+			</div>
+			<div>
+				<b x-html="cloud.username"></b>
+			</div>
+			<div>
+				<dt x-html="cloud.title"></dt>
+			</div>
+			<div>
+				<dd x-html="cloud.thought"></dd>
+			</div>
+			<div>
+				<button style="border-color:darkred;" :hx-delete="'/api/media/clouds/' + cloud.id" hx-trigger="click"
+					hx-target="#alter" hx-swap="none settle:1s transition:true" @click="htmx.process($el)"
+					x-text="'Delete'"></button>
+			</div>
+		</div>
+	</template>
+</dl>

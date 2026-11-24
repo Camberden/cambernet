@@ -57,17 +57,19 @@ document.addEventListener("alpine:init", () => {
 	Alpine.directive('tooltip', (el, { expression }) => {
 		tippy(el, { content: expression });
 	});
-	Alpine.directive('autograph', function (el, { expression }) {
+	Alpine.directive('autograph', function (el, { autographTimeout }) {
 		setTimeout(function () {
 			// el.setAttribute('x-show', false);
 			el.setAttribute('x-transition.duration.500ms', '');
-			validity = Alpine.store('nauth').getValidity();
+			validity = CMBRutil.identified;
 			console.table({ 'X-Autograph: validity first?': validity });
 			if (validity) {
 				el.setAttribute('x-show', validity);
 				el.setAttribute('x-cloak', validity);
 			}
 			console.table({ 'X-Autograph: validity last?': validity });
+
+			clearTimeout(autographTimeout);
 		}, 2000);
 	});
 	Alpine.directive('clock', function (el, { expression }) {
@@ -115,13 +117,14 @@ document.addEventListener("alpine:init", () => {
 	Alpine.store('notifier', {
 		open: false,
 		toggle() {
-			this.open = !this.open;
+			this.open = true;
+			console.log('NOTIFIER OPEN at Toggle?: ' + (this.open ? 'TRUE' : 'FALSE'));
 		},
 		trigger() {
 			if (this.open === true) {
-				setTimeout(function () {
-					this.open === false;
-					console.log('what' + this.open);
+				setTimeout(() => {
+					this.open = false;
+					console.log('NOTIFIER OPEN: ' + (this.open ? 'TRUE' : 'FALSE'));
 				}, 1000);
 			}
 		}
@@ -140,15 +143,6 @@ document.addEventListener("alpine:init", () => {
 			this.mode = val;
 			this.setMode(val);
 		}
-	});
-	Alpine.store('nauth', {
-		valid: false,
-		toggle() {
-			this.valid = !this.valid;
-		},
-		getValidity() {
-			return this.valid;
-		},
 	});
 	Alpine.store('navStore', {
 		on: false,
@@ -345,55 +339,46 @@ const CMBRutil = {
 	 */
 	cloudGen: function (targetEl, loadVals) {
 
-		const cloudSpeed = (Math.random() * 10 + 5).toFixed(0);
-		// const cloudDelay = (Math.random() * 5).toFixed(0);
-		const cloudDelay = 0;
-		const cloudTop = ((Math.random() * 10) * 2).toFixed(0);
-		const cloudPad = (Math.random() * 10 / 2).toFixed(0);
+		const cloudSpeed = (Math.random() * 10 + 10).toFixed(0);
+		const cloudDelay = (Math.random() * 8).toFixed(0);
+		// const cloudDelay = 0;
+		// const cloudHeight = ((Math.random() * 10) + (loadVals[1].length)).toFixed(0);
+		// const cloudHeight = ((Math.random() * 10) + 10).toFixed(0);
+		const cloudWidth = ((Math.random() * 5) + 10).toFixed(0);
+		const cloudPad = (loadVals[1].length / 10).toFixed(1);
 		/**
 		 * @type {HTMLElement} div
 		 */
 		const div = document.createElement("div");
 		const dt = document.createElement("dt");
-		const dtTxt = document.createTextNode(loadVals[0]);
+		const dtTxt = document.createTextNode(loadVals[2] + " | " + loadVals[0]);
 		dt.appendChild(dtTxt);
 		const dd = document.createElement("dd");
 		const ddTxt = document.createTextNode(loadVals[1]);
+		dd.setAttribute('style', `padding-left: ${cloudPad}px; padding-right: ${cloudPad}px;`);
 		dd.appendChild(ddTxt);
 		div.appendChild(dt);
 		div.appendChild(dd);
-		console.log("hello cloudgen");
+		div.setAttribute('class', 'cmbr-cloud');
 		div.setAttribute('style', `
-			color: var(--cmbr-primary);
-			text-shadow: black 0.2rem 0.2rem 0.2rem;
-			width: fit-content;
-			opacity: 0%;
-			padding:${cloudPad}rem;
-			background-color: rgba(128, 128, 128, 0.3);
-			border-radius: 70%;
-			border-left-width: 5rem;
-			position: absolute;
-			left: 0%;
-			top:${cloudTop}%;
-			animation-name: cloud-float;
-			animation-play-state: running !important;
-			animation-duration: ${cloudSpeed}s;
+			value: ${loadVals[2]};
+			width: ${cloudWidth}rem;
+			height: ${cloudWidth}rem;
+			animation-duration: ${cloudSpeed - cloudDelay}s;
 			animation-delay: ${cloudDelay}s;
-			animation-direction: normal;
-			animation-timing-function: linear;
-			animation-iteration-count: 1;
-			text-overflow: none;
-			overflow: hidden;
-			
 		`);
+		targetEl.onclick = function () {
+			console.log("Cloud Clicked: " + loadVals[0] + " | " + loadVals[1] + " | " + loadVals[2]);
+			return loadVals[2];
+		};
 		targetEl.appendChild(div);
-		setTimeout(() => {
+		const cloudTimeout = setTimeout(() => {
 			while (targetEl.lastChild) {
 				targetEl.removeChild(targetEl.lastChild);
 			}
 			this.cloudGen(targetEl, loadVals);
+			clearTimeout(cloudTimeout);
 		}, cloudSpeed * 1000);
-
 	},
 
 

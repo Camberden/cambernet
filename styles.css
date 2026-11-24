@@ -45,6 +45,10 @@
 	--cmbr-gradient: linear-gradient(var(--cmbr-degrees), var(--cmbr-indigo), var(--cmbr-blue), var(--cmbr-orange), var(--cmbr-violet));
 	--cmbr-legacy-gradient: linear-gradient(120deg, #f59b60 0%, #a1dbf8 100%);
 	--cmbr-cloud-top: 70%;
+	--cmbr-sig-red: 63;
+	--cmbr-sig-green: 63;
+	--cmbr-sig-blue: 63;
+	--cmbr-sig: rgb(63, 63, 63);
 
 	/* |=====| "CMBR GRID PANEL COMPONENTS" |=====| */
 	--cmbr-com-pnl-padding: 1rem;
@@ -202,6 +206,26 @@
 
 .cm-editor .cm-content {
 	color: orangered;
+}
+
+#cmbr-sig-1 {
+	fill: rgb(from var(--cmbr-sig) calc(r - 63) calc(g - 63) calc(b - 63)),
+}
+
+#cmbr-sig-2 {
+	fill: rgb(from var(--cmbr-sig) calc(r + 12) calc(g + 12) calc(b + 12)),
+}
+
+#cmbr-sig-3 {
+	fill: rgb(from var(--cmbr-sig) calc(r - 1) calc(g - 40) calc(b +24)),
+}
+
+#cmbr-sig-4 {
+	fill: rgb(from var(--cmbr-sig) calc(r - 63) calc(g - 63) calc(b - 63)),
+}
+
+#cmbr-sig-5 {
+	fill: rgb(from var(--cmbr-sig) calc(r - 63) calc(g - 63) calc(b - 63)),
 }
 
 /* |==========| §SIMPLEMDE EDITOR |====================> */
@@ -397,7 +421,7 @@ div.editor-preview-active>h6,
 	background-image: none;
 }
 
-[cmbr-cloud] {
+/*
 	width: fit-content;
 	padding: 3rem;
 	background-color: rgba(128, 128, 128, 0.2);
@@ -405,6 +429,10 @@ div.editor-preview-active>h6,
 	position: absolute;
 	left: 0%;
 	top: var(--cmbr-cloud-top);
+*/
+
+[cmbr-cloud] {
+
 	animation-name: cloud-float;
 	animation-play-state: running !important;
 	animation-duration: 10s;
@@ -1465,6 +1493,11 @@ select:hover {
 .grid-row-2-1 {
 	display: grid;
 	grid-template-rows: 2fr 1fr;
+}
+
+.grid-row-10x-1 {
+	display: grid;
+	grid-template-rows: repeat(10, 1fr);
 }
 
 .grid-row-3-1 {
@@ -2604,32 +2637,6 @@ form>label {
 	}
 }
 
-@keyframes cloud-float {
-	0% {
-		opacity: 0%;
-		left: 0%;
-	}
-
-	20% {
-		opacity: 100%;
-		left: 20%
-	}
-
-	80% {
-		opacity: 80%;
-		left: 80%;
-	}
-
-	95% {
-		opacity: 0%;
-		left: 95%;
-	}
-
-	100% {
-		opacity: 0%;
-		left: 100%;
-	}
-}
 
 @keyframes change-box-shadow {
 
@@ -3134,6 +3141,7 @@ nav {
 	align-items: center;
 	column-gap: 1rem;
 	position: fixed;
+	margin-top: 1%;
 
 	/* background: 'images/cmbr-curtain-dark.svg'; */
 	box-shadow: 4rem 0rem 2rem 0rem var(--doi-black);
