@@ -179,6 +179,9 @@ router.get('/clouds', async (req, res) => {
 router.post('/clouds', cookieJwtAuth, async (req, res) => {
 
 	try {
+		if (!req.user || !req.user.payload) {
+			return res.status(401).json({ error: 'Unauthorized: No user payload found.' });
+		}
 		const { title, thought, weight } = req.body;
 		const user_id = req.user.payload.id;
 

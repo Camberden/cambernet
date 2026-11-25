@@ -4,8 +4,59 @@ const { generateToken, verifyToken } = require("../services/tokenService");
 const pool = require('../config/database');
 const { notifyUser } = require('../middleware/notify.js');
 const { cookieJwtAuth } = require('../middleware/auth.js');
-
 const router = express.Router();
+
+router.post('/version', async (req, res) => {
+	await pool.getConnection();
+	const [rows] = await pool.query('SELECT VERSION() AS version');
+	console.log('MySQL version:', rows[0].version);
+	result = (rows[0].version).toString();
+	console.log('Result: ' + result);
+	resultRows = rows[0];
+
+	pool.releaseConnection();
+	// res.sendFile("/workspace/workspace.html");
+	res.write("MySqlVersion: " + result);
+	res.end();
+});
+router.post('/threads', async (req, res) => {
+	await pool.getConnection();
+	const [rows] = await pool.query("SHOW status WHERE `Variable_name` = 'Threads_connected';");
+	console.log('MySQL Threads_connected:', rows[0].Value);
+	result = (rows[0].Value).toString();
+	console.log('Result: ' + result);
+	resultRows = rows[0];
+
+	pool.releaseConnection();
+	res.write("Threads active: " + result + " / 100, technically...");
+	res.end();
+});
+router.post('/processes', notifyUser, async (req, res) => {
+	await pool.getConnection();
+	const [rows] = await pool.query("SHOW processlist;");
+	// const resultRows = (rows[0]).toString();
+	// resultRows = rows[0];
+	const resultRows = rows.map(row => ({
+		...row,
+	}));
+
+	res.json(resultRows);
+	pool.releaseConnection();
+	res.end();
+});
+router.get('/processes', notifyUser, async (req, res) => {
+	await pool.getConnection();
+	const [rows] = await pool.query("SHOW processlist;");
+	// const resultRows = (rows[0]).toString();
+	// resultRows = rows[0];
+	const resultRows = rows.map(row => ({
+		...row,
+	}));
+
+	res.json(resultRows);
+	pool.releaseConnection();
+	res.end();
+});
 
 router.post('/register', async (req, res, next) => {
 	try {
@@ -78,7 +129,6 @@ router.post('/login', async (req, res, next) => {
 		}
 		console.log("Password Compared: " + (selectedUser.password_hash).substr(0, 10) + "...");
 
-
 		const token = await generateToken({ id: selectedUser.id, username: selectedUser.username });
 		console.log("TOKEN GENERATED");
 		console.log("Releasing Connection...");
@@ -100,104 +150,58 @@ router.post('/login', async (req, res, next) => {
 				// maxAge: 7 * 24 * 60 * 60 * 1000
 				// 7 days
 			});
-			res.redirect('/workspace/');
+			// res.redirect('/workspace/');
 		}
 	} catch (err) {
 		console.error('Login error:', err);
-		// res.clearCookie('jwt_token');
+		res.clearCookie('jwt_token');
 		return res.status(500).json({ error: 'Login failed', details: err.message });
 	}
 	console.log("Login route completed.");
 	// Only call next() if response wasn't already sent
 	if (!res.headersSent) {
-		next();
+		console.log("No headers sent.");
+		res.redirect('reactivate');
 	}
+	next();
 });
-router.post('/version', async (req, res) => {
-	await pool.getConnection();
-	const [rows] = await pool.query('SELECT VERSION() AS version');
-	console.log('MySQL version:', rows[0].version);
-	result = (rows[0].version).toString();
-	console.log('Result: ' + result);
-	resultRows = rows[0];
 
-	pool.releaseConnection();
-	// res.sendFile("/workspace/workspace.html");
-	res.write("MySqlVersion: " + result);
-	res.end();
-});
-router.post('/threads', async (req, res) => {
-	await pool.getConnection();
-	const [rows] = await pool.query("SHOW status WHERE `Variable_name` = 'Threads_connected';");
-	console.log('MySQL Threads_connected:', rows[0].Value);
-	result = (rows[0].Value).toString();
-	console.log('Result: ' + result);
-	resultRows = rows[0];
-
-	pool.releaseConnection();
-	res.write("Threads active: " + result + " / 100, technically...");
-	res.end();
-});
-router.post('/processes', notifyUser, async (req, res) => {
-	await pool.getConnection();
-	const [rows] = await pool.query("SHOW processlist;");
-	// const resultRows = (rows[0]).toString();
-	// resultRows = rows[0];
-	const resultRows = rows.map(row => ({
-		...row,
-	}));
-
-	res.json(resultRows);
-	pool.releaseConnection();
-	res.end();
-});
-router.get('/processes', notifyUser, async (req, res) => {
-	await pool.getConnection();
-	const [rows] = await pool.query("SHOW processlist;");
-	// const resultRows = (rows[0]).toString();
-	// resultRows = rows[0];
-	const resultRows = rows.map(row => ({
-		...row,
-	}));
-
-	res.json(resultRows);
-	pool.releaseConnection();
-	res.end();
-});
 router.get('/reactivate', cookieJwtAuth, async (req, res) => {
 	pool.releaseConnection();
 	try {
 		if (req.user) {
-			res.json(
-				{
-					identity: req.user.payload.username,
-					identityNumber: req.user.payload.id,
-					isAuthenticated: true
-				}
-			);
-			console.log("User reactivated: " + res.identity);
+			// ).redirect('/');
 			console.log("User reactivated: " + req.user.payload.username);
+			console.log("User reactivated: " + req.user.payload.id);
+			// console.log("Authenticated: " + res.isAuthenticated);
 			pool.releaseConnection();
+			// res.redirect('/');
 		} else {
 			console.log("No token-user in cookies.");
-			res.json(
-				{
-					identity: null,
-					identityNumber: null,
-					isAuthenticated: false
-				}
-			);
+			throw new Error("No token-user in cookies.");
 		}
 	} catch (err) {
-		console.log("Reactivation Triggered: " + err.message);
+		console.log("Reactivation Triggered with Error: " + err.message);
 		pool.releaseConnection();
+
 	};
-	pool.releaseConnection();
-	res.end();
+	if (!res.headersSent) {
+		console.log("No headers sent.");
+		pool.releaseConnection();
+		console.log("Reactivation route completed.");
+		res.json({
+			identity: req.user.payload.username,
+			identityNumber: req.user.payload.id,
+		});
+	}
 });
+
+
 router.post('/logout', async (req, res) => {
+	console.log("Logging out user...");
 	res.get('jwt_token');
 	res.clearCookie('jwt_token');
+	pool.releaseConnection();
 	res.redirect('/');
 });
 

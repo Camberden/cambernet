@@ -1,31 +1,3 @@
-<style>
-	.interval-panel {
-		border: inherit;
-		background-color: inherit;
-		user-select: none;
-		animation-name: panel-fade;
-		animation-duration: inherit;
-		animation-timing-function: linear;
-		animation-iteration-count: infinite;
-		animation-direction: normal;
-		animation-fill-mode: unset;
-	}
-
-
-	@keyframes panel-fade {
-		0% {
-			opacity: 0;
-		}
-
-		50% {
-			opacity: 1;
-		}
-
-		100% {
-			opacity: 0;
-		}
-	}
-</style>
 <div x-data="{
 		panelValue: 0,
 		panelChange: false,
@@ -75,6 +47,34 @@
 		width: 10rem;
 		height: 3rem;
 		animation-duration: 5s;">
+		<style>
+			.interval-panel {
+				border: inherit;
+				background-color: inherit;
+				user-select: none;
+				animation-name: panel-fade;
+				animation-duration: inherit;
+				animation-timing-function: linear;
+				animation-iteration-count: infinite;
+				animation-direction: normal;
+				animation-fill-mode: unset;
+			}
+
+
+			@keyframes panel-fade {
+				0% {
+					opacity: 0;
+				}
+
+				50% {
+					opacity: 1;
+				}
+
+				100% {
+					opacity: 0;
+				}
+			}
+		</style>
 		<div class="interval-panel" x-effect="cyclePanelCollections($el, robeChantKanji);">
 		</div>
 	</div>

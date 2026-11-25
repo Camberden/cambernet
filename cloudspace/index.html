@@ -6,6 +6,7 @@
 	<link rel="shortcut icon" href="/images/cmbr-sig.svg">
 	<link rel="stylesheet" type="text/css" href="/styles.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="cmbr-cloud.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="/mediaquery.css" media="screen" />
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/1.11/simplemde.min.css">
 	<script src="https://cdn.jsdelivr.net/simplemde/1.11/simplemde.min.js"></script>
 	<script defer src="https://cdn.jsdelivr.net/npm/@imacrayon/alpine-ajax@0.12.6/dist/cdn.min.js"></script>
@@ -21,18 +22,9 @@
 	<title>Chrispy's Cloudspace</title>
 </head>
 
-<body data-theme="light" style="height: 100vh; overflow-x: hidden !important;" x-data="{
+<body data-theme="light" style="height:150vh; background-image: url('/assets/artifacts/wallpaper-cereal-1.jpg');
+ overflow-x: hidden" x-data="{
 	siteUser: {},
-	activeSection: 'Workspace',
-	setSiteUser: function(iden) {
-		this.siteUser = iden;
-	},
-	getSiteUser: function() {
-		return this.siteUser;
-	},
-	purgeInterval: function() {
-		CMBRutil.killInterval(CMBRutil.interval); 
-	},
 }" x-effect="siteUser = await $get('/api/auth/reactivate')">
 	<nav id=" nav" hx-get="../nav.html" hx-target="this" hx-trigger="load" hx-swap="innerHTML" x-bg>
 	</nav>
@@ -80,7 +72,7 @@
 				animation-duration: ${cloudSpeed - cloudDelay}s;
 				animation-delay: ${cloudDelay}s;
 				`);
-			div.innerText = loadVals[0] + ' | ' + loadVals[1] + ' | ' + loadVals[2];
+			div.innerText = loadVals[0] + '\n' + loadVals[1];
 			targetEl.appendChild(div);
 			const cloudTimeout = setTimeout(() => {
 				while (targetEl.lastChild) {
@@ -103,7 +95,7 @@
 			 */
 			const div = document.createElement('div');
 			const dt = document.createElement('dt');
-			const dtTxt = document.createTextNode(loadVals[2] + ' | ' + loadVals[0]);
+			const dtTxt = document.createTextNode(loadVals[0] + '\n');
 			dt.appendChild(dtTxt);
 			const dd = document.createElement('dd');
 			const ddTxt = document.createTextNode(loadVals[1]);
@@ -145,11 +137,14 @@
 			hx-trigger="htmx:after-settle" hx-swap="innerHTML">
 		</slot>
 		<slot style="height:5rem;">
-			<div x-show="$store.notifier.open === false;">
-				<i x-text="'Cloud Selected: ' + cloudSelected"></i>
+			<div>
+				<i x-text="'Hi there! Nice catch! :D'"></i>
 			</div>
 			<div id="notifier"></div>
 		</slot>
+		<div x-show="$store.cmbr.rainOn" hx-get="../template/rainfall.html" hx-target="this" hx-trigger="load"
+			hx-swap="innerHTML">
+		</div>
 
 		<!-- ! NOTIFIER ! %-->
 
@@ -179,49 +174,17 @@
 			</div>
 		</section>
 
-		<section
+		<!-- <section
 			style="z-index:90; position: sticky; opacity: 100%; left:0%; bottom:25%; top:50%; width:25rem; height: 20rem; text-align: left;">
-
-			<div class=" cmbr-item" style="border: 0.5rem groove black;">
-				<!-- ! CREATE ! %-->
-				<form id="new-cloud-form" hx-post='/api/media/clouds' hx-trigger="submit" hx-target="#alter"
-					hx-swap="none settle:1s transition:true">
-					<label for="title" x-text="'Cloud Title'"></label>
-					<input class="cmbr-input-1" type="text" :id=$id('title') required>
-					<br>
-					<div id="mdeditor-handle" style="text-align: left; width:80%;" x-data="{
-							value: '_A thought, fleeting like a cloud._',
-							init() {
-								let editor = CMBRutil.md();
-								editor.value(this.value);
-								editor.isSideBySideActive() ? console.log() : $store.navStore.toggle();
-								editor.codemirror.on('change', ()=> {
-									this.value = editor.value();
-								});
-							},
-						}">
-						<label for="thought" x-text="'Cloud Thought'"></label>
-						<input x-ref="mdinput" type='hidden' name='mdinput' :value="value" :id=$id('thought') />
-						<textarea x-ref="editor" type="textarea"></textarea>
-					</div>
-					<br>
-					<label for="weight" x-text="'Cloud Weight'"></label>
-					<input class="cmbr-input-1" type="number" name="weight" :id=$id('weight')>
-					<button type="submit" x-text="'Make Cloud'" @click="htmx.process($el);" cmbr-i>
-					</button>
-				</form>
-			</div>
-			<div>
-				<hr class="hr-cmbr-gradient">
-			</div>
-		</section>
-
+		</section> -->
 
 
 		<section class="cmbr-flexfixed"
-			style="position:fixed; z-index:90; background: var(--cmbr-blass); opacity: 50%; bottom:2%; right:0%; width:30rem; height:20rem; border: 0.5rem groove black;">
+			style=" z-index:60; background: var(--cmbr-blass); opacity: 90%; height:20rem; border: 0.5rem groove black;">
 			<div id="cloudDataList">
 				<!-- ! TEMPLATE ! -->
+				<button class="cmbr-button" style="font-size: 2rem;" x-text="'⛆'"
+					@click="$store.cmbr.toggleRain();"></button>
 				<dl>
 					<template x-for="cloud in getClouds()">
 						<div class=" grid-col-5x-1" @mouseenter="cloudSelected = cloud.id"
@@ -249,6 +212,56 @@
 				</dl>
 			</div>
 		</section>
+		<!-- <div style="
+			bottom:30%;
+			display: flex;
+			box-sizing: border-box;
+			position: fixed;
+			width: 100%;
+			height: 30%;
+			z-index: 80;"></div> -->
+
+		<footer style="
+			bottom:0;
+			display: flex;
+			box-sizing: border-box;
+			position: fixed;
+			width: 100%;
+			height: 25%;
+			z-index: 80;
+			background-color: blue;
+			background-image: var(--mosky-4);
+			">
+
+			<div class="cmbr-item chrispyfruit-2" style="width: 100%; z-index: 100; align-items: center; justify-items:stretch;
+				 background-color: var(--cmbr-blass); border: 1rem inset royalblue;">
+				<!-- ! CREATE ! %-->
+				<form id="new-cloud-form" hx-post="/api/media/clouds" hx-trigger="submit" hx-target="#alter"
+					hx-swap="none settle:1s transition:true" class="grid-col-1-1">
+
+					<label for="title" x-text="'Cloud Title'"></label>
+					<input class="input-legacy" type="text" name="title" :id=$id('title') required />
+
+					<label for="thought" x-text="'Cloud Thought'"></label>
+					<input class="input-legacy" type="text" name="thought" :id=$id('thought') />
+
+					<label for="weight" x-text="'Cloud Weight'"></label>
+					<input class="input-legacy" type="number" name="weight" :id=$id('weight') />
+
+					<i x-text="''"></i>
+					<button class="click-bar" style="width:max-content" type="submit" x-text="'Make Cloud'"
+						@click="htmx.process($el);" cmbr-i>
+					</button>
+				</form>
+				<div>
+					<hr class="hr-hkri-gradient">
+				</div>
+			</div>
+			<div class="grid-row-1-1-1" style="width: 70vw; align-items: center; justify-items:stretch;"></div>
+			<div class="grid-row-1-1-1" style="width: 70vw; align-items: center; justify-items:stretch;"></div>
+			<div class="grid-row-1-1-1" style="width: 70vw; align-items: center; justify-items:stretch;">
+		</footer>
+
 
 	</main>
 </body>

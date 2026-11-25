@@ -9,7 +9,7 @@
  * @author Camberden (Chrispy | Kippi)
  */
 const latestUpdate = "Tuesday, November 24th, 2026";
-// document.querySelector("#latest-update").innerText = latestUpdate;
+document.querySelector("#latest-update").innerText = latestUpdate;
 /**
  * 
  * @param {string} month

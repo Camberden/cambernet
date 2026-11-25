@@ -1,14 +1,17 @@
 	.cmbr-cloud {
 
 		user-select: none;
-		text-align: center;
+		text-align: left;
+		font-family: "PermanentMarker";
+		font-weight: 500;
+		color: rgb(26, 26, 101);
+		text-shadow: 0.3rem 0.2rem grey;
 		align-content: center;
 		box-sizing: border-box;
 		width: 10rem;
 		height: 10rem;
 		background-image: url('../images/cmbr-cloud.png');
-		background-clip: border-box;
-		clip-path: inset 100px;
+		background-clip: content-box;
 		background-position: center;
 		background-size: contain;
 		background-repeat: no-repeat;
@@ -30,6 +33,7 @@
 
 	.cmbr-cloud:hover {
 		background-color: var(--cmbr-blass-frame);
+		background-blend-mode: luminosity;
 		border-radius: 50%;
 		cursor: pointer;
 	}

@@ -12,7 +12,9 @@
 	<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
 		integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 	<script src="https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js"></script>
+	<script defer src="https://unpkg.com/alpinejs-fetch@latest/dist/api.min.js"></script>
 	<script defer src="https://cdn.jsdelivr.net/npm/@imacrayon/alpine-ajax@0.12.6/dist/cdn.min.js"></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
 	<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
 	<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
 
@@ -26,73 +28,65 @@
 	purgeInterval: function() {
 			CMBRutil.killInterval(CMBRutil.interval); 
 		},
-}" x-initialized="$store.cmbr.siteUser = await $get('/api/auth/reactivate')">
+	}" x-effect="CMBRutil.user = $get ('/api/auth/reactivate')">
 
 	<nav id="nav" hx-get="nav.html" hx-target="this" hx-trigger="load" hx-swap="innerHTML" x-bg></nav>
 
-	<main class="index-grid">
+	<main class="index-grid cmbr-item">
 
-		<div class="signature-div">
+		<div class=" signature-div">
 			<img id="signature" src="images/cmbr-sig-transform.svg" alt="cmbr">
 		</div>
 
 		<div class="index-grid-reduced">
-			<div id="camberden-div">
+			<div id="camberden-div" style="background-color: var(--cmbr-grid-box);">
 
 				<h1 hx-get="template/camberden.html" hx-trigger="load" hx-target="this" hx-swap="outerHTML">camberden
 				</h1>
-				<div id="camberden-bar" class="button-grid-row">
-					<div hx-get="../template/user.html" hx-trigger="load delay:500ms" hx-target="this"
-						hx-swap="innerHTML">
+
+				<!-- % Dotnet Titlebar %-->
+				<div id="camberden-bar" class="grid-col-1-1-1 cmbr-item-center"
+					style="background-color: var(--cmbr-blass);">
+					<!--! AuthAccess !-->
+					<div style="border: 0.2rem ridge transparent; width:12rem;" value="loginlogout"
+						hx-get="../template/exmodal.html" hx-target="#loginlogout" hx-trigger="load delay:2000ms"
+						hx-swap="outerHTML transition:true" x-data="{}">
+
+						<button id="loginlogout" class="cmbr-button-chrispy">
+							<img width="100%" height="100%" src="../images/squares-fade.svg" alt="loading..."
+								cmbr-loading />
+						</button>
 					</div>
-
-					<div style="border: 0.2rem ridge transparent; width: 12rem;">
-						<template x-for="(spec, index) in $store.cmbr.siteUser" :key="index">
-							<div class="vt323" style="color: burlywood;">
-								<span x-show="index === 'identity'" x-html="spec"
-									:x-effect="index === 'identity' ? CMBRutil.setUser(spec) : console.log(spec)"></span>
-							</div>
-						</template>
-
-					</div>
-
-					<div style="color:burlywood;" hx-get="/template/interval-panel.html" hx-trigger="load"
-						hx-target="this" hx-swap="innerHTML" x-text="'Interval'">
+					<!--! Clock !-->
+					<div><samp class="vt323" x-clock></samp></div>
+					<!--! User Prompter !-->
+					<div hx-get="template/user.html" hx-trigger="load delay:2000ms" hx-target="#cmbr-u"
+						hx-swap="outerHTML transition:true" x-show="CMBRutil.getUser(CMBRutil.user)">
+						<div id="cmbr-u" cmbr-i>
+							<img width="100%" height="100%" src="../images/squares-fade.svg" alt="loading..."
+								cmbr-loading />
+						</div>
 					</div>
 				</div>
+
 			</div>
+
+		</div>
+		</div>
 		</div>
 
-		<div id="info-div">
-
-			<div id="page-info">
-				<p>
-					Welcome to the <b class="chrispyfruit-2">camberden</b> corner.<br>
-					I'm the author, <i>Chrispy,</i> and this site serves as my personal
-					corner of the internet where I post my music and musings and an assortment
-					of modest software projects. Whatever I create here is meaningful enough
-					to me to justify its existence. One must endeavor to create meaning and
-					substance in the real world in ways which reveal themselves to the beholder.<br>
-					All the best,<br>
-					<span class="chrispy">🌾🌾🌾 Chrispy 🌾🌾🌾 </span>
-				</p>
-			</div>
-
-			<div id="info-div-frame">
-				<div id="info-div-background">
-				</div>
-			</div>
-
+		<div hx-get="template/indexinfo.html" hx-trigger="load" hx-target="this" hx-swap="innerHTML"
+			style="background-color: var(--cmbr-blass);">
 		</div>
 
 		<hr class="hr-cmbr-gradient">
-		<div class="sections-links" hx-get="sections.html" hx-swap="innerHTML" hx-target="#sections-target"
-			hx-trigger="load">
-			<div id="sections-target"></div>
+		<div class="sections-links" style="background-color: var(--cmbr-grid-box)" hx-get="sections.html"
+			hx-swap="innerHTML" hx-target="#sections-target" hx-trigger="load" x-cloak>
+			<div id="sections-target" style="background-color: var(--cmbr-blass);"></div>
 		</div>
 		<hr class="hr-cmbr-gradient">
 
-		<footer class="index-footer">
+		<footer class="index-footer" style="background-color: var(--cmbr-grid-box); color: var(--link-color);">
 			<p id="footer-text">Made with ♡ by Chrispy</p>
 			<p>Last updated on <span x-ref="update" id="latest-update"></span></p>
 			<p lang="jp"><span id="japanese-date"></span></p>

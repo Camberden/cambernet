@@ -14,11 +14,10 @@ exports.cookieJwtAuth = (req, res, next) => {
 		} else {
 			console.log("Not Accessed.");
 			console.log("No token found in cookies.");
-			res.sendStatus(401).json({ error: 'Unauthorized: No token provided' });
+			// res.sendStatus(401).json({ error: 'Unauthorized: No token provided' });
 		}
 	} catch (err) {
 		console.log("No token or token invalid: " + err.message);
-		next();
 	};
 	next();
 };

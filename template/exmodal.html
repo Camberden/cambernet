@@ -3,7 +3,7 @@
 	openModal: false,
  }">
 	<div x-on:click="openModal = true">
-		<button type="button" class="cmbr-button" x-text="CMBRutil.user === null ? 'Login' : 'Logout'">
+		<button type="button" class="cmbr-button-chrispy" x-text="CMBRutil.identity ? 'Logout' : 'Login'">
 		</button>
 	</div>
 
@@ -18,18 +18,18 @@
 		<!-- Panel -->
 		<div x-show="openModal" x-transition x-on:click="openModal = false">
 			<div x-on:click.stop x-trap.noscroll.inert="openModal"
-				style="position: relative; min-height: auto; max-width: auto; padding:4rem;">
+				style="position: relative; min-height: auto; max-width: fit-content; padding:4rem;">
 				<div class="modal-field">
 					<!-- ! Auth True ! -->
 					<template x-if="CMBRutil.getUser(CMBRutil.user) === true">
 						<div hx-get="../template/logout.html" hx-target="this" hx-trigger="load" hx-swap="outerHTML"
-							x-text="'Logout'" @load="console.log(Alpine.store('nauth').valid)">
+							x-text="'Logout'" @load="console.log(CMBRutil.identity)">
 						</div>
 					</template>
 					<!-- ! Auth False ! -->
 					<template x-if="CMBRutil.getUser(CMBRutil.user) === false">
 						<div hx-get="../template/login.html" hx-target="this" hx-trigger="load" hx-swap="outerHTML"
-							x-text="'Login'" @load="console.log(Alpine.store('nauth').valid)">
+							x-text="'Login'" @load="console.log(CMBRutil.identity)">
 						</div>
 					</template>
 				</div>

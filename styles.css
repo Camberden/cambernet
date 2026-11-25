@@ -271,7 +271,7 @@ CMBR NET STYLES
 
 	background-repeat: no-repeat;
 	background-size: cover;
-	background-position: 0% 88%;
+	background-position: 0% 100%;
 	border-bottom: 0.3rem solid var(--cmbr-blass-frame);
 	transition: all 0.5s ease-in-out;
 }
@@ -1419,6 +1419,19 @@ button:disabled:hover {
 	user-select: none;
 }
 
+.cmbr-lock {
+	font-family: 'vt323', monospace;
+	font-size: 1rem;
+	max-height: 3rem;
+	width: 12rem;
+	box-sizing: border-box;
+	border: 0.3rem solid black;
+	border-top: 0.3rem groove black;
+	justify-content: center;
+	align-content: center;
+}
+
+
 .cmbr-button:hover {
 	border-color: cornflowerblue;
 	background-color: beige;
@@ -1464,12 +1477,13 @@ TRIGGER BOXES <class="trigger-box">
 }
 
 .click-bar {
-	width: 20rem;
-	height: fit-content;
+	box-sizing: border-box;
+	width: 100%;
+	font-family: Lora, monospace;
+	/* height: fit-content; */
 	color: burlywood;
 	background: #182124;
-	border: 0.3rem groove cadetblue;
-	margin-inline: auto;
+	border: 0.3rem groove cornflowerblue;
 }
 
 .cmbr-tr {
@@ -1867,6 +1881,7 @@ PARTITIONING TRIAL
 	grid-template-columns: repeat(1, 100%);
 	max-width: 60%;
 	margin-inline: auto;
+	background-color: var(--bg-color);
 }
 
 
@@ -2382,22 +2397,23 @@ form & <input/> md-read
 }
 
 .input-legacy {
-	background-color: var(--clr-grid-box);
-	color: #f59b60;
-	font-family: monospace, serif;
-	font-size: 1.5rem;
+	background-color: var(--cmbr-blass);
+	color: burlywood;
+	font-family: Lora, monospace;
+	font-weight: 600;
+	font-size: 1.3rem;
 	border: 0.3rem ridge cornflowerblue;
 	width: 100%;
 }
 
 .input-legacy:focus {
-	background-color: var(--clr-grid-box);
-	border-color: orchid;
+	background-color: var(--clr-gradient-common);
+	border-color: var(--cmbr-green);
 }
 
-form>label {
+/* form>label {
 	text-align: right;
-}
+} */
 
 .md-read {
 	display: block;

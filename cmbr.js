@@ -64,20 +64,19 @@ document.addEventListener("alpine:init", () => {
 		setTimeout(function () {
 			// el.setAttribute('x-show', false);
 			el.setAttribute('x-transition.duration.500ms', '');
-			validity = CMBRutil.identified;
-			console.table({ 'X-Autograph: validity first?': validity });
+			const validity = CMBRutil.getUser() ? true : false;
+			console.table({ 'X-Autograph: Authenticated BEFORE 2000ms??': validity });
 			if (validity) {
 				el.setAttribute('x-show', validity);
 				el.setAttribute('x-cloak', validity);
 			}
-			console.table({ 'X-Autograph: validity last?': validity });
+			console.table({ 'X-Autograph: Authenticated AFTER 2500ms?': validity });
 
 			clearTimeout(autographTimeout);
 		}, 2000);
 	});
 	Alpine.directive('clock', function (el, { expression }) {
 		el.setAttribute('x-transition', '');
-		el.innerHTML = 'clock';
 		setInterval(() => {
 			const now = new Date();
 			const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long', hour: '2-digit', minute: '2-digit', second: '2-digit' };
@@ -111,11 +110,12 @@ document.addEventListener("alpine:init", () => {
 			setInterval(() => { document.location = this.page }, 1000);
 		}
 	});
-	Alpine.store('cmbr', () => ({
+	Alpine.store('cmbr', {
 		siteUser: {},
 		activeSection: 'Home',
 		setSiteUser: function (iden) {
 			this.siteUser = iden;
+			console.log("Site User Set: " + this.siteUser);
 		},
 		getSiteUser: function () {
 			return this.siteUser;
@@ -123,7 +123,11 @@ document.addEventListener("alpine:init", () => {
 		purgeInterval: function () {
 			CMBRutil.killInterval(CMBRutil.interval);
 		},
-	}));
+		rainOn: false,
+		toggleRain: function () {
+			this.rainOn = !this.rainOn;
+		}
+	});
 	Alpine.store('modal', {
 		open: false,
 		toggle() {
@@ -428,11 +432,19 @@ const CMBRutil = {
 	mainView: 'Home',
 	user: null,
 	identified: false,
+
+	/**
+	 * 
+	 * @param {String} currentUser ? null
+	 * @description Checks if a user is currently identified and returns a boolean
+	 * @returns 
+	 */
 	getUser: function (currentUser) {
 		// currentUser != null ? this.user = currentUser : this.user = null;
 		console.log("Current User: " + currentUser);
 		if (this.user === null) {
 			this.identified = false;
+			this.user = null;
 			return false;
 		} else {
 			return true;
@@ -441,8 +453,8 @@ const CMBRutil = {
 	setUser: function (username) {
 		console.log("Setting User: " + this.user);
 		console.log("Identified: " + this.identified);
-		this.user = username;
 		this.idenitfied = true;
+		this.getUser(username);
 	},
 
 	interval: null,
@@ -626,6 +638,8 @@ const CMBRutil = {
 	atSiteIndex: function () {
 		if (document.location.href.endsWith("legacyindex.html")) {
 			return false;
+		} else if (document.location.href.length <= 22) {
+			return false;;
 		} else if (baseHyperlinks.includes(document.location.href)) {
 			return true;
 		} else if (document.location.href.endsWith("index.html")) {
@@ -830,5 +844,5 @@ const sout = (x) => { console.log("<‰=== " + (x ?? "No Output") + " ===‰>");
 const braft = (l) => document.querySelector(`${l}`).appendChild(document.createElement("br"));
 
 (async () => {
-	CMBRutil.handleFormDefault(true);
+	// CMBRutil.handleFormDefault(true);
 })();
